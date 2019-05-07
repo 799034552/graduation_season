@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <title>我的热搜</title>
+        <script src = "../../js/jquery-3.3.1.min.js"></script>
+        <script src = "../../js/swiper.min.js"></script>
+        <script src = "../../js/qrcode.min.js"></script>
+        <link href="../../css/bubble.css" rel = "stylesheet">
+        <link href="../../css/swiper.min.css" rel = "stylesheet">
+    </head>
+    <body>
+            <div style = "display:none" class = "picBoxMask">
+                    <div  class = "picBox">
+                        <button onclick="isPicShow(0)" class = "picDelete">X</button>
+                        <div id="qrcode"></div>
+                        <div class ="picMessage">长按保存/分享</div>
+                    </div>
+                </div>
+            <div class="swiper-container swiper-container-h">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class = "maxShow">
+                            <div class = "searchTop">
+                                <img alt = "这里是图片">
+                                <div>热搜榜</div>
+                            </div>
+                            <div onclick = "toNext()" class = "toThirdPage">泡泡页</div>
+                            <div onclick="isPicShow(1)" class = "showSearch">生成我<br>的专属<br>热搜</div>
+                            <ul class = "hotSearch">
+                                <li>
+                                    <img class = "king" src = "../../img/king.png">
+                                    <img class = "selfImg" >
+                                    <div class = "hotSearchItem">
+                                        <div>
+                                                <strong>#</strong>啦啦啦啦啦啦啦啦啦啦啦啦啦啦拉啦啦啦啦啦<strong>#</strong>
+                                        </div>
+                                    </div>
+                                    <div class = "love">
+                                        <img src = "../../img/love.png" alt = "爱心">
+                                        <span>23</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img class = "king" src = "../../img/king.png">
+                                    <img class = "selfImg" >
+                                    <div class = "hotSearchItem">
+                                        <div>
+                                                <strong>#</strong>认真地写话题<strong>#</strong>
+                                        </div>
+                                    </div>
+                                    <div class = "love">
+                                        <img src = "../../img/love.png" alt = "爱心">
+                                        <span>23</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img class = "king" src = "../../img/king.png">
+                                    <img class = "selfImg" >
+                                    <div class = "hotSearchItem">
+                                        <div>
+                                                <strong>#</strong>啊啊啊啊啊啊啊啊啊啊啊啊啊<strong>#</strong>
+                                        </div>
+                                    </div>
+                                    <div class = "love">
+                                        <img src = "../../img/love.png" alt = "爱心">
+                                        <span>25</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img class = "king" >
+                                    <img class = "selfImg" >
+                                    <div class = "hotSearchItem">
+                                        <div>
+                                                <strong>#</strong>啊啊啊啊啊啊啊啊啊啊啊啊啊<strong>#</strong>
+                                        </div>
+                                    </div>
+                                    <div class = "love">
+                                        <img src = "../../img/love.png" alt = "爱心">
+                                        <span>1</span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div onclick="toForward()" class = "toFirstPage">热搜榜</div>
+                        <div onclick="toNext()" class = "toThirdPage">热评榜</div>
+                        <div class = "deleteBox">
+                            拖动到这里删除
+                        </div>
+                        <div class = "bubbleBox">
+                            <div class = "first oneItemBox ">
+                                <div onclick="change(this)" class = "oneItem">
+                                    <div class = "message">去百度</div>
+                                    <div class = "colorBox"></div>
+                                </div>
+                            </div>
+                            <div class = "second oneItemBox ">
+                                <div onclick="change(this)" class = "oneItem">
+                                    <div class = "message">去百度</div>
+                                    <div class = "colorBox"></div>
+                                </div>
+                            </div>
+                            <div class = "third oneItemBox ">
+                                <div onclick="change(this)" class = "oneItem">
+                                    <div class = "message">去百度</div>
+                                    <div class = "colorBox"></div>
+                                </div>
+                            </div>
+                            <div class = "forth oneItemBox ">
+                                <div onclick="change(this)" class = "oneItem">
+                                    <div class = "message">去百度</div>
+                                    <div class = "colorBox"></div>
+                                </div>
+                            </div>
+                            <div class = "five oneItemBox ">
+                                <div onclick="change(this)" class = "oneItem">
+                                    <div class = "message">去百度</div>
+                                    <div class = "colorBox"></div>
+                                </div>
+                            </div>
+                            <div class = "add oneItemBox ">
+                                <div class = "oneItem">
+                                    <div class = "message">+</div>
+                                    <div class = "colorBox"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "tool">
+                            <div onclick="reFresh()" class = "refresh"><button>刷新</button></div>
+                            <div onclick = "isPicShow(1)" class = "myBut"><button>生成二维码</button></div>
+                        </div>
+                        <div class = "bubbleMachine">
+                            <div class = "machineLeft">泡泡鸡</div>
+                            <div class = "machineRight">泡泡鸡</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class = "maxShow">
+                            <div class = "commentTop">
+                                <img alt = "这里是图片">
+                                <div>热评榜</div>
+                            </div>
+                            <div onclick = "toForward()" class = "toFirstPage">泡泡页</div>
+                            <div onclick="isPicShow(1)" class = "showSearch">生成我<br>的专属<br>热搜</div>
+                            <ul class = "hotComment">
+                                <li>
+                                    <div>
+
+                                    </div>
+                                    <button>点赞</button>
+                                </li>
+                                <li>
+                                    <div>
+
+                                    </div>
+                                    <button>点赞</button>
+                                </li>
+                                <li>
+                                    <div>
+
+                                    </div>
+                                    <button>点赞</button>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <script src = "../../js/bubble.js"></script>
+    </body>
+</html>
+<script>
+    $("Ss").fadeOut()
+</script>

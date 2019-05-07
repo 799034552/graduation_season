@@ -1,0 +1,532 @@
+.swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  html, body {
+    position: relative;
+    height: 100%;
+    font-size:4.4vw;
+}
+
+body{
+    padding:0;
+    margin:0;
+    -moz-user-select: none; 
+    -o-user-select:none; 
+    -khtml-user-select:none; 
+    -webkit-user-select:none; 
+    -ms-user-select:none; 
+    user-select:none;  
+    font-size: 62.5%;
+    background:white;
+}
+.deleteBox{
+    position:absolute;
+    width:100%;
+    top:0;
+    font-size: 18px;
+    height: 0;
+    overflow: hidden;
+    background:red;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+body .deleteBoxShow{
+    height:9.8vh;
+
+}
+.bubbleBox{
+    position: relative;
+    height: 100vh;
+}
+.oneItemBox{
+    position:absolute;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 1px;
+    width: 1px;
+    border-radius: 50%;
+}
+.oneItem{
+    position: absolute;
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    transition: all 1.5s;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0.5vw 0.5vw #888888;
+}
+.colorBox{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 40;
+    opacity: 0;
+    transition: all 1.3s;
+    border-radius: 50%;
+}
+.bubbleBox .myAnimate{
+    width:200vh;
+    height:200vh;
+    z-index:50;
+}
+.bubbleBox .myAnimate .colorBox{
+    opacity:1;
+}
+.oneItem{
+    background: #ffd1d1;
+}
+.clone{
+    opacity: 0.5;
+}
+.beCloned{
+    opacity:0.7;
+}
+body .deleteBoxActive{
+    background: blue;
+}
+.first{
+    display: none;
+    top:35vw;
+    left: 28vw;
+}
+.first.animate{
+    animation: myFirst 3s;
+}
+.second{
+    display: none;
+    top:25vw;
+    right: 28vw;
+}
+.second.animate{
+    animation: mySecond 4s;
+}
+.third{
+    display: none;
+    top:72vw;
+    right: 28vw;
+}
+.third.animate{
+    animation: myThird 3s;
+}
+.forth{
+    display: none;
+    top:77vw;
+    left: 28vw;
+}
+.forth.animate{
+    animation: myForth 2.5s;
+}
+.five{
+    display: none;
+    top:115vw;
+    right: 28vw;
+}
+.five.animate{
+    animation: myFive 2s;
+}
+.add .oneItem{
+    background: #CCC;
+}
+.add {
+    display:none;
+    top:120vw;
+    left:28vw;
+}
+.add.animate{
+    animation: myAdd 2s;
+}
+.animate{
+    z-index: 10;
+}
+
+@keyframes mySecond{
+    from{
+        top:calc(100vh - 20vw);
+        right: 28vw;
+        transform:scale(0.4);
+    }
+    to{
+        top:25vw;
+        right: 28vw;
+        transform:scale(1);
+    }
+}
+@keyframes myFirst{
+    from{
+        top:calc(100vh - 20vw);
+        left: 28vw;
+        transform:scale(0.2);
+    }
+    to{
+        top:35vw;
+        left: 28vw;
+        transform:scale(1);
+    }
+}
+@keyframes myThird{
+    from{
+        top:calc(100vh - 20vw);
+        right: 28vw;
+        transform:scale(0.2);
+    }
+    to{
+        top:72vw;
+        right: 28vw;
+        transform:scale(1);
+    }
+}
+@keyframes myForth{
+    from{
+        top:calc(100vh - 20vw);
+        left: 28vw;
+        transform:scale(0.4);
+    }
+    to{
+        top:77vw;
+        left: 28vw;
+        transform:scale(1);
+    }
+}
+@keyframes myFive{
+    from{
+        top:calc(100vh - 20vw);
+        right: 28vw;
+        transform:scale(0.4);
+    }
+    to{
+        top:115vw;
+        right: 28vw;
+        transform:scale(1);
+    }
+}
+@keyframes myAdd{
+    from{
+        top:calc(100vh - 10vw);
+        left: 28vw;
+        transform:scale(0.4);
+    }
+    to{
+        top:120vw;
+        left: 28vw;
+        transform:scale(1);
+    }
+}
+.tool{
+    position: absolute;
+    bottom:10vw;
+    display:flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+}
+.refresh button{
+    background: #daf8f8;
+    margin-bottom: 5vw;
+    height: 11.1vw;
+    width:11.1vw;
+    border-radius: 50%;
+    outline: 0;
+    border:0;
+    z-index: 2;
+}
+.refresh button:active{
+    position: relative;
+    left: 1px;
+    top:1px;
+}
+.myBut button{
+    background: #f2f2f2;
+    border-radius: 10px;
+    width:33.3vw;
+    height: 11.1vw;
+    border:0;
+    outline: 0;
+
+}
+.bubbleMachine{
+    position: absolute;
+    width: 100%;
+    bottom:0
+}
+.bubbleMachine .machineLeft{
+    width:70px;
+    height: 70px;
+    background: #CCC;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+.bubbleMachine .machineRight{
+    width:70px;
+    height: 70px;
+    background: #CCC;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+}
+.toFirstPage{
+    box-sizing:border-box;
+    position: absolute;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    font-size: 1rem;
+    width: 38px;
+    height: 91px;
+    padding:6px;
+    top:50%;
+    margin-top:-45px;
+    background: #f2f2f2;
+    z-index: 20;
+}
+.toThirdPage{
+    box-sizing:border-box;
+    position: absolute;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    font-size: 1rem;
+    width: 38px;
+    height: 91px;
+    right: 0;
+    padding:6px;
+    top:50%;
+    margin-top:-45px;
+    background: #f2f2f2;
+    z-index: 20;
+}
+.picBox{
+    position: absolute;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    top:0;
+    width:260px;
+    height: 309px;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto auto;
+    border:1px black solid;
+    background: white;
+
+}
+.picMessage{
+    margin-top: 30px;
+    height: 35px;
+    width:158px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffb379;
+    font-size: 0.8rem;
+    border:1px black solid;
+}
+.picDelete{
+    position: absolute;
+    right: 10px;
+    top:10px;
+    border-radius: 50%;
+    outline: 0;
+    border:0;
+    width:24px;
+    height: 24px;
+}
+.picBoxMask{
+    position: absolute;
+    top:0;
+    left: 0;
+    width:100vw;
+    height: 100vh;
+    z-index: 999;
+}
+.showSearch{
+    position: absolute;
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.maxShow{
+    position: absolute;
+    top:0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+
+}
+.searchTop div{
+    text-align: center;
+    font-size: 3.6em;
+}
+.searchTop img{
+    position:absolute;
+    height: 50px;
+    width:100px;
+}
+.hotSearch{
+    padding:0;
+    margin:0;
+    list-style:none;
+    position: absolute;
+    width:72.2vw;
+    height: calc(95vh - 50px);
+    top: 80px;
+    left:10vw;
+}
+.hotSearch li{
+    padding:0;
+    margin:0;
+    display: block;
+    position: relative;
+    height:18vw;
+    border:0.3vw black solid;
+    border-radius: 5vw;
+    display: flex;
+    align-items: center;
+    margin-bottom:4vw; 
+}
+.love{
+    position: absolute;
+    right:4vw;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.love img{
+    height: 6vw;
+    width:auto;
+}
+.love span{
+    color:red;
+    font-size: 0.7rem;
+}
+.king{
+    margin-left: 3vw;
+    left:3vw;
+    width:5vw;
+    height: auto;
+
+}
+.selfImg{
+    box-sizing: border-box;
+    height: 14vw;
+    width: 14vw;
+    margin-left: 2vw;
+    border-radius: 7vw;
+    left:10vw;
+    border:0.3vw black solid;
+}
+.hotSearchItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:30vw;
+    margin-left: 3vw;
+    font-size: 0.8rem;
+    
+}
+.hotSearchItem strong{
+    font-weight:900;
+}
+.hotSearch li button{
+    padding:0;
+    margin:0;
+    position: absolute;
+    height: 4.1vw;
+    width:11.1vw;
+    line-height: 4.1vw;
+    text-align: center;
+    right:2vw;
+    bottom:1vw;
+    border-radius: 1vw;
+    outline: 0;
+    border:0.1vw solid black;
+    background: white;
+}
+.showSearch{
+    position: absolute;
+    right: 1vw;
+    border-radius: 50%;
+    top:60px;
+    background: #b9f0ff;
+    height:13.05vw;
+    width:11.6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+
+
+.commentTop div{
+    text-align: center;
+    font-size: 3.6em;
+    height: 50px;
+}
+.commentTop img{
+    position:absolute;
+    height: 50px;
+    width:100px;
+}
+.hotComment{
+    padding:0;
+    margin:0;
+    list-style:none;
+    position: absolute;
+    width:72.2vw;
+    height: calc(95vh - 50px);
+    top: 80px;
+    left:10vw;
+}
+.hotComment li{
+    padding:0;
+    margin:0;
+    display: block;
+    position: relative;
+    height:13.8vw;
+    border:0.2vw black solid;
+    border-radius: 3vw;
+}
+.hotComment li button{
+    padding:0;
+    margin:0;
+    position: absolute;
+    height: 4.1vw;
+    width:11.1vw;
+    line-height: 4.1vw;
+    text-align: center;
+    right:2vw;
+    bottom:1vw;
+    border-radius: 1vw;
+    outline: 0;
+    border:0.1vw solid black;
+    background: white;
+}
