@@ -1,0 +1,284 @@
+textarea{resize:none;} 
+p{margin: 0;}
+#base{
+	position: absolute;
+	left: 0;
+	top:0;
+	width: 100%;
+}
+
+#topic{
+	position: absolute;
+left: 0;
+top:0;
+width: 100%;
+}
+
+#topicName{
+	position: absolute;
+	top:9vw;
+	left: 0;
+	margin: 0;
+    font-size: 9vw;
+    width: 100%;
+    text-align: center;
+}
+
+#inputComment{
+	position: absolute;
+	top:29vw;
+	width: 83vw;
+	height: 47vw;
+	left: calc(8.5vw - 3px);
+	border-color: rgb(169, 169, 169);
+	font-size: 5vw; 
+}
+
+#commitComment{
+	position: absolute;
+	top:81vw;
+	width: 38.89vw;
+	height:12.5vw;
+	left: 30.555vw;
+	font-size: 5vw; 
+
+}
+
+#sort{
+	position: absolute;
+	top: 97.5vw;
+	width: 100%;
+	height:12.5vw;
+	border-top-width:1px;
+	border-bottom-width: 1px;
+	border-left-width: 0;
+    border-right-width: 0; 
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+	left: 0;
+}
+
+#sort_hot{
+	position: absolute;
+	top:1.5vw;
+	left: 5vw;
+	width: 35vw;
+	width: 42vw;
+	height:9.5vw;
+	background-color: rgba(22, 155, 213, 1);
+    border: none;
+    border-radius: 5px;
+}
+
+#sort_time{
+	position: absolute;
+	position: absolute;
+	top:1.5vw;
+	right: 5vw;
+	width: 42vw;
+	height:9.5vw;
+	background-color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+}
+#sort_time_text{
+	position: absolute;
+	top:calc(50% - 3.33333vw);
+	font-size: 5vw; 
+	margin: 0px;
+	width: 100%;
+	text-align: center;
+	color: #000000;
+}
+
+#sort_hot_text{
+	position: absolute;
+	top:calc(50% - 3.33333vw);
+	font-size: 5vw; 
+	margin: 0px;
+	width: 100%;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+#comment_hot{
+	position: absolute;
+	top:calc(110vw + 2px);
+	width: 100%;
+	left: 0;
+}
+
+#comment_time{
+	position: absolute;
+	top:calc(110vw + 2px);
+	width: 100%;
+	left: 0;
+}
+
+.comments{
+ 	position: absolute;
+ 	width: 100%;
+ 	height:2.5vw;
+ 	top:0;
+ 	border-top-width: 0;
+ 	border-bottom-width: 1px;
+ 	border-left-width:0;
+ 	border-right-width:0;  
+ 	border-style: solid;
+ 	border-color: rgb(169, 169, 169);
+}
+
+.avatar{
+	position: absolute;
+	top:1.5vw;
+	left: 1.5vw;
+	height:10vw;
+	width: 10vw;
+}
+
+.username{
+	position: absolute;
+	top:3vw;
+	font-size: 5vw;
+	left: 12.5vw;
+}
+
+.likes{
+	position: absolute;
+	top:4vw;
+	font-size: 3.5vw;
+	right: 12.5vw;
+	}
+
+.like_img{
+	position: absolute;
+	top:2vw;
+	right: 3vw;
+	height:8vw;
+	width: 8vw;
+    border: none;
+    border-radius: 5px;
+}
+
+.content{
+	position: absolute;
+	top:12.5vw;
+	left: 12.5vw;
+	width: 75vw;
+	font-size: 3.5vw;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.reply{
+	position: absolute;
+	top:15vw;
+	right: 3vw;
+	height:8.333vw;
+	width: 27vw;
+    border-width: 1px;
+    border-color: rgb(169, 169, 169);
+    border-style: solid;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.reply_text{
+	position: absolute;
+	width: 100%;
+	text-align:center;
+	top:1.7vw;
+	font-size: 3.5vw;
+}
+
+.subcomment{
+	position: absolute;
+	right: 3vw;
+	left: 11.5vw;
+	height:2vw;
+	top:18vw;
+	background-color: rgb(215, 215, 215);
+}
+
+.subcontent{
+	position: absolute;
+	left: 2vw;
+	top:2vw;
+	right: 2vw;
+	font-size: 3.5vw;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.sub_name{
+	font-weight: 600;
+}
+
+
+#reply_area{
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.input_reply{
+	width: calc(80% - 2px);
+	height: calc(10vw - 4px);
+	border-style: solid;
+	border-color:  rgb(215, 215, 215);
+    border-width: 1px;
+    
+    float: left;
+    font-size: 3.5vw;
+}
+
+#sent_reply{
+	float: left;
+	width: calc(20%  );
+	height:10vw;
+	font-size: 3.5vw;
+
+}
+
+#subcomment_detail{
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+}
+
+#subcomment_detail_head{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 15vw;
+	border-top-width: 0;
+ 	border-bottom-width: 1px;
+ 	border-left-width:0;
+ 	border-right-width:0;  
+ 	border-style: solid;
+ 	border-color: rgb(169, 169, 169);
+}
+
+.subtopic{
+	position: absolute;
+	top: 4vw;
+	width: 100%;
+	text-align: center;
+	font-size: 5vw;
+}
+
+#back{
+	z-index: 10;
+}
+
+#owner{
+	position: absolute;
+	top:5vw;
+	font-size: 3vw;
+	left: 2vw;
+	color: #FF0000;
+}
