@@ -2,11 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+        <!-- <meta name="viewport" content="width=1242,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no shrink-to-fit=no" /> -->
+        <meta name="viewport" content="width=1242,user-scalable=no,shrink-to-fit=no" />
         <title>我的热搜</title>
         <script src = "../../js/jquery-3.3.1.min.js"></script>
         <script src = "../../js/swiper.min.js"></script>
         <script src = "../../js/qrcode.min.js"></script>
+        <script src = "../../js/baseurl.js"></script>
         <link href="../../css/bubble.css" rel = "stylesheet">
         <link href="../../css/swiper.min.css" rel = "stylesheet">
     </head>
@@ -29,58 +31,17 @@
                             <div onclick = "toNext()" class = "toThirdPage">泡泡页</div>
                             <div onclick="isPicShow(1)" class = "showSearch">生成我<br>的专属<br>热搜</div>
                             <ul class = "hotSearch">
-                                <li>
-                                    <img class = "king" src = "../../img/king.png">
-                                    <img class = "selfImg" >
-                                    <div class = "hotSearchItem">
-                                        <div>
-                                                <strong>#</strong>啦啦啦啦啦啦啦啦啦啦啦啦啦啦拉啦啦啦啦啦<strong>#</strong>
-                                        </div>
-                                    </div>
-                                    <div class = "love">
-                                        <img src = "../../img/love.png" alt = "爱心">
-                                        <span>23</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img class = "king" src = "../../img/king.png">
-                                    <img class = "selfImg" >
-                                    <div class = "hotSearchItem">
-                                        <div>
-                                                <strong>#</strong>认真地写话题<strong>#</strong>
-                                        </div>
-                                    </div>
-                                    <div class = "love">
-                                        <img src = "../../img/love.png" alt = "爱心">
-                                        <span>23</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img class = "king" src = "../../img/king.png">
-                                    <img class = "selfImg" >
-                                    <div class = "hotSearchItem">
-                                        <div>
-                                                <strong>#</strong>啊啊啊啊啊啊啊啊啊啊啊啊啊<strong>#</strong>
-                                        </div>
-                                    </div>
-                                    <div class = "love">
-                                        <img src = "../../img/love.png" alt = "爱心">
-                                        <span>25</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img class = "king" >
-                                    <img class = "selfImg" >
-                                    <div class = "hotSearchItem">
-                                        <div>
-                                                <strong>#</strong>啊啊啊啊啊啊啊啊啊啊啊啊啊<strong>#</strong>
-                                        </div>
-                                    </div>
-                                    <div class = "love">
-                                        <img src = "../../img/love.png" alt = "爱心">
-                                        <span>1</span>
-                                    </div>
-                                </li>
+                                <li class = "hotSearchTitle">热搜榜</li>
+                                <li>1、111111</li>
+                                <li>2、22222</li>
+                                <li>3、33333</li>
+                                <li>4、44444</li>
+                                <li>4、44444</li>
+                                <li>4、44444</li>
+                                <li>4、44444</li>
+                                <li>4、44444</li>
+                                <li>4、44444</li>
+                                <li>4、44444</li>
 
                             </ul>
                         </div>
@@ -130,7 +91,7 @@
                             </div>
                         </div>
                         <div class = "tool">
-                            <div onclick="reFresh()" class = "refresh"><button>刷新</button></div>
+                            <div onclick="refreshTopic()" class = "refresh"><button>刷新</button></div>
                             <div onclick = "isPicShow(1)" class = "myBut"><button>生成二维码</button></div>
                         </div>
                         <div class = "bubbleMachine">
@@ -139,31 +100,69 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class = "maxShow">
-                            <div class = "commentTop">
+                       <div class = "maxShow">
+                            <div class = "searchTop">
                                 <img alt = "这里是图片">
-                                <div>热评榜</div>
+                                <div>热搜榜</div>
                             </div>
                             <div onclick = "toForward()" class = "toFirstPage">泡泡页</div>
                             <div onclick="isPicShow(1)" class = "showSearch">生成我<br>的专属<br>热搜</div>
                             <ul class = "hotComment">
-                                <li>
-                                    <div>
-
+                                <li class = "king1">
+                                    <div class = "king"></div>
+                                    <img class = "selfImg" >
+                                    <div class = "hotCommentItem">
+                                        <div>
+                                            <div class = "oneCommentTopic"><strong>#</strong><div>啦啦啦啦啦啦啦拉啦啦啦啦啦啦啦啦啦啦拉啦啦啦啦啦啦啦啦</div><strong>#</strong></div>
+                                            <div class = "commentMessage">啦啦啦啦啦啦啦啦啦拉啦啦啦啦啦</div>
+                                        </div>
                                     </div>
-                                    <button>点赞</button>
+                                    <div class = "love">
+                                        <img src = "../../img/love.svg" alt = "爱心">
+                                        <span>23</span>
+                                    </div>
+                                </li>
+                                <li class = "king2">
+                                    <div class = "king"></div>
+                                    <img class = "selfImg" >
+                                    <div class = "hotCommentItem">
+                                        <div>
+                                            <div class = "oneCommentTopic"><strong>#</strong><div>啦啦啦</div><strong>#</strong></div>
+                                            <div class = "commentMessage">啦啦啦啦啦啦啦</div>
+                                        </div>
+                                    </div>
+                                    <div class = "love">
+                                        <img src = "../../img/love.svg" alt = "爱心">
+                                        <span>23</span>
+                                    </div>
+                                </li>
+                                <li class = "king3">
+                                    <div class = "king"></div>
+                                    <img class = "selfImg" >
+                                    <div class = "hotCommentItem">
+                                        <div>
+                                            <div class = "oneCommentTopic"><strong>#</strong><div>啦啦啦啦</div><strong>#</strong></div>
+                                            <div class = "commentMessage">啦啦啦啦啦啦啦啦啦拉啦啦啦啦啦</div>
+                                        </div>
+                                    </div>
+                                    <div class = "love">
+                                        <img src = "../../img/love.svg" alt = "爱心">
+                                        <span>25</span>
+                                    </div>
                                 </li>
                                 <li>
-                                    <div>
-
+                                    <div class = "king"></div>
+                                    <img class = "selfImg" >
+                                    <div class = "hotCommentItem">
+                                        <div>
+                                            <div class = "oneCommentTopic"><strong>#</strong><div>啦啦啦啦啦</div><strong>#</strong></div>
+                                            <div class = "commentMessage">啦啦啦啦啦啦</div>
+                                        </div>
                                     </div>
-                                    <button>点赞</button>
-                                </li>
-                                <li>
-                                    <div>
-
+                                    <div class = "love">
+                                        <img src = "../../img/love.svg" alt = "爱心">
+                                        <span>1</span>
                                     </div>
-                                    <button>点赞</button>
                                 </li>
 
                             </ul>
@@ -175,5 +174,5 @@
     </body>
 </html>
 <script>
-    $("Ss").fadeOut()
+    
 </script>

@@ -1,1 +1,1 @@
-var baseurl = 'https://stringscloud/';
+var baseurl = 'http://localhost:3000';
