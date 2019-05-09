@@ -10,6 +10,7 @@ var rule = /userid=(.+?)(&|#|$)/;//检测是否是二维码进入的正则
 var userId = undefined;
 var showTopic;  //我的话题
 var infoUrl;
+var enterStatus = undefined; //0 不是扫码进来的  1扫码新用户 2扫码老用户
 var hotSearch = 
     [
         {
@@ -33,14 +34,53 @@ var hotSearch =
 var hotComment = 
     [
         {
-        "id": 1,
-        "title": 'string',
-        "heat":{
-            "id": 12,
-            "name": 'string',
-            "avatar": '../img/king2.svg'
-        }
-    }
+        id: 1,
+        title:'sss',
+        topic: '矮冬瓜',
+        goods:22,//点赞数
+        heat:{
+            id: 12,
+            name: 'string',
+            avatar: '../../img/S.png'
+        },
+        
+    },
+    {
+        id: 1,
+        topic: '安达市',
+        title:'sss',
+        goods:22,
+        heat:{
+            id: 12,
+            name: 'string',
+            avatar: '../../img/love.svg'
+        },
+        
+    },
+    {
+        id: 1,
+        topic: '切图',
+        title:'sss',
+        goods:22,
+        heat:{
+            id: 12,
+            name: 'string',
+            avatar: '../../img/king2.svg'
+        },
+        
+    },
+    {
+        id: 1,
+        topic: '窃听器',
+        title:'sss',
+        goods:22,
+        heat:{
+            id: 12,
+            name: 'string',
+            avatar: '../../img/king2.svg'
+        },
+        
+    },
 ]
 var receiveData =     {
     id: 123,
@@ -82,61 +122,54 @@ var receiveData =     {
         },
     ]
 }
+var myData;//用户个人信息
+var isNew ;//是否是新用户
 
-//ajax拦截器
-$.ajaxSetup({
-    contentType:"application/x-www-form-urlencoded;charset=utf-8",
-    statusCode: {
-     200:function(data,status,res){
-         console.log("ok");
-     },
-      404: function(a,b,c) {
-          alert('数据获取/输入失败，没有此服务。404');
-      },
-      504: function() {
-          alert('数据获取/输入失败，服务器没有响应。504');
-      },
-      500: function() {
-          alert('服务器有误。500');
-      }
-    }
- });
 //初始化
 $(function(){
-
-
+    
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.search);
     if(ruleResult){
         userId = Number(ruleResult[1]);
-    }
-    if(userId){
-        infoUrl = baseurl + "/users/"+userId;
     } else {
-        infoUrl = baseurl + "/users";
+        enterStatus = 0;
     }
+    
 
     //获取用户信息
-    // $.get('http://localhost:3000/users',function(data,status,res){
-    //     receiveData = data;
+    $.get(baseurl + '/users',function(data,status,res){
+       myData = data;
+       if(myData.collection.length === 0){
+           enterStatus = 1;
+       } else {
+           if(enterStatus === undefined){
+               if(myData.id === userId){
+                   enterStatus = 0;
+               } else {
+                   enterStatus = 2;
+               }
+           }
+       }
+       console.log(enterStatus);
+       if(enterStatus === 0 ){
+           receiveData = myData;
+           initiateAll();
+       } else {
+           $.get(baseurl + '/users/' + userId,function(da,sta){
+               receiveData = da;
+               initiateAll();
+           })
+       }
 
-    // })
-    if(userId == receiveData.id){
-        userId = undefined;
-    }
-    if(userId){ //不是本人
-        console.log("不是本人")
-    } else {   //是本人
-        console.log("本人");
-        refreshTopic();
-        hopSearchInit();
-    }
+    })
+
 
 
     document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
     slideInit();//初始化滑动插件
     pushHistory();//ios后退
-    codeInit();
+    
 
 
     //动画结束后删除动画避免复制时干扰
@@ -145,77 +178,12 @@ $(function(){
     })
     
     //长按拖动事件
-    $(".bubbleBox .oneItemBox").on({
-        touchstart: function(e){
-            console.log(e.touches[0]);
-            startLocation[0] = e.touches[0].clientX;
-            startLocation[1] = e.touches[0].clientY;
-            console.log("start");
-            clone = 0;
-            isMoving = false;
-            if($(e.target).parents(".oneItemBox").hasClass("add")){
-                return;
-            }
-            timeOutEvent = setTimeout(function(){
-                isMoving = true;
-                console.log("ok");
-                $(e.target).parents(".oneItemBox").addClass("beCloned");
-                $(".deleteBox").addClass("deleteBoxShow");
-            },500);
-        },
-        touchmove: function(e){
-            if(!isMoving){
-                clearTimeout(timeOutEvent);
-            } else {
-                if(clone !== 0){
-                    var x = e.touches[0].clientX;
-                    var y = e.touches[0].clientY;
-                    var height = $(".deleteBox").height();
-                    clone.css({
-                        'transform':'translate(' + (x - startLocation[0]) + 'px,' + (y - startLocation[1]) + 'px)'
-                    })
-                    if(height > y){
-                        $(".deleteBox").addClass("deleteBoxActive");
-                        isDelete = true;
 
-                    } else {
-                        $(".deleteBoxActive").removeClass("deleteBoxActive");
-                        isDelete = false;
-                    }
-                } else {
-                    beCloned = $(e.target).parents(".oneItemBox");
-                    clone = beCloned.clone(true);
-                    clone.addClass("clone");
-                    $(".bubbleBox").append(clone);
-                }
-                e.stopPropagation();
-                e.preventDefault();
-
-            }
-        },
-        touchend: function(e){
-            if(timeOutEvent!=0){ 
-                clearTimeout(timeOutEvent);
-            } 
-            if(clone !== 0){
-                clone.remove();
-                if(isDelete){
-                    beCloned.css({
-                        'display':'none'
-                    })
-                    setTimeout(function(){
-                        beCloned.addClass("animate");
-                        beCloned.css({
-                            'display':'flex',
-                        })
-
-                    },500);
-                }
-            }
-            $(".deleteBoxShow").removeClass("deleteBoxShow");
-            $(".deleteBox").removeClass("deleteBoxActive");
-            $(".beCloned").removeClass("beCloned");
-        }
+    $(".love").on("click",function(e){
+        e.stopPropagation();
+    })
+    $(".hotComment li").on('click',function(e){
+        console.log(e)
     })
 })
 //刷新泡泡
@@ -288,8 +256,117 @@ function codeInit(){
         width : 500,
         height : 500
     });
-    qrcode.makeCode(baseurl+'/bubble.html?userid='+receiveData);
+    qrcode.makeCode(baseurl+'/bubble.html?userid='+myData.id);
 
+}
+//全部初始化
+function initiateAll(){
+    refreshTopic();
+    hopSearchInit();
+    hotCommentInit();
+    dragInit();
+    if(enterStatus === 0){
+        codeInit();
+        $(".s2Show").hide();
+        $(".s1Show").hide();
+        $(".s0Show").show();
+        
+    } else if(enterStatus === 1){
+        $(".s2Show").hide();
+        $(".s1Show").show();
+        $(".s0Show").hide();
+    } else {
+        $(".s1Show").hide();
+        $(".s0Show").hide();
+        $(".s2Show").show();
+    }
+
+    
+    
+
+}
+
+//解除拖拽
+function cancelDrag(){
+    $(".bubbleBox .oneItemBox").off("touchstart");
+    $(".bubbleBox .oneItemBox").off("touchmove");
+    $(".bubbleBox .oneItemBox").off("touchend");
+}
+//初始化拖拽
+function dragInit(){
+        $(".bubbleBox .oneItemBox").on({
+        touchstart: function(e){
+            console.log(e.touches[0]);
+            startLocation[0] = e.touches[0].clientX;
+            startLocation[1] = e.touches[0].clientY;
+            clone = 0;
+            isMoving = false;
+            if($(e.target).parents(".oneItemBox").hasClass("add")){
+                return;
+            }
+            timeOutEvent = setTimeout(function(){
+                isMoving = true;
+                console.log("ok");
+                $(e.target).parents(".oneItemBox").addClass("beCloned");
+                $(".deleteBox").addClass("deleteBoxShow");
+            },500);
+        },
+        touchmove: function(e){
+            if(!isMoving){
+                clearTimeout(timeOutEvent);
+            } else {
+                if(clone !== 0){
+                    var x = e.touches[0].clientX;
+                    var y = e.touches[0].clientY;
+                    var height = $(".deleteBox").height();
+                    clone.css({
+                        'transform':'translate(' + (x - startLocation[0]) + 'px,' + (y - startLocation[1]) + 'px)'
+                    })
+                    if(height > y){
+                        $(".deleteBox").addClass("deleteBoxActive");
+                        isDelete = true;
+
+                    } else {
+                        $(".deleteBoxActive").removeClass("deleteBoxActive");
+                        isDelete = false;
+                    }
+                } else {
+                    beCloned = $(e.target).parents(".oneItemBox");
+                    clone = beCloned.clone(true);
+                    clone.addClass("clone");
+                    $(".bubbleBox").append(clone);
+                }
+                e.stopPropagation();
+                e.preventDefault();
+
+            }
+        },
+        touchend: function(e){
+            if(timeOutEvent!=0){ 
+                clearTimeout(timeOutEvent);
+            } 
+            if(clone !== 0){
+                clone.remove();
+                if(isDelete){
+                    beCloned.css({
+                        'display':'none'
+                    })
+                    console.log(beCloned);
+                    console.log(beCloned.find(".oneItem")[0].getAttribute("id"))
+                    setTimeout(function(){
+                        beCloned.addClass("animate");
+                        beCloned.css({
+                            'display':'flex',
+                        })
+
+                    },500);
+                }
+            }
+            $(".deleteBoxShow").removeClass("deleteBoxShow");
+            $(".deleteBox").removeClass("deleteBoxActive");
+            $(".beCloned").removeClass("beCloned");
+        }
+    })
 }
 
 //随机数值中返回5个
@@ -353,15 +430,40 @@ function hopSearchInit(){
 }
 
 //渲染热评榜
-function hotComment(){
-    $("hotComment li").hide();
+function hotCommentInit(){
+    $(".hotComment li").hide();
     for(var i = 0 ;i<hotComment.length;i++){
+        var temp;
         if(i === 0){
-            var temp = $(".king1");
+            temp = $(".king1");
             temp.show();
-
-
+        } else if(i === 1){
+            temp = $(".king2");
+            temp.show();
+        } else if(i === 2){
+            temp = $(".king3");
+            temp.show();
+        } else {
+            var cl = $(".template").clone(true);
+            temp = $(cl[0]);
+            temp.show();
+            $(".hotComment").append(temp);
         }
+        temp[0].setAttribute("index",i);
+        temp.children(".selfImg").attr("src",hotComment[i].heat.avatar);
+        temp.find(".oneCommentTopic div").html(hotComment[i].topic);
+        temp.find(".commentMessage").html(hotComment[i].title);
+        temp.find(".love span").html(hotComment[i].goods);
+        
     }
+
+}
+//添加到我的热搜
+function addToMy(){
+    mySwiper.detachEvents();
+    dragInit();
+}
+//生成我的专属热搜
+function createMy(){
 
 }
