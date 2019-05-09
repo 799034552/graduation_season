@@ -15,7 +15,7 @@
     <body>
             <div style = "display:none" class = "picBoxMask">
                     <div  class = "picBox">
-                        <button onclick="isPicShow(0)" class = "picDelete">X</button>
+                        <button onclick="isPicShow(0)" class = "picDelete"></button>
                         <div id="qrcode"></div>
                         <div class ="picMessage">长按保存/分享</div>
                     </div>
@@ -47,8 +47,9 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div onclick="toForward()" class = "toFirstPage">热搜榜</div>
-                        <div onclick="toNext()" class = "toThirdPage">热评榜</div>
+                        <div class = "s22Show back" onclick = "backToSecond()"></div>
+                        <div onclick="toForward()" class = "s21Show toFirstPage">热搜榜</div>
+                        <div onclick="toNext()" class = "s21Show toThirdPage">热评榜</div>
                         <div class = "deleteBox">
                             拖动到这里删除
                         </div>
@@ -91,9 +92,11 @@
                             </div>
                         </div>
                         <div class = "tool">
-                            <div onclick="refreshTopic()" class = "refresh"><button>刷新</button></div>
+                            <div onclick="refreshTopic()" class = "refresh s21Show"><button>刷新</button></div>
                             <div onclick = "isPicShow(1)" class = "myBut s0Show"><button>生成二维码</button></div>
-                            <div onclick="addToMy()" class = "myBut s2Show"><button>添加到我的热搜榜</button></div>
+                            <div onclick="addToMy()" class = "myBut s21Show"><button>添加到我的热搜榜</button></div>
+                            <div onclick="goToMy()" class = "myBut  s21Show"><button>返回我的热搜榜</button></div>
+                            <div onclick="goToMy()" class = "myBut   s22Show"><button>添加到我的热搜榜</button></div>
                             <div onclick="createMy()" class = "myBut s1Show"><button>生成我的专属热搜</button></div>
                         </div>
                         <div class = "bubbleMachine">
