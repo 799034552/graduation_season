@@ -229,7 +229,6 @@ body .deleteBoxActive{
     z-index: 15;
 }
 .refresh button{
-    margin-bottom: 5vw;
     background: url("../img/button_create.svg");
     background-size: 110% 110%;
     background-position: center;
@@ -248,14 +247,15 @@ body .deleteBoxActive{
 }
 .myBut button{
     background: url("../img/button_create.svg");
-    background-size: 110% 110%;
+    background-size: 110% 400px;
     background-position: center;
-    width:318px;
+    width:400px;
     height: 108px;
     font-size: 0.8rem;
     border-radius: 10px;
     border:0;
     outline: 0;
+    margin-top:50px;
 
 }
 .bubbleMachine{

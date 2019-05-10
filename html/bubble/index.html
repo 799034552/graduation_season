@@ -92,11 +92,19 @@
                             </div>
                         </div>
                         <div class = "tool">
-                            <div onclick="refreshTopic()" class = "refresh s21Show"><button>刷新</button></div>
-                            <div onclick = "isPicShow(1)" class = "myBut s0Show"><button>生成二维码</button></div>
-                            <div onclick="addToMy()" class = "myBut s21Show"><button>添加到我的热搜榜</button></div>
-                            <div onclick="goToMy()" class = "myBut  s21Show"><button>返回我的热搜榜</button></div>
-                            <div onclick="goToMy()" class = "myBut   s22Show"><button>添加到我的热搜榜</button></div>
+                                <div onclick="refreshTopic()" class = "refresh s21Show"><button>刷新</button></div>
+                            <div class = "s0Show">
+                                <div onclick = "isPicShow(1)" class = "myBut s0Show"><button>生成二维码</button></div>
+                            </div>
+                            <div class = "s2Show">
+                                <div onclick="addToMy()" class = "myBut s21Show"><button>添加到我的热搜榜</button></div>
+                                <div onclick="goToMy()" class = "myBut  s21Show"><button>返回我的热搜榜</button></div>
+                                <div onclick="addToHotSearchList()" class = "myBut   s22Show"><button>添加到我的热搜榜</button></div>
+                            </div>
+                            <div class = "s3Show">
+
+                            </div>
+                            
                             <div onclick="createMy()" class = "myBut s1Show"><button>生成我的专属热搜</button></div>
                         </div>
                         <div class = "bubbleMachine">

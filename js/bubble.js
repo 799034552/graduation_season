@@ -13,6 +13,8 @@ var infoUrl;
 var enterStatus = undefined; //0 不是扫码进来的  1扫码新用户 2扫码老用户
 var ajaxCount = 0;
 var addToMY = false;//添加到我的热搜榜标识
+var myurl = "file:///C:/c/bbt/project/graduate/html/bubble/index.html#";
+var addTopicUrl = "/??";
 var hotSearch = 
     [
         {
@@ -126,17 +128,17 @@ var myData;//用户个人信息
 
 //初始化
 $(function(){
-    
-    console.log("ddd");
-    // $.ajax({
-    //     url:baseurl+'/collection',
-    //     method:'PUT',
-    //     data:{collection:[1,2,3,4,5,6,7]},
-    //     success(data,status){
-    //         console.log(data);
-    //     }
-    // })
+    $.get("https://test.scut18pie1.top/auth/fake/3",function(data,status,res){
+        // $.ajax({
+        //     url:baseurl+'/users/collection',
+        //     method:'PUT',
+        //     data:{collection:[1,2,3,4,5,6,7]},
+        //     success(data,status){
+        //         console.log(data);
+        //     }
+        // })
 
+        
 
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.search);
@@ -150,7 +152,7 @@ $(function(){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
        myData = data;
-       console.log("用户的信息：",myData);
+       console.log(data);
        if(myData.collection.length === 0){
            enterStatus = 1;
        } else {
@@ -162,29 +164,39 @@ $(function(){
                }
            }
        }
-       enterStatus = 2;//测试为老用户
-       console.log("用户的身份是：",enterStatus);
+
+    //    enterStatus = 2;//测试为老用户
+    //    receiveData = myData;
+    //    isOver();
+      console.log("用户的身份是:",enterStatus);
        if(enterStatus === 0 ){
            receiveData = myData;
        } else {
            $.get(baseurl + '/users/' + userId,function(da,sta){
+               console.log(da);
                receiveData = da;
                isOver();
            })
        }
        isOver();
+       if(enterStatus == 0){
+           userId = myData.id;
+       }
+        //获取热搜榜
+        $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
+            hotSearch = data;
+            console.log(data);
+            isOver();
+        })
+        //获取热评榜
+        $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
+            console.log(data);
+            hotComment = data;
+            isOver();
+        })
 
     })
-    //获取热搜榜
-    $.get(baseurl + "/heat/topics",function(data,status){
-        hotSearch = data;
-        isOver();
-    })
-    //获取热评榜
-    $.get(baseurl + "/heat/comments",function(data,status){
-        hotComment = data;
-        isOver();
-    })
+
     
 
 
@@ -207,13 +219,11 @@ $(function(){
     $(document).on('click','.love',function(e){
         var index = Number($(this).parent("li")[0].getAttribute("index"));
         var liked = Number(hotComment[index].heat.liked);
-        console.log(hotComment);
         var _this = this;
-        console.log(liked);
+        console.log(hotComment);
         if(liked === 0){
-            console.log("init");
             $.ajax({
-                url:baseurl + "/like/comments/" + hotComment[index].heat.id,
+                url:baseurl + "/likecomments" + hotComment[index].heat.id,
                 method:"PUT",
                 success(data){
                     console.log($(_this).find("span"));
@@ -234,6 +244,10 @@ $(function(){
         goToTopic(this.getAttribute("id"));
     
     });
+
+        
+    })
+
 })
 //刷新泡泡
 function reFresh(){
@@ -412,11 +426,14 @@ function dragInit(){
                     beCloned.css({
                         'display':'none'
                     })
-                    if(addToMY = false){
+                    if(!addToMY){
                         var index = (beCloned.find(".oneItem")[0].getAttribute("id"));
                         var temp = getAnother(index);
-                        $(beCloned).find(".oneItem")[0].setAttribute("id",showTopic[temp].topic_id);
-                        $(beCloned).find(".message").html(showTopic[temp].title);
+                        if(temp){
+                            $(beCloned).find(".oneItem")[0].setAttribute("id",showTopic[temp].topic_id);
+                            $(beCloned).find(".message").html(showTopic[temp].title);
+                        }
+
                         setTimeout(function(){
                             beCloned.addClass("animate");
                             beCloned.css({
@@ -472,14 +489,18 @@ function change(e){
     },500);
     e.classList.add("myAnimate");
 }
+//发布话题
+function goToAddTopic(){
+    window.location = baseurl + addTopicUrl;
+}
 //刷新话题
 function refreshTopic(){
     if($(".animate").length>0){
         return;
     }
     showTopic =  getFiveTop(receiveData.collection);
-    console.log(receiveData.collection);
     var temp = document.getElementsByClassName("oneItem");
+    console.log(showTopic);
     for(var i = 0;i < 5;i++){
         temp[i].getElementsByClassName("message")[0].innerHTML = showTopic[i].title;
         temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("id",showTopic[i].topic_id);
@@ -502,10 +523,8 @@ function hopSearchInit(){
 //渲染热评榜
 function hotCommentInit(){
     $(".hotComment li").hide();
-    console.log(hotComment);
     for(var i = 0 ;i<hotComment.length;i++){
         var temp;
-        console.log(hotComment);
 
             if(i === 0){
                 temp = $(".king1");
@@ -545,6 +564,25 @@ function addToMy(){
     $(".deleteBox").addClass("deleteBoxShow");
     mySwiper.detachEvents();
 }
+//添加至我的热搜榜
+function  addToHotSearchList(){
+    var temp = $(".oneItem:visible");
+    var sendData = [];
+    for(var i = 0;i< temp.length-1;i++){
+        sendData.push(Number(temp[i].getAttribute("id")));
+    }
+    $.ajax({
+        url:baseurl+'/users/collection',
+        method:'PUT',
+        data:{collection:sendData},
+        success(data,status){
+            window.location = myurl;
+        }
+    })
+    console.log(sendData);
+
+
+}
 function backToSecond(){
     reFresh();
     addToMY = false;
@@ -554,10 +592,7 @@ function backToSecond(){
     mySwiper.attachEvents();
 
 }
-//生成我的专属热搜
-function createMy(){
 
-}
 //跳转页面
 function goToTopic(id){
     window.location = "file:///C:/c/bbt/project/graduate/html/detail.html?id=" + id;
@@ -565,12 +600,9 @@ function goToTopic(id){
 //再随机取一个
 function getAnother(id){
     var count = 0;
-    console.log(receiveData);
     if(receiveData.collection.length <= 5){
         return false;
-
     }
-    console.log(showTopic,receiveData);
     while(count++ < 50000){
         var rand = Math.floor(Math.random()*receiveData.collection.length);
         var flag = false,temp;
@@ -591,7 +623,14 @@ function getAnother(id){
         }
     }
     return false;
-    
-
+}
+//生成我的专属热搜
+function createMy(){
+    var sendData = [];
+    var list = $(".oneItem");
+    for(var i = 0;i<list.length-1;i++){
+        sendData += ("topic=" + list[i].getAttribute("id"));
+    }
+    window.location = baseurl + "??/" + sendData;
 
 }

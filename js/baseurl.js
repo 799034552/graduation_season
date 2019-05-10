@@ -1,6 +1,4 @@
-var baseurl = 'https://test.scut18pie1.top/api'; //本地node调试用http://localhost:3000
-                                                  //调试2 https://test.scut18pie1.top/api
-//var baseurl = "http://localhost:3000";
+var baseurl = 'https://test.scut18pie1.top/api';
 
 //ajax拦截器
 $.ajaxSetup({
@@ -20,7 +18,6 @@ $.ajaxSetup({
     }
  });
 
- //默认登录
- $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){
-        
-})
+//默认登录
+//  $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){ 
+// })
