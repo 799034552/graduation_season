@@ -3,17 +3,52 @@
     <head>
         <title>test</title>
         <meta name="viewport" content="width=740,user-scalable=no,shrink-to-fit=no" />
+        <script src = "../js/jquery-3.3.1.min.js"></script>
     </head>
     <body>
-        1234
+            <div class = "my one">
+                有cursor: pointer;
+
+                </div>
+                <div class = "my two">
+                    无cursor: pointer;
+            
+                </div>
 
         <script>
+            $(".my").on({
+                touchstart:function(){
+                    this.style = "background: red;"
+                }
+            })
 
         </script>
     </body>
+
     <style>
         body{
             font-size: 20px;
         }
+        div{
+            width:200px;
+            height: 200px;
+            border: black 1px solid;
+            margin-top:30px;
+            background: blue;
+        }
+        .one{
+            cursor: pointer;
+        }
+        @keyframes test{
+            from{
+                transform: translateX(0);
+
+            }
+            to{
+                transform: translateX(100px);
+
+            }
+        }
+
     </style>
 </html>

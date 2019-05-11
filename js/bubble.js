@@ -13,7 +13,7 @@ var infoUrl;
 var enterStatus = undefined; //0 不是扫码进来的  1扫码新用户 2扫码老用户
 var ajaxCount = 0;
 var addToMY = false;//添加到我的热搜榜标识
-var myurl = "file:///C:/c/bbt/project/graduate/html/bubble/index.html#";
+var myurl = "./index.html";
 var addTopicUrl = "/??";
 var hotSearch = 
     [
@@ -128,7 +128,11 @@ var myData;//用户个人信息
 
 //初始化
 $(function(){
-    $.get("https://test.scut18pie1.top/auth/fake/3",function(data,status,res){
+    slideInit();//初始化滑动插件
+    $(".maxShow").show();
+    document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
+    pushHistory();//ios后退
+    $.get("https://test.scut18pie1.top/auth/fake/1",function(data,status,res){
         // $.ajax({
         //     url:baseurl+'/users/collection',
         //     method:'PUT',
@@ -196,15 +200,6 @@ $(function(){
         })
 
     })
-
-    
-
-
-
-    document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
-    slideInit();//初始化滑动插件
-    pushHistory();//ios后退
-    
 
 
     //动画结束后删除动画避免复制时干扰
@@ -429,9 +424,10 @@ function dragInit(){
                     if(!addToMY){
                         var index = (beCloned.find(".oneItem")[0].getAttribute("id"));
                         var temp = getAnother(index);
-                        if(temp){
-                            $(beCloned).find(".oneItem")[0].setAttribute("id",showTopic[temp].topic_id);
-                            $(beCloned).find(".message").html(showTopic[temp].title);
+                        console.log(temp);
+                        if(temp !== false){
+                            $(beCloned).find(".oneItem")[0].setAttribute("id",receiveData.collection[temp].topic_id);
+                            $(beCloned).find(".message").html(receiveData.collection[temp].title);
                         }
 
                         setTimeout(function(){
@@ -485,7 +481,7 @@ function change(e){
         return;
     }
     setTimeout(function(){
-        goToTopic(e.id);
+        //goToTopic(e.id);
     },500);
     e.classList.add("myAnimate");
 }
@@ -595,7 +591,7 @@ function backToSecond(){
 
 //跳转页面
 function goToTopic(id){
-    window.location = "file:///C:/c/bbt/project/graduate/html/detail.html?id=" + id;
+    window.location = "../detail.html?id=" + id;
 }
 //再随机取一个
 function getAnother(id){
@@ -610,7 +606,6 @@ function getAnother(id){
         for(var i = 0 ;i<showTopic.length;i++){
             if(Number(showTopic[i].topic_id) === Number(id)){
                 temp = i;
-
             }
             if(showTopic[i].topic_id === receiveData.collection[rand].topic_id){
                 flag = true;
@@ -619,7 +614,7 @@ function getAnother(id){
         }
         if(!flag){
             showTopic[temp] = receiveData.collection[rand];
-            return temp;
+            return rand;
         }
     }
     return false;

@@ -50,15 +50,18 @@ body .deleteBoxShow{
     width: 1px;
     border-radius: 50%;
 }
-.message{
-    width:100%;
-    height: 100%;
+body .message{
+    height: 527px;
+    width: 527px;
     display:flex;
     align-items: center;
     justify-content: center;
-    padding:0 50px;
-    text-align: center;
+    padding-left:  50px;
+    padding-right:  50px;
+    padding-left: 30px;
 
+    text-align: center;
+    word-break: normal;
 }
 .oneItem{
     position: absolute;
@@ -378,6 +381,7 @@ body .deleteBoxActive{
 
 
 .maxShow{
+    display: none;
     position: absolute;
     top:0;
     left: 0;
