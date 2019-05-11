@@ -11,6 +11,10 @@ var userId = undefined;
 var showTopic;  //我的话题
 var infoUrl;
 var enterStatus = undefined; //0 不是扫码进来的  1扫码新用户 2扫码老用户
+var ajaxCount = 0;
+var addToMY = false;//添加到我的热搜榜标识
+var myurl = "file:///C:/c/bbt/project/graduate/html/bubble/index.html#";
+var addTopicUrl = "/??";
 var hotSearch = 
     [
         {
@@ -35,49 +39,47 @@ var hotComment =
     [
         {
         id: 1,
-        title:'sss',
-        topic: '矮冬瓜',
-        goods:22,//点赞数
+        title: '矮冬瓜',
         heat:{
             id: 12,
             name: 'string',
-            avatar: '../../img/S.png'
+            avatar: '../../img/king2.svg',
+            likes:34,
+            content:'的撒发二个而噩噩高大的嘎啊打发打发'
         },
         
     },
     {
         id: 1,
-        topic: '安达市',
-        title:'sss',
-        goods:22,
+        title:'阿尔泰',
         heat:{
             id: 12,
-            name: 'string',
-            avatar: '../../img/love.svg'
+            name: '发',
+            avatar: '../../img/king2.svg',
+            likes:34,
+            content:'是否恢复深V萨特挖'
         },
-        
     },
     {
         id: 1,
-        topic: '切图',
-        title:'sss',
-        goods:22,
+        title:'案发前而且',
         heat:{
             id: 12,
             name: 'string',
-            avatar: '../../img/king2.svg'
+            avatar: '../../img/king2.svg',
+            likes:34,
+            content:'爱过对方打电话通话'
         },
-        
     },
     {
         id: 1,
-        topic: '窃听器',
-        title:'sss',
-        goods:22,
+        title:'艾尔群若群',
         heat:{
             id: 12,
             name: 'string',
-            avatar: '../../img/king2.svg'
+            avatar: '../../img/king2.svg',
+            likes:34,
+            content:'迅速放斯嘎尔天'
         },
         
     },
@@ -123,11 +125,21 @@ var receiveData =     {
     ]
 }
 var myData;//用户个人信息
-var isNew ;//是否是新用户
 
 //初始化
 $(function(){
-    
+    $.get("https://test.scut18pie1.top/auth/fake/3",function(data,status,res){
+        // $.ajax({
+        //     url:baseurl+'/users/collection',
+        //     method:'PUT',
+        //     data:{collection:[1,2,3,4,5,6,7]},
+        //     success(data,status){
+        //         console.log(data);
+        //     }
+        // })
+
+        
+
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.search);
     if(ruleResult){
@@ -140,6 +152,7 @@ $(function(){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
        myData = data;
+       console.log(data);
        if(myData.collection.length === 0){
            enterStatus = 1;
        } else {
@@ -151,18 +164,40 @@ $(function(){
                }
            }
        }
-       console.log(enterStatus);
+
+    //    enterStatus = 2;//测试为老用户
+    //    receiveData = myData;
+    //    isOver();
+      console.log("用户的身份是:",enterStatus);
        if(enterStatus === 0 ){
            receiveData = myData;
-           initiateAll();
        } else {
            $.get(baseurl + '/users/' + userId,function(da,sta){
+               console.log(da);
                receiveData = da;
-               initiateAll();
+               isOver();
            })
        }
+       isOver();
+       if(enterStatus == 0){
+           userId = myData.id;
+       }
+        //获取热搜榜
+        $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
+            hotSearch = data;
+            console.log(data);
+            isOver();
+        })
+        //获取热评榜
+        $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
+            console.log(data);
+            hotComment = data;
+            isOver();
+        })
 
     })
+
+    
 
 
 
@@ -176,15 +211,43 @@ $(function(){
     $('.oneItemBox').on("webkitAnimationEnd",function(){
         this.classList.remove("animate");
     })
-    
-    //长按拖动事件
+    //点赞
+    // $(".love").on("click",function(e){
+    //     console.log($(this.parents("li")));
+    //     e.stopPropagation();
+    // })
+    $(document).on('click','.love',function(e){
+        var index = Number($(this).parent("li")[0].getAttribute("index"));
+        var liked = Number(hotComment[index].heat.liked);
+        var _this = this;
+        console.log(hotComment);
+        if(liked === 0){
+            $.ajax({
+                url:baseurl + "/likecomments" + hotComment[index].heat.id,
+                method:"PUT",
+                success(data){
+                    console.log($(_this).find("span"));
+                }
+            })
 
-    $(".love").on("click",function(e){
+        }
         e.stopPropagation();
+
+    });
+    //热评的点击
+    $(document).on('click','.hotComment li',function(){
+        goToTopic(hotComment[Number(this.getAttribute("id"))].topic_id);
+
+    });
+    //热搜的点击
+    $(document).on('click','.hotSearch li:not(.hotSearchTitle)',function(){
+        goToTopic(this.getAttribute("id"));
+    
+    });
+
+        
     })
-    $(".hotComment li").on('click',function(e){
-        console.log(e)
-    })
+
 })
 //刷新泡泡
 function reFresh(){
@@ -259,11 +322,13 @@ function codeInit(){
     qrcode.makeCode(baseurl+'/bubble.html?userid='+myData.id);
 
 }
+
 //全部初始化
 function initiateAll(){
     refreshTopic();
     hopSearchInit();
     hotCommentInit();
+    
     dragInit();
     if(enterStatus === 0){
         codeInit();
@@ -280,10 +345,20 @@ function initiateAll(){
         $(".s0Show").hide();
         $(".s2Show").show();
     }
-
+}
+//判断是否完成ajax
+function isOver(){
+    ajaxCount++;
+    if(enterStatus === 0){
+        if(ajaxCount >= 3){
+            initiateAll();
+        }
+    } else {
+        if(ajaxCount >= 4){
+            initiateAll();
+        }
+    }
     
-    
-
 }
 
 //解除拖拽
@@ -306,9 +381,9 @@ function dragInit(){
             }
             timeOutEvent = setTimeout(function(){
                 isMoving = true;
-                console.log("ok");
                 $(e.target).parents(".oneItemBox").addClass("beCloned");
                 $(".deleteBox").addClass("deleteBoxShow");
+                
             },500);
         },
         touchmove: function(e){
@@ -351,18 +426,26 @@ function dragInit(){
                     beCloned.css({
                         'display':'none'
                     })
-                    console.log(beCloned);
-                    console.log(beCloned.find(".oneItem")[0].getAttribute("id"))
-                    setTimeout(function(){
-                        beCloned.addClass("animate");
-                        beCloned.css({
-                            'display':'flex',
-                        })
+                    if(!addToMY){
+                        var index = (beCloned.find(".oneItem")[0].getAttribute("id"));
+                        var temp = getAnother(index);
+                        if(temp){
+                            $(beCloned).find(".oneItem")[0].setAttribute("id",showTopic[temp].topic_id);
+                            $(beCloned).find(".message").html(showTopic[temp].title);
+                        }
 
-                    },500);
+                        setTimeout(function(){
+                            beCloned.addClass("animate");
+                            beCloned.css({
+                                'display':'flex',
+                            })
+                        },500);
+                        $(".deleteBoxShow").removeClass("deleteBoxShow");
+
+                    }
                 }
             }
-            $(".deleteBoxShow").removeClass("deleteBoxShow");
+            
             $(".deleteBox").removeClass("deleteBoxActive");
             $(".beCloned").removeClass("beCloned");
         }
@@ -371,9 +454,13 @@ function dragInit(){
 
 //随机数值中返回5个
 function getFiveTop(collection){
-    var i = 0,result = [],temp = [],flag = false;
+    var i = 0,result = [],temp = [],flag = false,count = 0;
     //生成5个不同的随机数
     while(i < 5){
+        if(count++ > 50000){
+            break;
+            
+        }
         flag = false;
         temp [i] = Math.floor(Math.random()*collection.length);
         for(var j = 0;j<i;j++){
@@ -398,21 +485,25 @@ function change(e){
         return;
     }
     setTimeout(function(){
-        window.location = "https://www.baidu.com?id="+e.id;
+        goToTopic(e.id);
     },500);
     e.classList.add("myAnimate");
+}
+//发布话题
+function goToAddTopic(){
+    window.location = baseurl + addTopicUrl;
 }
 //刷新话题
 function refreshTopic(){
     if($(".animate").length>0){
         return;
     }
-    var showTopic =  getFiveTop(receiveData.collection);
+    showTopic =  getFiveTop(receiveData.collection);
     var temp = document.getElementsByClassName("oneItem");
-    
+    console.log(showTopic);
     for(var i = 0;i < 5;i++){
         temp[i].getElementsByClassName("message")[0].innerHTML = showTopic[i].title;
-        temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("id",showTopic[i].id);
+        temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("id",showTopic[i].topic_id);
     }
     reFresh();
 
@@ -424,7 +515,7 @@ function hopSearchInit(){
     for(var i = 0; i < hotSearch.length;i++){
         var temp = document.createElement("li");
         temp.innerHTML = (i+1)+"、" + hotSearch[i].title;
-        temp.setAttribute("index",i);
+        temp.setAttribute("id",hotSearch[i].topic_id);
         document.getElementsByClassName("hotSearch")[0].appendChild(temp);
     }
 }
@@ -434,36 +525,112 @@ function hotCommentInit(){
     $(".hotComment li").hide();
     for(var i = 0 ;i<hotComment.length;i++){
         var temp;
-        if(i === 0){
-            temp = $(".king1");
-            temp.show();
-        } else if(i === 1){
-            temp = $(".king2");
-            temp.show();
-        } else if(i === 2){
-            temp = $(".king3");
-            temp.show();
-        } else {
-            var cl = $(".template").clone(true);
-            temp = $(cl[0]);
-            temp.show();
-            $(".hotComment").append(temp);
-        }
-        temp[0].setAttribute("index",i);
-        temp.children(".selfImg").attr("src",hotComment[i].heat.avatar);
-        temp.find(".oneCommentTopic div").html(hotComment[i].topic);
-        temp.find(".commentMessage").html(hotComment[i].title);
-        temp.find(".love span").html(hotComment[i].goods);
+
+            if(i === 0){
+                temp = $(".king1");
+                temp.show();
+            } else if(i === 1){
+                temp = $(".king2");
+                temp.show();
+            } else if(i === 2){
+                temp = $(".king3");
+                temp.show();
+            } else {
+                var cl = $(".template").clone(true);
+                temp = $(cl[0]);
+                temp.show();
+                $(".hotComment").append(temp);
+            }
+            temp[0].setAttribute("index",i);
+            temp.children(".selfImg").attr("src",hotComment[i].heat.avatar);
+            temp.find(".oneCommentTopic div").html(hotComment[i].title);
+            temp.find(".commentMessage").html(hotComment[i].heat.content);
+            temp.find(".love span").html(hotComment[i].heat.likes);
+
+
+        
         
     }
-
+}
+function goToMy(){
+    window.location = 'file:///C:/c/bbt/project/graduate/html/bubble/index.html';
 }
 //添加到我的热搜
 function addToMy(){
+    reFresh();
+    addToMY = true;
+    $(".s22Show").show();
+    $(".s21Show").hide();
+    $(".deleteBox").addClass("deleteBoxShow");
     mySwiper.detachEvents();
-    dragInit();
+}
+//添加至我的热搜榜
+function  addToHotSearchList(){
+    var temp = $(".oneItem:visible");
+    var sendData = [];
+    for(var i = 0;i< temp.length-1;i++){
+        sendData.push(Number(temp[i].getAttribute("id")));
+    }
+    $.ajax({
+        url:baseurl+'/users/collection',
+        method:'PUT',
+        data:{collection:sendData},
+        success(data,status){
+            window.location = myurl;
+        }
+    })
+    console.log(sendData);
+
+
+}
+function backToSecond(){
+    reFresh();
+    addToMY = false;
+    $(".s22Show").hide();
+    $(".s21Show").show();
+    $(".deleteBox").removeClass("deleteBoxShow");
+    mySwiper.attachEvents();
+
+}
+
+//跳转页面
+function goToTopic(id){
+    window.location = "file:///C:/c/bbt/project/graduate/html/detail.html?id=" + id;
+}
+//再随机取一个
+function getAnother(id){
+    var count = 0;
+    if(receiveData.collection.length <= 5){
+        return false;
+    }
+    while(count++ < 50000){
+        var rand = Math.floor(Math.random()*receiveData.collection.length);
+        var flag = false,temp;
+
+        for(var i = 0 ;i<showTopic.length;i++){
+            if(Number(showTopic[i].topic_id) === Number(id)){
+                temp = i;
+
+            }
+            if(showTopic[i].topic_id === receiveData.collection[rand].topic_id){
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            showTopic[temp] = receiveData.collection[rand];
+            return temp;
+        }
+    }
+    return false;
 }
 //生成我的专属热搜
 function createMy(){
+    var sendData = [];
+    var list = $(".oneItem");
+    for(var i = 0;i<list.length-1;i++){
+        sendData += ("topic=" + list[i].getAttribute("id"));
+    }
+    window.location = baseurl + "??/" + sendData;
 
 }

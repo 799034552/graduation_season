@@ -24,7 +24,7 @@ body{
     position:absolute;
     width:100%;
     top:0;
-    font-size: 18px;
+    font-size: 1rem;
     height: 0;
     overflow: hidden;
     background:red;
@@ -41,7 +41,7 @@ body .deleteBoxShow{
     height: 100vh;
 }
 .oneItemBox{
-    font-size: 1.4rem;
+    font-size: 1rem;
     position:absolute;
     display:flex;
     justify-content: center;
@@ -49,6 +49,16 @@ body .deleteBoxShow{
     height: 1px;
     width: 1px;
     border-radius: 50%;
+}
+.message{
+    width:100%;
+    height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding:0 50px;
+    text-align: center;
+
 }
 .oneItem{
     position: absolute;
@@ -91,51 +101,106 @@ body .deleteBoxActive{
 }
 .first{
     display: none;
-    top:35vw;
-    left: 28vw;
+    top:300px;
+    left: 450px;
+    transform:scale(1);
 }
 .first.animate{
     animation: myFirst 3s;
 }
+@keyframes myFirst{
+    0%{
+        top:calc(100vh);
+        transform:scale(0);
+    }
+    100%{
+        top:300px;
+        transform:scale(1);
+    }
+}
 .second{
     display: none;
-    top:25vw;
-    right: 28vw;
+    top:580px;
+    right: 300px;
+    transform:scale(0.9);
 }
 .second.animate{
     animation: mySecond 4s;
 }
+@keyframes mySecond{
+    from{
+        top:100vh;
+        transform:scale(0);
+    }
+    to{
+        top:580px;
+        transform:scale(0.9);
+    }
+}
 .third{
     display: none;
-    top:72vw;
-    right: 28vw;
+    top:850px;
+    left: 400px;
+    transform:scale(0.95);
 }
 .third.animate{
     animation: myThird 3s;
 }
+@keyframes myThird{
+    from{
+        top:100vh;
+        transform:scale(0);
+    }
+    to{
+        top:850px;
+        transform:scale(0.95);
+    }
+}
 .forth{
     display: none;
-    top:77vw;
-    left: 28vw;
+    top: 1100px;
+    right: 350px;
 }
 .forth.animate{
     animation: myForth 2.5s;
 }
+@keyframes myForth{
+    from{
+        top:100vh;
+        transform:scale(0);
+    }
+    to{
+        top:1100px;
+        transform:scale(1);
+    }
+}
 .five{
     display: none;
-    top:115vw;
-    right: 28vw;
+    top:1400px;
+    left: 400px;
+    transform:scale(0.8);
 }
 .five.animate{
     animation: myFive 2s;
+}
+@keyframes myFive{
+    from{
+        top:100vh;
+        transform:scale(0);
+    }
+    to{
+        top:1400px;
+        transform:scale(0.8);
+    }
 }
 .add .oneItem{
     background: #CCC;
 }
 .add {
     display:none;
-    top:120vw;
-    left:28vw;
+    top:1570px;
+    right:430px;
+    transform:scale(0.7);
 }
 .add.animate{
     animation: myAdd 2s;
@@ -143,82 +208,19 @@ body .deleteBoxActive{
 .animate{
     z-index: 10;
 }
-
-@keyframes mySecond{
-    from{
-        top:calc(100vh - 20vw);
-        right: 28vw;
-        transform:scale(0.4);
-    }
-    to{
-        top:25vw;
-        right: 28vw;
-        transform:scale(1);
-    }
-}
-@keyframes myFirst{
-    0%{
-        top:calc(100vh - 20vw);
-        left: 28vw;
-        transform:scale(0.2);
-    }
-    100%{
-        top:35vw;
-        left: 28vw;
-        transform:scale(1);
-    }
-}
-@keyframes myThird{
-    from{
-        top:calc(100vh - 20vw);
-        right: 28vw;
-        transform:scale(0);
-    }
-    to{
-        top:72vw;
-        right: 28vw;
-        transform:scale(1);
-    }
-}
-@keyframes myForth{
-    from{
-        top:calc(100vh - 20vw);
-        left: 28vw;
-        transform:scale(0);
-    }
-    to{
-        top:77vw;
-        left: 28vw;
-        transform:scale(1);
-    }
-}
-@keyframes myFive{
-    from{
-        top:calc(100vh - 20vw);
-        right: 28vw;
-        transform:scale(0);
-    }
-    to{
-        top:115vw;
-        right: 28vw;
-        transform:scale(1);
-    }
-}
 @keyframes myAdd{
     from{
-        top:calc(100vh - 10vw);
-        left: 28vw;
+        top:100vh;
         transform:scale(0);
     }
     to{
-        top:120vw;
-        left: 28vw;
-        transform:scale(1);
+        top:1570px;
+        transform:scale(0.7);
     }
 }
 .tool{
     position: absolute;
-    bottom:10vw;
+    bottom:20px;
     display:flex;
     width: 100%;
     flex-direction: column;
@@ -227,7 +229,6 @@ body .deleteBoxActive{
     z-index: 15;
 }
 .refresh button{
-    margin-bottom: 5vw;
     background: url("../img/button_create.svg");
     background-size: 110% 110%;
     background-position: center;
@@ -246,14 +247,15 @@ body .deleteBoxActive{
 }
 .myBut button{
     background: url("../img/button_create.svg");
-    background-size: 110% 110%;
+    background-size: 110% 400px;
     background-position: center;
-    width:318px;
+    width:400px;
     height: 108px;
     font-size: 0.8rem;
     border-radius: 10px;
     border:0;
     outline: 0;
+    margin-top:50px;
 
 }
 .bubbleMachine{
@@ -318,14 +320,16 @@ body .deleteBoxActive{
     justify-content: center;
     z-index: 999;
     top:0;
-    width:800px;
-    height: 1000px;
+    width:850px;
+    height: 1050px;
     left:0;
     right:0;
     bottom:0;
     margin:auto auto;
-    border:1px black solid;
-    background: white;
+    /* border:1px black solid; */
+    background: url("../img/qrcode_box.png");
+    background-size: 100% 100%;
+    
 
 }
 .picMessage{
@@ -340,15 +344,15 @@ body .deleteBoxActive{
     border:1px black solid;
 }
 .picDelete{
-    font-size: 1rem;
     position: absolute;
-    right: 10px;
-    top:10px;
-    border-radius: 50%;
+    right: 30px;
+    top:30px;
     outline: 0;
     border:0;
     width:80px;
     height: 80px;
+    background: url("../img/qrcode_delete.png") no-repeat;
+    background-position: center;
 }
 .picBoxMask{
     position: absolute;
@@ -553,6 +557,26 @@ body .deleteBoxActive{
 }
 .searchTop,.showSearch{
     display: none;
+}
+.s2Show{
+    display: none;
+}
+.s1Show{
+    display: none;
+}
+.s22Show{
+    display: none;
+}
+.s22Show.back{
+    position: absolute;
+    z-index: 500;
+    top:50px;
+    left: 30px;
+    width:100px;
+    height: 100px;
+    background: url("../img/back.svg");
+    background-size: 100% 100%;
+    background-position: center;
 }
 
 
