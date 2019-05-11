@@ -6,18 +6,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>毕业季</title>
-    <link rel="stylesheet" href="../css/start.css">
     <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/swiper.min.js"></script>
+    <link rel="stylesheet" href="../css/swiper.min.css">
+    <link rel="stylesheet" href="../css/start.css">
+
     <script src="../js/start.js"></script>
+
 </head>
 
 <body>
+    <!-- 用户引导 -->
+    <div class="leading">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../img/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="../img/b.jpg" alt=""></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <button>
+            知道啦
+        </button>
+    </div>
+
     <!-- 初始页 -->
     <div class="background">
         <div class="logo">
-            <img src="../img/u6.png" alt="">
+            <img src="../img/b.jpg" alt="">
         </div>
         <div class="information">
+
             <p>
                 状态的维持与恢复
                 当用户退出产品时（误操作、Home键、锁屏、自动关机），产品需要维持用户操作前的状态，
@@ -29,6 +49,8 @@
                 当用户退出产品时（误操作、Home键、锁屏、自动关机），产品需要维持用户操作前的状态，
                 当用户返回产品时仍可以恢复到之前状态，并
                 状态的维持与恢复
+                当用户退出产品时（误操作、Home键、锁屏、自动关机），产品需要维持用户操作前的状态，
+                当用户返回产品时仍可以恢复到之前状态，并状态的维持与恢复
                 当用户退出产品时（误操作、Home键、锁屏、自动关机），产品需要维持用户操作前的状态，
                 当用户返回产品时仍可以恢复到之前状态，并
             </p>
@@ -42,49 +64,99 @@
     <!-- 话题选择 -->
     <div class="bgchoiceTopic">
         <div class="choiceTitle">
-            <p>请选择五个热搜话题吧：</p>
+            <p>先选择五个热搜吧~</p>
         </div>
+        <P class="pchoiced">
+            <已选>
+        </P>
+        <!-- 用户选择的话题 -->
+        <div class="userChoiced">
+            <p>空空如也~快选些话题吧~</p>
+        </div>
+        <p class="rechoice">
+            <系统备选>
+        </p>
+        <!-- 系统备选话题 -->
         <div class="choice">
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
-                <div class="chosen" style="display:none;">0</div>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>震惊！xx每天熬夜不睡觉的原因竟是？</p>
+                    <div>1</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
-                <div class="chosen" style="display:none;">0</div>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>xx还我蚂蚁森林能量！</p>
+                    <div>2</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
-                <div class="chosen" style="display:none;">0</div>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>求xx长高秘籍</p>
+                    <div>3</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
-                <div class="chosen" style="display:none;">0</div>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>xx桌上到底有多少化妆品？</p>
+                    <div>4</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤啊啊啊啊啊啊啊啊啊#</p>
-                <div class="chosen" style="display:none;">0</div>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>xx大佬能不能带带我学习</p>
+                    <div>5</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>xx那么好看，为什么还是单身？</p>
+                    <div>6</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>求问xx体重</p>
+                    <div>7</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>发现了！xx游戏不停成绩不降的原因竟是？</p>
+                    <div>8</div>
+                </div>
             </div>
             <div class="topic">
-                <div><img src="../img/u6.png" alt=""></div>
-                <p>#你打篮球就像蔡徐坤#</p>
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>xx的发际线在哪？</p>
+                    <div>9</div>
+                </div>
+            </div>
+            <div class="topic">
+                <div>
+                    <img class="topicimg" src="../img/topic.png" alt="">
+                    <img class="fireimg" src="../img/fire.png" alt="">
+                    <p>跪求xx生发秘籍</p>
+                    <div>10</div>
+                </div>
             </div>
         </div>
         <div class="choiceButton">
