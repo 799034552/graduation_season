@@ -7,29 +7,42 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    display: block;
+    display: none;
 }
+
+/* 活动介绍页 */
 .logo{
     position: absolute;
-    top:8vh;
+    top:3vh;
     width:100vw;
     text-align: center;
 }
 .logo img{
     width: 60vw;
+    height: 20vw;
 }
 .information{
     position:absolute;
     width: 70vw;
-    height: 45vh;
-    top:30vh;
+    height: 52vh;
+    top:20vh;
     left:15vw;
+    border:0.1vw solid gray;
+    box-shadow: 0.2vw 0.2vw gray;
+    border-radius: 3vw;
     overflow: scroll;
+}
+.information p{
+    position: absolute;
+    top:2.5vw;
+    left:2.5vw;
+    width: 95%;
+    height: 98%;
 }
 .button{
     position:absolute;
     width: 100vw;
-    top:84vh;
+    top:85vh;
     text-align: center;
 }
 .button button{
@@ -44,72 +57,205 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow: scroll;
     display: none;
 }
 .choiceTitle{
     position: absolute;
-    width: 70vw;
-    height: 11vh;
-    top:5vh;
-    left: 15vw;
-    text-align: center;
+    width: 77vw;
+    height: 6.3vw;
+    top:12.3vw;
+    left:13.5vw;
     font-size: 6vw;
-    line-height: 11vh;
-    background-color: darkolivegreen;
+    line-height: 6.3vw;
+    font-family: HYYouYuanTiJ;
+}
+.pchoiced{
+    position: absolute;
+    top:21vw;
+    left:14vw;
+}
+.userChoiced{
+    position: absolute;
+    top:27.5vw;
+    left:10.4vw;
+    width:79vw;
+    height: 10vw;
+    text-align: center;
+}
+.userChoiced>p{
+    font-size: 3vw;
+}
+.userChoiced div{
+    /* width: 100%; */
+    /* height:6.7vw; */
+    /* height:8vw;
+    margin-bottom: 1.5vw; */
+    width: 0vw;
+    height: 0vw;
+    margin: 0 auto;
+}
+.userChoiced .bg{
+    width: 100%;
+    height: 100%;
+}
+.userChoiced div .cross{
+    position: absolute;
+    top:9%;
+    height: 70%;
+    left:89%;
 }
 .choice{
     position: absolute;
-    width:80vw;
-    height: 60vh;
-    top:20vh;
-    left:10vw;
-    border: 0.1vw solid;
+    width:79vw;
+    height: 65vw;
+    top:88vw;
+    left:10.4vw;
     overflow:scroll;
+    text-align: center;
 }
 .choiceButton{
     position: absolute;
-    top:85vh;
+    top:157vw;
     width:100vw;
     text-align: center;
+    margin-bottom: 5vw;
 }
 .choiceButton button{
     height:5vh;
     width:30vw;
     background-color: rgb(179, 178, 178);
+    border-radius: 3vw;
     font-size: 5vw;
     color:gray;
     border: 0px;
 }
+.rechoice{
+    position: absolute;
+    top:83vw;
+    left:14vw;
+}
 .topic{
-    background-color:white;
     position: relative;
-    height: 15vw;
-    line-height: 15vw;
-    border-bottom: 0.05vw solid;
-    font-size: 5vw; 
-    /* color:rgb(85, 85, 219); */
+    width: 79vw;
+    margin: 0 auto;
+    height:6.7vw;
+    /* height:8vw; */
+    margin-top: 2vw;
 }
-.topic div{
-    position: absolute;
-    width: 13vw;
-    height: 13vw;
-    top:1vw;
-    left: 1vw;
-    border-radius: 50%;
-    border: 0.1px solid;
-    overflow: hidden;
+
+.topicimg{
+    width: 100%;
+    height: 100%;
 }
-.topic p{
+.fireimg{
     position: absolute;
-    width: 64vw;
-    height: 15vw;
-    left: 16vw;
+    left:5vw;
+    top:10%;
+    height:70%;
+}
+.topic div p{
+    position:absolute;
+    width:80%;
+    height:100%;
+    left:10vw;
+    top:0vw;
+    line-height: 6.5vw;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: left;
+    
 }
-.topic img{
-    height: 13vw;
-    width: 13vw;
+.topic div div{
+    display: none;
 }
+/* 新加的话题选择动画 */
+.hide{
+    animation: hide ;
+    animation-delay: 0.1s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+@keyframes hide{
+    to{
+        height: 0vw;
+        width: 0vw;
+        margin-top: 0vw; 
+    }
+}
+.show{
+    animation: show ;
+    animation-delay: 0s;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+@keyframes show{
+    from{
+        height: 0vw;
+        width: 0vw;
+        margin-top: 0vw;
+    }
+    to{
+        width: 100%;
+        /* height:6.7vw; */
+        height:8vw;
+        margin-top: 1.5vw;    
+    }
+}
+/* 话题添加 */
+.userChoiced div{
+    position: relative;
+}
+.userChoiced p{
+    position: absolute;
+    width:85%;
+    height:100%;
+    left:3vw;
+    top:0vw;
+    line-height: 6.5vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+/* 引导页面 */
+.leading{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: block;
+}
+.swiper-container{
+    position: absolute;
+    left: 15vw;
+    top:30vw;
+    width:70vw;
+    height:100vw;
+    overflow: hidden;
+}
+.swiper-wrapper{
+    width:80vw;
+    height:80vw;
+}
+.swiper-slide{
+    width:80vw;
+    height:80vw;
+}
+.swiper-slide img{
+    width: 100%;
+    height: 100%;
+}
+.leading button {
+    position: absolute;
+    top:140vw;
+    left: 40vw;
+    width:20vw;
+    height:8vw;
+    background-color: white;
+    border: 0.1vw solid gray;
+    border-radius: 2vw;
+}
+

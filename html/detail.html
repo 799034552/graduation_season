@@ -5,7 +5,9 @@
   	<meta charset="UTF-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../js/jquery-3.3.1.min.js" ></script>
+   <!--  <script src="../js/detail.js"></script> -->
     <script src="../js/detail.js"></script>
+    <script src="../js/baseurl.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/detail.css">
   </head>
   <body>
@@ -13,9 +15,9 @@
 
       <div id="topic">
   		  <div id="put">
-  		     <p id="topicName">话题名称</p>
-  		     <textarea id="inputComment" placeholder="#该话题名称" maxlength="200"></textarea>
-  		     <button id="commitComment">发表评论</button>
+  		     <p id="topicName"></p>
+  		     <textarea id="inputComment" maxlength="200"></textarea>
+  		     <button id="commitComment" onclick="sentComment();">发表评论</button>
   		  </div>
   		  <div id="sort">
   		  	<div id="sort_time">
@@ -34,7 +36,7 @@
       </div>
       <div id="reply_area">
           <input class="input_reply" id="input_reply">
-          <button id="sent_reply">发布</button>
+          <button id="sent_reply" onclick="sentSubcomment();">发布</button>
         </div>
   	</div>
   </body>
