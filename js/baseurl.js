@@ -6,8 +6,8 @@ $.ajaxSetup({
         withCredentials: true    
     },
     statusCode: {
-      401: function(a,b,c) {
-          alert("没授权，滚");
+      401: function() {
+        window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
       },
       404:function(){
           

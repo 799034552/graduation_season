@@ -35,17 +35,21 @@
             border: black 1px solid;
             margin-top:30px;
             background: blue;
+            
         }
-        .one{
+        .my.one{
             cursor: pointer;
+            animation: test 4s;
         }
         @keyframes test{
             from{
-                transform: translateX(0);
+                transform:scale(0);
+                /* transform: translateX(0); */
 
             }
             to{
-                transform: translateX(100px);
+                transform: scale(1);
+                /* transform: translateX(100px); */
 
             }
         }

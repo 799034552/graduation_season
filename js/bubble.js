@@ -128,11 +128,12 @@ var myData;//用户个人信息
 
 //初始化
 $(function(){
+    console.log(window.location.href);
+    encodeURI
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
     pushHistory();//ios后退
-    $.get("https://test.scut18pie1.top/auth/fake/1",function(data,status,res){
         // $.ajax({
         //     url:baseurl+'/users/collection',
         //     method:'PUT',
@@ -241,7 +242,7 @@ $(function(){
     });
 
         
-    })
+    
 
 })
 //刷新泡泡
@@ -299,7 +300,7 @@ function slideInit(){
                 $(".toFirstPage").hide();
                 $(".toThirdPage").hide();
               },
-              slideChangeTransitionEnd: function(){
+              transitionEnd: function(){
                 $(".toFirstPage").fadeIn();
                 $(".toThirdPage").fadeIn();
               },
@@ -366,6 +367,7 @@ function cancelDrag(){
 function dragInit(){
         $(".bubbleBox .oneItemBox").on({
         touchstart: function(e){
+            document.getElementById("test").innerHTML = "正在按住";
             console.log(e.touches[0]);
             startLocation[0] = e.touches[0].clientX;
             startLocation[1] = e.touches[0].clientY;
@@ -375,6 +377,8 @@ function dragInit(){
                 return;
             }
             timeOutEvent = setTimeout(function(){
+                timeOutEvent = 0;
+                document.getElementById("test").innerHTML = "已经克隆";
                 isMoving = true;
                 $(e.target).parents(".oneItemBox").addClass("beCloned");
                 $(".deleteBox").addClass("deleteBoxShow");
@@ -383,9 +387,11 @@ function dragInit(){
         },
         touchmove: function(e){
             if(!isMoving){
+                document.getElementById("test").innerHTML = "时间不够就拖动";
                 clearTimeout(timeOutEvent);
             } else {
                 if(clone !== 0){
+                    document.getElementById("test").innerHTML = "移动克隆体";
                     var x = e.touches[0].clientX;
                     var y = e.touches[0].clientY;
                     var height = $(".deleteBox").height();
@@ -413,9 +419,11 @@ function dragInit(){
         },
         touchend: function(e){
             if(timeOutEvent!=0){ 
+                document.getElementById("test").innerHTML = "计时未结束放手";
                 clearTimeout(timeOutEvent);
             } 
             if(clone !== 0){
+                document.getElementById("test").innerHTML = "已完成";
                 clone.remove();
                 if(isDelete){
                     beCloned.css({
@@ -436,12 +444,11 @@ function dragInit(){
                                 'display':'flex',
                             })
                         },500);
-                        $(".deleteBoxShow").removeClass("deleteBoxShow");
 
                     }
                 }
             }
-            
+            $(".deleteBoxShow").removeClass("deleteBoxShow");
             $(".deleteBox").removeClass("deleteBoxActive");
             $(".beCloned").removeClass("beCloned");
         }
@@ -481,8 +488,8 @@ function change(e){
         return;
     }
     setTimeout(function(){
-        //goToTopic(e.id);
-    },500);
+        goToTopic(e.id);
+    },1000);
     e.classList.add("myAnimate");
 }
 //发布话题
