@@ -315,7 +315,7 @@ function codeInit(){
         width : 500,
         height : 500
     });
-    qrcode.makeCode(baseurl+'/bubble.html?userid='+myData.id);
+    qrcode.makeCode(baseurl+'/bubble?userid='+myData.id);
 
 }
 
