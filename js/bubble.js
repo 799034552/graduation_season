@@ -128,22 +128,10 @@ var myData;//用户个人信息
 
 //初始化
 $(function(){
-    console.log(window.location.href);
-    encodeURI
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
     pushHistory();//ios后退
-        // $.ajax({
-        //     url:baseurl+'/users/collection',
-        //     method:'PUT',
-        //     data:{collection:[1,2,3,4,5,6,7]},
-        //     success(data,status){
-        //         console.log(data);
-        //     }
-        // })
-
-        
 
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.search);
