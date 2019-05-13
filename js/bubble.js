@@ -143,9 +143,49 @@ $(function(){
     }
     dragInit();
         $.ajax({
-            url:baseurl + "/users/collection",
+            url:baseurl + "/topics",
             method:'put',
-            data:{collection:[1,2,3,4,5,6,7]},
+            data:{title:"物流通选课好无聊",target_id:'1'},
+            success(){
+                console.log("ok");
+            }
+        })
+        $.ajax({
+            url:baseurl + "/topics",
+            method:'put',
+            data:{title:"testtest",target_id:'1'},
+            success(){
+                console.log("ok");
+            }
+        })
+        $.ajax({
+            url:baseurl + "/topics",
+            method:'put',
+            data:{title:"一饭二楼居然有翅包饭",target_id:'1'},
+            success(){
+                console.log("ok");
+            }
+        })
+        $.ajax({
+            url:baseurl + "/topics",
+            method:'put',
+            data:{title:"快体侧了！",target_id:'1'},
+            success(){
+                console.log("ok");
+            }
+        })
+        $.ajax({
+            url:baseurl + "/topics",
+            method:'put',
+            data:{title:"好饿，没有东西吃",target_id:'1'},
+            success(){
+                console.log("ok");
+            }
+        })
+        $.ajax({
+            url:baseurl + "/topics",
+            method:'put',
+            data:{title:"步道乐跑跑完了",target_id:'1'},
             success(){
                 console.log("ok");
             }
