@@ -1,0 +1,40 @@
+#input_topic{
+	position: absolute;
+	top:29vw;
+	width: 83vw;
+	height: 47vw;
+	left: calc(8.5vw - 3px);
+	border-color: rgb(169, 169, 169);
+	font-size: 5vw; 
+}
+
+#commit_topic{
+	position: absolute;
+	top:81vw;
+	width: 38.89vw;
+	height:12.5vw;
+	left: 30.555vw;
+	font-size: 5vw; 
+
+}
+
+p{
+	margin: 0;
+	font-size: 10vw;
+	width: 100%;
+	text-align: center;
+}
+
+#heading{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	border-top-width: 0;
+ 	border-bottom-width: 1px;
+ 	border-left-width:0;
+ 	border-right-width:0;  
+ 	border-style: solid;
+ 	border-color: rgb(169, 169, 169);
+
+}
