@@ -324,11 +324,7 @@ function codeInit(){
         width : 500,
         height : 500
     });
-<<<<<<< HEAD
     qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
-=======
-    qrcode.makeCode(baseurl+'/bubble?userid='+myData.id);
->>>>>>> 41db8ab64e7c717140491722a9f3d947839ea1c0
 
 }
 
