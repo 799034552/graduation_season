@@ -144,7 +144,7 @@ $(function(){
     dragInit();
         $.ajax({
             url:baseurl + "/topics",
-            method:'put',
+            method:'post',
             data:{title:"物流通选课好无聊",target_id:'1'},
             success(){
                 console.log("ok");
@@ -152,7 +152,7 @@ $(function(){
         })
         $.ajax({
             url:baseurl + "/topics",
-            method:'put',
+            method:'post',
             data:{title:"testtest",target_id:'1'},
             success(){
                 console.log("ok");
@@ -160,7 +160,7 @@ $(function(){
         })
         $.ajax({
             url:baseurl + "/topics",
-            method:'put',
+            method:'post',
             data:{title:"一饭二楼居然有翅包饭",target_id:'1'},
             success(){
                 console.log("ok");
@@ -168,7 +168,7 @@ $(function(){
         })
         $.ajax({
             url:baseurl + "/topics",
-            method:'put',
+            method:'post',
             data:{title:"快体侧了！",target_id:'1'},
             success(){
                 console.log("ok");
@@ -176,7 +176,7 @@ $(function(){
         })
         $.ajax({
             url:baseurl + "/topics",
-            method:'put',
+            method:'post',
             data:{title:"好饿，没有东西吃",target_id:'1'},
             success(){
                 console.log("ok");
@@ -184,7 +184,7 @@ $(function(){
         })
         $.ajax({
             url:baseurl + "/topics",
-            method:'put',
+            method:'post',
             data:{title:"步道乐跑跑完了",target_id:'1'},
             success(){
                 console.log("ok");
