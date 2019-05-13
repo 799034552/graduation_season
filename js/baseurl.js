@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 
 var baseurl = 'https://graduation2019.100steps.net/api';
 //var baseurl = "https://test.scut18pie1.top/api";
+=======
+var baseurl = 'https://graduation2019.100steps.net/api';
+>>>>>>> 41db8ab64e7c717140491722a9f3d947839ea1c0
 
 //ajax拦截器
 $.ajaxSetup({
