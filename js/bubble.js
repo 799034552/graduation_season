@@ -6,7 +6,7 @@ var clone;//克隆出来的对象
 var beCloned;//被克隆的对象
 var isDelete;//是否可以删除移动对象的标识
 var isMoving;//是否正在移动
-var rule = /userid=(.+?)(&|#|$)/;//检测是否是二维码进入的正则
+var rule = /userid=(.+?)(&|#|$|\/)/;//检测是否是二维码进入的正则
 var userId = undefined;
 var showTopic;  //我的话题
 var infoUrl;
@@ -128,8 +128,6 @@ var myData;//用户个人信息
 
 //初始化
 $(function(){
-    console.log(window.location.href);
-    encodeURI
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
@@ -152,93 +150,96 @@ $(function(){
     } else {
         enterStatus = 0;
     }
-    
+    dragInit();
 
+    $.get("https://test.scut18pie1.top/auth/fake/1",function(data,status,res){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
-       myData = data;
-       console.log(data);
-       if(myData.collection.length === 0){
-           enterStatus = 1;
-       } else {
-           if(enterStatus === undefined){
-               if(myData.id === userId){
-                   enterStatus = 0;
-               } else {
-                   enterStatus = 2;
-               }
-           }
-       }
-
-    //    enterStatus = 2;//测试为老用户
-    //    receiveData = myData;
-    //    isOver();
-      console.log("用户的身份是:",enterStatus);
-       if(enterStatus === 0 ){
-           receiveData = myData;
-       } else {
-           $.get(baseurl + '/users/' + userId,function(da,sta){
-               console.log(da);
-               receiveData = da;
-               isOver();
-           })
-       }
-       isOver();
-       if(enterStatus == 0){
-           userId = myData.id;
-       }
-        //获取热搜榜
-        $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
-            hotSearch = data;
-            console.log(data);
-            isOver();
-        })
-        //获取热评榜
-        $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
-            console.log(data);
-            hotComment = data;
-            isOver();
-        })
+        myData = data;
+        if(data.collection.length === 0){
+            //window.location = "../start.html";
+        }
+        if(myData.collection.length === 0){
+            enterStatus = 1;
+        } else {
+            if(enterStatus === undefined){
+                if(myData.id === userId){
+                    enterStatus = 0;
+                } else {
+                    enterStatus = 2;
+                }
+            }
+        }
+       console.log("用户的身份是:",enterStatus);
+        if(enterStatus === 0 ){
+            codeInit();
+            receiveData = myData;
+        } else {
+            if(userId == undefined){
+                alert("你没有初始话题，却又不是扫码进来的，帮你跳转到扫码开发者的二维码界面");
+                window.location = 'index.html?userid=2';
+            }
+            $.get(baseurl + '/users/' + userId,function(da,sta){
+                console.log(da);
+                receiveData = da;
+                isOver();
+            })
+        }
+        isOver();
+        if(enterStatus == 0){
+            userId = myData.id;
+        }
+         //获取热搜榜
+         $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
+             hotSearch = data;
+             console.log(data);
+             isOver();
+         })
+         //获取热评榜
+         $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
+             console.log(data);
+             hotComment = data;
+             isOver();
+         })
+ 
+     })
 
     })
-
-
     //动画结束后删除动画避免复制时干扰
     $('.oneItemBox').on("webkitAnimationEnd",function(){
         this.classList.remove("animate");
     })
-    //点赞
-    // $(".love").on("click",function(e){
-    //     console.log($(this.parents("li")));
-    //     e.stopPropagation();
-    // })
-    $(document).on('click','.love',function(e){
+    $(".hotComment").on('click',".love",function(e){
         var index = Number($(this).parent("li")[0].getAttribute("index"));
         var liked = Number(hotComment[index].heat.liked);
         var _this = this;
         console.log(hotComment);
-        if(liked === 0){
-            $.ajax({
-                url:baseurl + "/likecomments" + hotComment[index].heat.id,
-                method:"PUT",
-                success(data){
-                    console.log($(_this).find("span"));
+        console.log(liked);
+        $.ajax({
+            url:baseurl + "/likecomments/" + hotComment[index].heat.comment_id,
+            method:"PUT",
+            success(data){
+                var temp = $(_this).find("span");
+                if(liked === 0){
+                    temp.html(Number(temp.html())+1);
+                    hotComment[index].heat.liked++;
+                } else {
+                    temp.html(Number(temp.html())-1)
+                    hotComment[index].heat.liked--;
                 }
-            })
-
-        }
+            }
+        })
+        
         e.stopPropagation();
 
     });
     //热评的点击
-    $(document).on('click','.hotComment li',function(){
-        goToTopic(hotComment[Number(this.getAttribute("id"))].topic_id);
-
+    $(".hotComment").on('click','li',function(){
+        goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
     //热搜的点击
-    $(document).on('click','.hotSearch li:not(.hotSearchTitle)',function(){
+    $('.hotSearch').on('click','li:not(.hotSearchTitle)',function(){
         goToTopic(this.getAttribute("id"));
-    
     });
 
         
@@ -281,8 +282,10 @@ function isPicShow(status){
 
 //ios后退
 function pushHistory() {
+    history.pushState(null, null, document.URL);
     window.addEventListener("popstate", function(e) {
-        self.location.reload();
+        console.log("回退");
+        //self.location.reload();
     }, false);
     var state = {
         title : "",
@@ -325,7 +328,7 @@ function initiateAll(){
     hopSearchInit();
     hotCommentInit();
     
-    dragInit();
+    
     if(enterStatus === 0){
         codeInit();
         $(".s2Show").hide();
@@ -365,10 +368,13 @@ function cancelDrag(){
 }
 //初始化拖拽
 function dragInit(){
-        $(".bubbleBox .oneItemBox").on({
-        touchstart: function(e){
+    var temp = document.getElementsByClassName("oneItemBox");
+    console.log(temp.length);
+    for(var i = 0;i<temp.length;i++){
+        temp[i].addEventListener("touchstart",function(e){
+            console.log("开始触摸");
             document.getElementById("test").innerHTML = "正在按住";
-            console.log(e.touches[0]);
+            console.log(this);
             startLocation[0] = e.touches[0].clientX;
             startLocation[1] = e.touches[0].clientY;
             clone = 0;
@@ -381,13 +387,15 @@ function dragInit(){
                 document.getElementById("test").innerHTML = "已经克隆";
                 isMoving = true;
                 $(e.target).parents(".oneItemBox").addClass("beCloned");
+                console.log("显示");
                 $(".deleteBox").addClass("deleteBoxShow");
-                
             },500);
-        },
-        touchmove: function(e){
+
+        });
+        temp[i].addEventListener("touchmove",function(e){
             if(!isMoving){
                 document.getElementById("test").innerHTML = "时间不够就拖动";
+                console.log("已清除");
                 clearTimeout(timeOutEvent);
             } else {
                 if(clone !== 0){
@@ -416,8 +424,8 @@ function dragInit(){
                 e.preventDefault();
 
             }
-        },
-        touchend: function(e){
+        })
+        temp[i].addEventListener("touchend",function(e){
             if(timeOutEvent!=0){ 
                 document.getElementById("test").innerHTML = "计时未结束放手";
                 clearTimeout(timeOutEvent);
@@ -451,8 +459,99 @@ function dragInit(){
             $(".deleteBoxShow").removeClass("deleteBoxShow");
             $(".deleteBox").removeClass("deleteBoxActive");
             $(".beCloned").removeClass("beCloned");
-        }
-    })
+
+
+        })
+    }
+
+    //     $(".bubbleBox .oneItemBox").on({
+    //     // touchstart: function(e){
+    //     //     document.getElementById("test").innerHTML = "正在按住";
+    //     //     console.log(e.touches[0]);
+    //     //     startLocation[0] = e.touches[0].clientX;
+    //     //     startLocation[1] = e.touches[0].clientY;
+    //     //     clone = 0;
+    //     //     isMoving = false;
+    //     //     if($(e.target).parents(".oneItemBox").hasClass("add")){
+    //     //         return;
+    //     //     }
+    //     //     timeOutEvent = setTimeout(function(){
+    //     //         timeOutEvent = 0;
+    //     //         document.getElementById("test").innerHTML = "已经克隆";
+    //     //         isMoving = true;
+    //     //         $(e.target).parents(".oneItemBox").addClass("beCloned");
+    //     //         $(".deleteBox").addClass("deleteBoxShow");
+                
+    //     //     },500);
+    //     // },
+    //     // touchmove: function(e){
+    //     //     if(!isMoving){
+    //     //         document.getElementById("test").innerHTML = "时间不够就拖动";
+    //     //         clearTimeout(timeOutEvent);
+    //     //     } else {
+    //     //         if(clone !== 0){
+    //     //             document.getElementById("test").innerHTML = "移动克隆体";
+    //     //             var x = e.touches[0].clientX;
+    //     //             var y = e.touches[0].clientY;
+    //     //             var height = $(".deleteBox").height();
+    //     //             clone.css({
+    //     //                 'transform':'translate(' + (x - startLocation[0]) + 'px,' + (y - startLocation[1]) + 'px)'
+    //     //             })
+    //     //             if(height > y){
+    //     //                 $(".deleteBox").addClass("deleteBoxActive");
+    //     //                 isDelete = true;
+
+    //     //             } else {
+    //     //                 $(".deleteBoxActive").removeClass("deleteBoxActive");
+    //     //                 isDelete = false;
+    //     //             }
+    //     //         } else {
+    //     //             beCloned = $(e.target).parents(".oneItemBox");
+    //     //             clone = beCloned.clone(true);
+    //     //             clone.addClass("clone");
+    //     //             $(".bubbleBox").append(clone);
+    //     //         }
+    //     //         e.stopPropagation();
+    //     //         e.preventDefault();
+
+    //     //     }
+    //     // },
+    //     // touchend: function(e){
+    //     //     if(timeOutEvent!=0){ 
+    //     //         document.getElementById("test").innerHTML = "计时未结束放手";
+    //     //         clearTimeout(timeOutEvent);
+    //     //     } 
+    //     //     if(clone !== 0){
+    //     //         document.getElementById("test").innerHTML = "已完成";
+    //     //         clone.remove();
+    //     //         if(isDelete){
+    //     //             beCloned.css({
+    //     //                 'display':'none'
+    //     //             })
+    //     //             if(!addToMY){
+    //     //                 var index = (beCloned.find(".oneItem")[0].getAttribute("id"));
+    //     //                 var temp = getAnother(index);
+    //     //                 console.log(temp);
+    //     //                 if(temp !== false){
+    //     //                     $(beCloned).find(".oneItem")[0].setAttribute("id",receiveData.collection[temp].topic_id);
+    //     //                     $(beCloned).find(".message").html(receiveData.collection[temp].title);
+    //     //                 }
+
+    //     //                 setTimeout(function(){
+    //     //                     beCloned.addClass("animate");
+    //     //                     beCloned.css({
+    //     //                         'display':'flex',
+    //     //                     })
+    //     //                 },500);
+
+    //     //             }
+    //     //         }
+    //     //     }
+    //     //     $(".deleteBoxShow").removeClass("deleteBoxShow");
+    //     //     $(".deleteBox").removeClass("deleteBoxActive");
+    //     //     $(".beCloned").removeClass("beCloned");
+    //     // }
+    // })
 }
 
 //随机数值中返回5个
@@ -488,7 +587,7 @@ function change(e){
         return;
     }
     setTimeout(function(){
-        goToTopic(e.id);
+        //goToTopic(e.id);
     },1000);
     e.classList.add("myAnimate");
 }

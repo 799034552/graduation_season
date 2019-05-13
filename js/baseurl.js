@@ -1,5 +1,5 @@
-var baseurl = 'https://test.scut18pie1.top/api';
-
+//var baseurl = 'https://graduation2019.100steps.net/api';
+var baseurl = "https://test.scut18pie1.top/api";
 //ajax拦截器
 $.ajaxSetup({
     xhrFields: {
@@ -7,7 +7,8 @@ $.ajaxSetup({
     },
     statusCode: {
       401: function() {
-        window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
+        //console.log("https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href));
+        //.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
       },
       404:function(){
           
@@ -19,5 +20,5 @@ $.ajaxSetup({
  });
 
 //默认登录
-//  $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){ 
-// })
+ $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){ 
+})
