@@ -1,5 +1,6 @@
-//var baseurl = 'https://test.scut18pie1.top/api';
+
 var baseurl = 'https://graduation2019.100steps.net/api';
+//var baseurl = "https://test.scut18pie1.top/api";
 
 //ajax拦截器
 $.ajaxSetup({
@@ -8,13 +9,14 @@ $.ajaxSetup({
     },
     statusCode: {
       401: function() {
-        window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
+        
+       window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
       },
       404:function(){
           
       },
       500:function(){
-          alert("服务器问题，滚");
+          alert("后端的锅");
       }
     }
  });

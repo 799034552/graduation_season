@@ -6,7 +6,7 @@ var clone;//克隆出来的对象
 var beCloned;//被克隆的对象
 var isDelete;//是否可以删除移动对象的标识
 var isMoving;//是否正在移动
-var rule = /userid=(.+?)(&|#|$)/;//检测是否是二维码进入的正则
+var rule = /userid=(.+?)(&|#|$|\/)/;//检测是否是二维码进入的正则
 var userId = undefined;
 var showTopic;  //我的话题
 var infoUrl;
@@ -15,6 +15,7 @@ var ajaxCount = 0;
 var addToMY = false;//添加到我的热搜榜标识
 var myurl = "./index.html";
 var addTopicUrl = "/??";
+var timeouts = [];
 var hotSearch = 
     [
         {
@@ -140,93 +141,106 @@ $(function(){
     } else {
         enterStatus = 0;
     }
-    
-
+    dragInit();
+        // $.ajax({
+        //     url:baseurl + "/users/collection",
+        //     method:'put',
+        //     data:{collection:[1,2,3,4,5,6,7]},
+        //     success(){
+        //         console.log("ok");
+        //     }
+        // })
+        // $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
-       myData = data;
-       console.log(data);
-       if(myData.collection.length === 0){
-           enterStatus = 1;
-       } else {
-           if(enterStatus === undefined){
-               if(myData.id === userId){
-                   enterStatus = 0;
-               } else {
-                   enterStatus = 2;
-               }
-           }
-       }
-
-    //    enterStatus = 2;//测试为老用户
-    //    receiveData = myData;
-    //    isOver();
-      console.log("用户的身份是:",enterStatus);
-       if(enterStatus === 0 ){
-           receiveData = myData;
-       } else {
-           $.get(baseurl + '/users/' + userId,function(da,sta){
-               console.log(da);
-               receiveData = da;
-               isOver();
-           })
-       }
-       isOver();
-       if(enterStatus == 0){
-           userId = myData.id;
-       }
-        //获取热搜榜
-        $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
-            hotSearch = data;
-            console.log(data);
-            isOver();
+        myData = data;
+        console.log(data.collection.length)
+        if(myData.collection.length === 0){
+            enterStatus = 1;
+        } else {
+            if(enterStatus === undefined){
+                if(myData.id === userId){
+                    enterStatus = 0;
+                } else {
+                    enterStatus = 2;
+                }
+            }
+        }
+       console.log("用户的身份是:",enterStatus);
+        if(enterStatus === 0 ){
+            codeInit();
+            receiveData = myData;
+        } else {
+            if(userId == undefined){
+                alert("你没有初始话题，却又不是扫码进来的，帮你跳转到扫码开发者的二维码界面");
+                window.location = 'index.html?userid=1';
+            }
+            $.get(baseurl + '/users/' + userId,function(da,sta){
+                console.log(da);
+                receiveData = da;
+                isOver();
+            })
+        }
+        isOver();
+        if(enterStatus == 0){
+            userId = myData.id;
+        }
+         //获取热搜榜
+         $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
+             hotSearch = data;
+             console.log(data);
+             isOver();
+         })
+         //获取热评榜
+         $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
+             console.log(data);
+             hotComment = data;
+             isOver();
+         })
         })
-        //获取热评榜
-        $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
-            console.log(data);
-            hotComment = data;
-            isOver();
-        })
 
-    })
-
-
+    // })
     //动画结束后删除动画避免复制时干扰
     $('.oneItemBox').on("webkitAnimationEnd",function(){
         this.classList.remove("animate");
     })
     //点赞
-    // $(".love").on("click",function(e){
-    //     console.log($(this.parents("li")));
-    //     e.stopPropagation();
-    // })
-    $(document).on('click','.love',function(e){
+    $(".hotComment").on('click',".love",function(e){
         var index = Number($(this).parent("li")[0].getAttribute("index"));
         var liked = Number(hotComment[index].heat.liked);
         var _this = this;
         console.log(hotComment);
-        if(liked === 0){
-            $.ajax({
-                url:baseurl + "/likecomments" + hotComment[index].heat.id,
-                method:"PUT",
-                success(data){
-                    console.log($(_this).find("span"));
-                }
-            })
-
-        }
+        console.log(liked);
+        $.ajax({
+            url:baseurl + "/likecomments/" + hotComment[index].heat.comment_id,
+            method:"PUT",
+            success(data){
+                $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
+                    hotComment = data;
+                    hotCommentInit();
+                })
+                // var temp = $(_this).find("span");
+                // if(liked === 0){
+                //     temp.html(Number(temp.html())+1);
+                //     hotComment[index].heat.liked++;
+                // } else {
+                //     temp.html(Number(temp.html())-1)
+                //     hotComment[index].heat.liked--;
+                // }
+            }
+        })
+        
         e.stopPropagation();
 
     });
     //热评的点击
-    $(document).on('click','.hotComment li',function(){
-        goToTopic(hotComment[Number(this.getAttribute("id"))].topic_id);
-
+    $(".hotComment").on('click','li',function(){
+        goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
+
     //热搜的点击
-    $(document).on('click','.hotSearch li:not(.hotSearchTitle)',function(){
+    $('.hotSearch').on('click','li:not(.hotSearchTitle)',function(){
         goToTopic(this.getAttribute("id"));
-    
     });
 
         
@@ -235,18 +249,24 @@ $(function(){
 })
 //刷新泡泡
 function reFresh(){
-    if($(".animate").length>0){
-        return;
-    }
-    $(".oneItemBox").addClass("animate").css({
+    // if($(".animate").length>0){
+    //     return;
+    // }
+    $(".oneItemBox").removeClass("animate");
+    $(".oneItemBox").css({
         'display':'none'
     })
-    setTimeout(function(){$(".second").css({'display':'flex'})},0);
-    setTimeout(function(){$(".first").css({'display':'flex'})},500);
-    setTimeout(function(){$(".third").css({'display':'flex'})},1000);
-    setTimeout(function(){$(".forth").css({'display':'flex'})},1500);
-    setTimeout(function(){$(".five").css({'display':'flex'})},1700);
-    setTimeout(function(){$(".add").css({'display':'flex'})},2000);
+    $(".second")[0].setAttribute("style","dispaly:none")
+    $(".oneItemBox").addClass("animate");
+    for(var i = 0;i<6;i++){
+        clearTimeout(timeouts[i]);
+    }
+    timeouts[0] = setTimeout(function(){$(".second").css({'display':'flex'})},500);
+    timeouts[1] = setTimeout(function(){$(".first").css({'display':'flex'})},500);
+    timeouts[2] = setTimeout(function(){$(".third").css({'display':'flex'})},1000);
+    timeouts[3] = setTimeout(function(){$(".forth").css({'display':'flex'})},1500);
+    timeouts[4] = setTimeout(function(){$(".five").css({'display':'flex'})},1700);
+    timeouts[5] = setTimeout(function(){$(".add").css({'display':'flex'})},2000);
 }
 
 //上一页
@@ -269,8 +289,10 @@ function isPicShow(status){
 
 //ios后退
 function pushHistory() {
+    history.pushState(null, null, document.URL);
     window.addEventListener("popstate", function(e) {
-        self.location.reload();
+        console.log("回退");
+        //self.location.reload();
     }, false);
     var state = {
         title : "",
@@ -298,12 +320,11 @@ function slideInit(){
 }
 //初始化二维码
 function codeInit(){
-
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         width : 500,
         height : 500
     });
-    qrcode.makeCode(baseurl+'/bubble.html?userid='+myData.id);
+    qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
 
 }
 
@@ -313,9 +334,8 @@ function initiateAll(){
     hopSearchInit();
     hotCommentInit();
     
-    dragInit();
+    
     if(enterStatus === 0){
-        codeInit();
         $(".s2Show").hide();
         $(".s1Show").hide();
         $(".s0Show").show();
@@ -353,10 +373,11 @@ function cancelDrag(){
 }
 //初始化拖拽
 function dragInit(){
-        $(".bubbleBox .oneItemBox").on({
-        touchstart: function(e){
-            document.getElementById("test").innerHTML = "正在按住";
-            console.log(e.touches[0]);
+    var temp = document.getElementsByClassName("oneItemBox");
+    console.log(temp.length);
+    for(var i = 0;i<temp.length;i++){
+        temp[i].addEventListener("touchstart",function(e){
+            console.log(this);
             startLocation[0] = e.touches[0].clientX;
             startLocation[1] = e.touches[0].clientY;
             clone = 0;
@@ -366,20 +387,19 @@ function dragInit(){
             }
             timeOutEvent = setTimeout(function(){
                 timeOutEvent = 0;
-                document.getElementById("test").innerHTML = "已经克隆";
                 isMoving = true;
                 $(e.target).parents(".oneItemBox").addClass("beCloned");
+                console.log("显示");
                 $(".deleteBox").addClass("deleteBoxShow");
-                
             },500);
-        },
-        touchmove: function(e){
+
+        });
+        temp[i].addEventListener("touchmove",function(e){
             if(!isMoving){
-                document.getElementById("test").innerHTML = "时间不够就拖动";
+                console.log("已清除");
                 clearTimeout(timeOutEvent);
             } else {
                 if(clone !== 0){
-                    document.getElementById("test").innerHTML = "移动克隆体";
                     var x = e.touches[0].clientX;
                     var y = e.touches[0].clientY;
                     var height = $(".deleteBox").height();
@@ -404,14 +424,12 @@ function dragInit(){
                 e.preventDefault();
 
             }
-        },
-        touchend: function(e){
+        })
+        temp[i].addEventListener("touchend",function(e){
             if(timeOutEvent!=0){ 
-                document.getElementById("test").innerHTML = "计时未结束放手";
                 clearTimeout(timeOutEvent);
             } 
             if(clone !== 0){
-                document.getElementById("test").innerHTML = "已完成";
                 clone.remove();
                 if(isDelete){
                     beCloned.css({
@@ -439,8 +457,10 @@ function dragInit(){
             $(".deleteBoxShow").removeClass("deleteBoxShow");
             $(".deleteBox").removeClass("deleteBoxActive");
             $(".beCloned").removeClass("beCloned");
-        }
-    })
+
+
+        })
+    }
 }
 
 //随机数值中返回5个
@@ -475,6 +495,9 @@ function change(e){
     if($(e).parents(".animate").length !== 0){
         return;
     }
+    console.log($(e).parent(".oneItemBox").css({
+        "z-index":'999'
+    }));
     setTimeout(function(){
         goToTopic(e.id);
     },1000);
@@ -486,9 +509,9 @@ function goToAddTopic(){
 }
 //刷新话题
 function refreshTopic(){
-    if($(".animate").length>0){
-        return;
-    }
+    // if($(".animate").length>0){
+    //     return;
+    // }
     showTopic =  getFiveTop(receiveData.collection);
     var temp = document.getElementsByClassName("oneItem");
     console.log(showTopic);
@@ -552,15 +575,27 @@ function addToMy(){
     addToMY = true;
     $(".s22Show").show();
     $(".s21Show").hide();
-    $(".deleteBox").addClass("deleteBoxShow");
     mySwiper.detachEvents();
 }
 //添加至我的热搜榜
 function  addToHotSearchList(){
     var temp = $(".oneItem:visible");
     var sendData = [];
+    var flag = false;
     for(var i = 0;i< temp.length-1;i++){
         sendData.push(Number(temp[i].getAttribute("id")));
+    };
+    for(var i = 0;i<myData.collection.length;i++){
+        flag = false;
+        for(var j = 0;j < sendData.length;j++){
+            if(sendData[j] === Number(myData.collection[i].topic_id)){
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            sendData.push(Number(myData.collection[i].topic_id));
+        }
     }
     $.ajax({
         url:baseurl+'/users/collection',
@@ -571,6 +606,7 @@ function  addToHotSearchList(){
         }
     })
     console.log(sendData);
+    console.log(myData);
 
 
 }

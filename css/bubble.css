@@ -21,6 +21,7 @@ body{
     background:white;
 }
 .deleteBox{
+    color:black;
     position:absolute;
     width:100%;
     height:9.8vh;
@@ -28,16 +29,19 @@ body{
     font-size: 1rem;
     transform:translateY(-9.8vh);
     overflow: hidden;
-    background:red;
+    /* background: red; */
     display:flex;
     align-items: center;
     justify-content: center;
     transition: all 0.4s;
+    background: -webkit-linear-gradient(top,#8ce2ff,rgba(0,0,0,0)) ; 
+    background: linear-gradient(#8ce2ff,rgba(0,0,0,0)) ; 
 }
 body .deleteBoxShow{
     transform:translateY(0);
 }
 .bubbleBox{
+    overflow: scroll;
     position: relative;
     height: 100vh;
 }
@@ -72,6 +76,7 @@ body .message{
     width: 527px;
     background: url("../img/bubble_one.svg");
     border-radius: 50%;
+    transform: scale(1);
     transition: all 1.5s;
     display:flex;
     justify-content: center;
@@ -89,9 +94,10 @@ body .message{
 }
 .bubbleBox .myAnimate{
 
-    width:200vh;
-    height:200vh;
-    z-index:50;
+    /* width:200vh;
+    height:200vh; */
+    transform:scale(10);
+    z-index:999;
 }
 .bubbleBox .myAnimate .colorBox{
     opacity:1;
@@ -103,7 +109,8 @@ body .message{
     opacity:0.7;
 }
 body .deleteBoxActive{
-    background: blue;
+    background: -webkit-linear-gradient(top,#F56C6C,rgba(0,0,0,0)) ; 
+    background: linear-gradient(#F56C6C,rgba(0,0,0,0)) ; 
 }
 .first{
     display: none;
@@ -259,26 +266,36 @@ body .deleteBoxActive{
     bottom:0
 }
 .bubbleMachine .machineLeft{
-    width:70px;
-    height: 70px;
+    width: 300px;
+    height: 300px;
     background: #CCC;
     display:flex;
     justify-content: center;
     align-items: center;
     float: left;
+    background-repeat: no-repeat;
+    background: url("../img/left.png");
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+
 }
 .bubbleMachine .machineRight{
-    width:70px;
-    height: 70px;
+    width:300px;
+    height: 300px;
     background: #CCC;
     display:flex;
     justify-content: center;
     align-items: center;
+    background-repeat: no-repeat;
     float: right;
+    background: url("../img/right.png");
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+
 }
 .toFirstPage{
     box-sizing:border-box;
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content:center;
     align-items: center;
@@ -287,13 +304,13 @@ body .deleteBoxActive{
     height: 300px;
     padding:6px;
     top:50%;
-    margin-top:-45px;
+    margin-top:-150px;
     background: #f2f2f2;
     z-index: 20;
 }
 .toThirdPage{
     box-sizing:border-box;
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content:center;
     align-items: center;
@@ -303,7 +320,7 @@ body .deleteBoxActive{
     right: 0;
     padding:6px;
     top:50%;
-    margin-top:-45px;
+    margin-top:-150px;
     background: #f2f2f2;
     z-index: 20;
 }
