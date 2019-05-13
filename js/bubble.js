@@ -142,14 +142,14 @@ $(function(){
         enterStatus = 0;
     }
     dragInit();
-        // $.ajax({
-        //     url:baseurl + "/users/collection",
-        //     method:'put',
-        //     data:{collection:[1,2,3,4,5,6,7]},
-        //     success(){
-        //         console.log("ok");
-        //     }
-        // })
+        $.ajax({
+            url:baseurl + "/users/collection",
+            method:'put',
+            data:{collection:[1,2,3,4,5,6,7]},
+            success(){
+                console.log("ok");
+            }
+        })
         // $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
