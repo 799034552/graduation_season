@@ -131,7 +131,13 @@ var myData;//用户个人信息
 $(function(){
     slideInit();//初始化滑动插件
     $(".maxShow").show();
-    document.addEventListener('touchmove', function(e){e.preventDefault()}, false);//禁止微信浏览器下拉
+    document.addEventListener('touchmove', function(e){
+        if (!document.querySelector('.maxShow').contains(e.target) && !document.querySelector('.bubbleBox').contains(e.target)) {
+            console.log(document.querySelector('.maxShow').contains(e.target));
+            console.log("top");
+            e.preventDefault();
+        }
+    }, false);//禁止微信浏览器下拉
     pushHistory();//ios后退
 
     //检测是否是二维码进来的
@@ -143,14 +149,14 @@ $(function(){
     }
     dragInit();
         // $.ajax({
-        //     url:baseurl + "/topics",
-        //     method:'post',
-        //     data:{title:"物流通选课好无聊",target_id:'1'},
+        //     url:baseurl + "/users/collection",
+        //     method:'put',
+        //     data:{collection:[1,2,3,4,5]},
         //     success(){
         //         console.log("ok");
         //     }
         // })
-        // $.get("https://graduation2019.100steps.net/auth/fake/2",function(data,status,res){
+        //  $.get("https://graduation2019.100steps.net/auth/fake/2",function(data,status,res){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
         myData = data;
@@ -199,7 +205,7 @@ $(function(){
          })
         })
 
-    // })
+    })
     //动画结束后删除动画避免复制时干扰
     $('.oneItemBox').on("webkitAnimationEnd",function(){
         this.classList.remove("animate");
@@ -246,7 +252,7 @@ $(function(){
         
     
 
-})
+// })
 //刷新泡泡
 function reFresh(){
     // if($(".animate").length>0){

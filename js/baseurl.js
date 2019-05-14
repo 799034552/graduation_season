@@ -9,7 +9,7 @@ $.ajaxSetup({
     },
     statusCode: {
       401: function() {
-       window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
+      // window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
       },
       404:function(){
           
