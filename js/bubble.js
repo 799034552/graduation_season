@@ -142,59 +142,19 @@ $(function(){
         enterStatus = 0;
     }
     dragInit();
-        $.ajax({
-            url:baseurl + "/topics",
-            method:'post',
-            data:{title:"物流通选课好无聊",target_id:'1'},
-            success(){
-                console.log("ok");
-            }
-        })
-        $.ajax({
-            url:baseurl + "/topics",
-            method:'post',
-            data:{title:"testtest",target_id:'1'},
-            success(){
-                console.log("ok");
-            }
-        })
-        $.ajax({
-            url:baseurl + "/topics",
-            method:'post',
-            data:{title:"一饭二楼居然有翅包饭",target_id:'1'},
-            success(){
-                console.log("ok");
-            }
-        })
-        $.ajax({
-            url:baseurl + "/topics",
-            method:'post',
-            data:{title:"快体侧了！",target_id:'1'},
-            success(){
-                console.log("ok");
-            }
-        })
-        $.ajax({
-            url:baseurl + "/topics",
-            method:'post',
-            data:{title:"好饿，没有东西吃",target_id:'1'},
-            success(){
-                console.log("ok");
-            }
-        })
-        $.ajax({
-            url:baseurl + "/topics",
-            method:'post',
-            data:{title:"步道乐跑跑完了",target_id:'1'},
-            success(){
-                console.log("ok");
-            }
-        })
-        // $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){
+        // $.ajax({
+        //     url:baseurl + "/topics",
+        //     method:'post',
+        //     data:{title:"物流通选课好无聊",target_id:'1'},
+        //     success(){
+        //         console.log("ok");
+        //     }
+        // })
+        // $.get("https://graduation2019.100steps.net/auth/fake/2",function(data,status,res){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
         myData = data;
-        console.log(data.collection.length)
+        console.log(data)
         if(myData.collection.length === 0){
             enterStatus = 1;
         } else {
