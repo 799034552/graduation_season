@@ -19,14 +19,13 @@
     text-align: center;
 }
 .logo img{
-    width: 60vw;
-    height: 20vw;
+    height: 35vw;
 }
 .information{
     position:absolute;
     width: 70vw;
-    height: 52vh;
-    top:20vh;
+    height: 70vw;
+    top:50vw;
     left:15vw;
     border:0.2vw solid gray;
     /* box-shadow: 0.2vw 0.2vw gray; */
@@ -39,11 +38,15 @@
     width: 100%;
     height: 100%;
     overflow:scroll;
+    line-height: 8vw;
+}
+.information span{
+    font-weight: bold;
 }
 .button{
     position:absolute;
     width: 100vw;
-    top:85vh;
+    top:150vw;
     text-align: center;
     cursor: pointer;
 }
