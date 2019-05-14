@@ -1,58 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>test</title>
-        <meta name="viewport" content="width=740,user-scalable=no,shrink-to-fit=no" />
-        <script src = "../js/jquery-3.3.1.min.js"></script>
-    </head>
-    <body>
-            <div class = "my one">
-                有cursor: pointer;
-
-                </div>
-                <div class = "my two">
-                    无cursor: pointer;
-            
-                </div>
-
-        <script>
-            $(".my").on({
-                touchstart:function(){
-                    this.style = "background: red;"
-                }
-            })
-
-        </script>
-    </body>
-
-    <style>
-        body{
-            font-size: 20px;
-        }
-        div{
-            width:200px;
-            height: 200px;
-            border: black 1px solid;
-            margin-top:30px;
-            background: blue;
-            
-        }
-        .my.one{
-            cursor: pointer;
-            animation: test 4s;
-        }
-        @keyframes test{
-            from{
-                transform:scale(0);
-                /* transform: translateX(0); */
-
-            }
-            to{
-                transform: scale(1);
-                /* transform: translateX(100px); */
-
-            }
-        }
-
-    </style>
+<head>
+	<title></title>
+</head>
+<body style="background-color: blue;">
+<div style="width: 17vw;height: 17vw;border-radius: 100%;position: absolute;left: 29vw;top: 29vw;border: 10px solid white;"></div>
+<div style="width: 14vw;height: 10vw;border-radius: 100%;position: absolute;left: 30vw;top: 30vw;border-left:1vw solid white;border-bottom:3vw solid blue;border-right:1vw solid white;border-top:3vw solid blue;opacity: 0.6;transform: rotate(170deg);"></div>
+</body>
 </html>

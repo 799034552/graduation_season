@@ -16,6 +16,7 @@ var addToMY = false;//添加到我的热搜榜标识
 var myurl = "./index.html";
 var addTopicUrl = "/??";
 var timeouts = [];
+var count1 = 0;
 var hotSearch = 
     [
         {
@@ -129,15 +130,10 @@ var myData;//用户个人信息
 
 //初始化
 $(function(){
+    
     slideInit();//初始化滑动插件
     $(".maxShow").show();
-    document.addEventListener('touchmove', function(e){
-        if (!document.querySelector('.maxShow').contains(e.target) && !document.querySelector('.bubbleBox').contains(e.target)) {
-            console.log(document.querySelector('.maxShow').contains(e.target));
-            console.log("top");
-            e.preventDefault();
-        }
-    }, false);//禁止微信浏览器下拉
+    
     pushHistory();//ios后退
 
     //检测是否是二维码进来的
@@ -151,7 +147,7 @@ $(function(){
         // $.ajax({
         //     url:baseurl + "/users/collection",
         //     method:'put',
-        //     data:{collection:[1,2,3,4,5]},
+        //     data:{collection:[1,2,3,4,5,6,7,8,9,10,11,12,1,13]},
         //     success(){
         //         console.log("ok");
         //     }
@@ -295,6 +291,7 @@ function isPicShow(status){
 
 //ios后退
 function pushHistory() {
+    console.log(document.URL);
     history.pushState(null, null, document.URL);
     window.addEventListener("popstate", function(e) {
         console.log("回退");
@@ -409,6 +406,7 @@ function dragInit(){
                     var x = e.touches[0].clientX;
                     var y = e.touches[0].clientY;
                     var height = $(".deleteBox").height();
+                    console.log(clone.css("transform"));
                     clone.css({
                         'transform':'translate(' + (x - startLocation[0]) + 'px,' + (y - startLocation[1]) + 'px)'
                     })
@@ -523,7 +521,7 @@ function refreshTopic(){
     console.log(showTopic);
     for(var i = 0;i < 5;i++){
         temp[i].getElementsByClassName("message")[0].innerHTML = showTopic[i].title;
-        temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("id",showTopic[i].topic_id);
+        temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("index",i);
     }
     reFresh();
 
@@ -543,6 +541,11 @@ function hopSearchInit(){
 //渲染热评榜
 function hotCommentInit(){
     $(".hotComment li").hide();
+    if(hotComment.length === 0){
+        $(".haveNoCom").css({
+            "display":'flex'
+        })
+    }
     for(var i = 0 ;i<hotComment.length;i++){
         var temp;
 
@@ -585,32 +588,38 @@ function addToMy(){
 }
 //添加至我的热搜榜
 function  addToHotSearchList(){
-    var temp = $(".oneItem:visible");
+    count1 = 0;
+    if($(".animate").length > 0){
+        return;
+    }
     var sendData = [];
+    var temp = $(".oneItem:visible");
+    console.log(temp);
     var flag = false;
     for(var i = 0;i< temp.length-1;i++){
-        sendData.push(Number(temp[i].getAttribute("id")));
-    };
-    for(var i = 0;i<myData.collection.length;i++){
         flag = false;
-        for(var j = 0;j < sendData.length;j++){
-            if(sendData[j] === Number(myData.collection[i].topic_id)){
+        var a =Number(temp[i].getAttribute("index"));
+        for(var j = 0;j < myData.collection.length;j++){
+            if(showTopic[a].title === myData.collection[j].title){
                 flag = true;
-                break;
             }
+
         }
         if(!flag){
-            sendData.push(Number(myData.collection[i].topic_id));
-        }
-    }
-    $.ajax({
-        url:baseurl+'/users/collection',
-        method:'PUT',
-        data:{collection:sendData},
-        success(data,status){
-            window.location = myurl;
-        }
-    })
+            count1++;
+            sendData.push(showTopic[a].title);
+                $.ajax({
+                    url:baseurl+'/topics',
+                    method:'post',
+                    data:{title:showTopic[a].title,target_id:myData.id},
+                    success(data,status){
+                        count1--;
+                        if(count1 === 0){
+                            window.location = "./index.html";
+                        }
+                }
+        })
+    }};
     console.log(sendData);
     console.log(myData);
 
@@ -661,8 +670,12 @@ function createMy(){
     var sendData = [];
     var list = $(".oneItem");
     for(var i = 0;i<list.length-1;i++){
-        sendData += ("topic=" + list[i].getAttribute("id"));
+        sendData += ("topic_id=" + list[i].getAttribute("id"));
     }
-    window.location = baseurl + "??/" + sendData;
+    window.location = baseurl + "start.html/" + sendData;
 
+}
+function addother(){
+    console.log(userId);
+    window.location = "../newtopic.html?id=" + userId;
 }

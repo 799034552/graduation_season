@@ -21,6 +21,7 @@ body{
     background:white;
 }
 .deleteBox{
+    z-index: 30;
     color:black;
     position:absolute;
     width:100%;
@@ -39,11 +40,6 @@ body{
 }
 body .deleteBoxShow{
     transform:translateY(0);
-}
-.bubbleBox{
-    overflow: scroll;
-    position: relative;
-    height: 100vh;
 }
 .oneItemBox{
     cursor: pointer;
@@ -65,16 +61,20 @@ body .message{
     padding-left:  50px;
     padding-right:  50px;
     padding-left: 30px;
+    z-index: 10;
 
     text-align: center;
     word-break: normal;
 }
 .oneItem{
+    color:black;
     cursor: pointer;
     position: absolute;
     height: 527px;
     width: 527px;
-    background: url("../img/bubble_one.svg");
+    background: -webkit-linear-gradient(rgba(0,0,0,0) 30%,rgb(235, 125, 255) 100%);
+   background: radial-gradient(rgba(0,0,0,0) 30%,rgb(235, 125, 255) 100%); /* 标准的语法 #8ec5fc*/
+   box-shadow: 10px 10px 30px black ;
     border-radius: 50%;
     transform: scale(1);
     transition: all 1.5s;
@@ -86,9 +86,10 @@ body .message{
     position:absolute;
     width: 100%;
     height: 100%;
-    background: white;
-    z-index: 40;
-    opacity: 0;
+    background: url("../img/bubble_one.svg") no-repeat;
+    background-size: 98.5% 98.5%;
+    background-position: center;
+    z-index: 5;
     transition: all 1.3s;
     border-radius: 50%;
 }
@@ -99,9 +100,9 @@ body .message{
     transform:scale(10);
     z-index:999;
 }
-.bubbleBox .myAnimate .colorBox{
+/* .bubbleBox .myAnimate .colorBox{
     opacity:1;
-}
+} */
 .clone{
     opacity: 0.5;
 }
@@ -117,6 +118,22 @@ body .deleteBoxActive{
     top:300px;
     left: 450px;
     transform:scale(1);
+}
+.first .oneItem{
+    background: -webkit-linear-gradient(rgba(0,0,0,0) 30%,rgb(125 , 159, 255) 100%);
+    background: radial-gradient(rgba(0,0,0,0) 30%,rgb(125 , 159, 255) 100%); /* 标准的语法 #8ec5fc*/
+}
+.third .oneItem{
+    background: -webkit-linear-gradient(rgba(0,0,0,0) 30%,rgb(151  , 125, 255) 100%);
+    background: radial-gradient(rgba(0,0,0,0) 30%,rgb(151  , 125, 255) 100%); /* 标准的语法 #8ec5fc*/
+}
+.forth .oneItem{
+    background: -webkit-linear-gradient(rgba(0,0,0,0) 30%,rgb(255, 125, 191) 100%);
+    background: radial-gradient(rgba(0,0,0,0) 30%,rgb(255, 125, 191) 100%); /* 标准的语法 #8ec5fc*/
+}
+.five .oneItem{
+    background: -webkit-linear-gradient(rgba(0,0,0,0) 30%,rgb(125 , 159, 255) 100%);
+    background: radial-gradient(rgba(0,0,0,0) 30%,rgb(125 , 159, 255) 100%); /* 标准的语法 #8ec5fc*/
 }
 .first.animate{
     animation: myFirst 3s;
@@ -198,7 +215,9 @@ body .deleteBoxActive{
     }
 }
 .add .oneItem{
-    background: #CCC;
+    font-size: 3rem;
+
+    /* background: #CCC; */
 }
 .add {
     display:none;
@@ -307,16 +326,21 @@ body .deleteBoxActive{
     margin-top:-150px;
     background: #f2f2f2;
     z-index: 20;
+    opacity: 0.7;
 }
 .toThirdPage{
     box-sizing:border-box;
+    text-align: center;
+    opacity: 0.7;
     position: fixed;
     display: flex;
     justify-content:center;
     align-items: center;
+    border-radius: 20px;
     font-size: 1rem;
     width: 100px;
     height: 300px;
+    left:auto;
     right: 0;
     padding:6px;
     top:50%;
@@ -341,8 +365,6 @@ body .deleteBoxActive{
     /* border:1px black solid; */
     background: url("../img/qrcode_box.png");
     background-size: 100% 100%;
-    
-
 }
 .picMessage{
     margin-top: 30px;
@@ -413,6 +435,7 @@ body .deleteBoxActive{
     margin:0 auto;
     /* height: calc(95vh - 50px); */
     top: 80px;
+    
 }
 .hotComment li{
     padding:0;
@@ -425,6 +448,7 @@ body .deleteBoxActive{
     display: flex;
     align-items: center;
     margin-bottom:54px; 
+    background: white;
 }
 .love{
     position: absolute;
@@ -552,6 +576,8 @@ body .deleteBoxActive{
     font-size: 1rem;
     list-style: none;
     margin-top:100px;
+    margin-bottom:100px;
+    background: white;
 }
 .hotSearch li{
     
@@ -598,6 +624,54 @@ body .deleteBoxActive{
     height: 20vh;
     z-index: 999;
 
+}
+.haveNoCom{
+    position:absolute;
+    width:100vw;
+    height:100vh;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    font-size: 2rem;
+}
+.haveNoCom div{
+    border-left: 40px #CCC solid;
+    padding-left: 5px;
+}
+.com{
+    background: url("../img/bg (3).jpg");
+    background-size: 100% 100%;
+    background-position: bottom;
+}
+.sea{
+    background: url("../img/bg (1).jpg");
+    background-size: 100% 100%;
+    background-position: bottom;
+}
+.bubbleBox{
+    overflow: scroll;
+    z-index: 50;
+    height: 100vh;
+    background: url("../img/bg (2).jpg");
+    background-size: 100% 100%;
+    background-position: bottom;
+
+}
+.light{
+    position: absolute;
+    width:80%;
+    height:80%;
+    
+    border-top:rgba(247, 245, 180, 0.5) 6px solid;
+    border-left: rgba(0, 0, 0, 0) solid 30px;
+    border-right: rgba(0, 0, 0, 0) solid 30px;
+    transform: rotate(120deg);
+    border-bottom:rgba(247, 245, 180, 0.5) 6px solid;
+    border-radius: 100%;
+    z-index: 999;
 }
 
 

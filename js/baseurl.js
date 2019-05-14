@@ -9,7 +9,7 @@ $.ajaxSetup({
     },
     statusCode: {
       401: function() {
-      // window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
+      window.location = "https://graduation2019.100steps.net/auth/jump?redirect=" + encodeURI(window.location.href);
       },
       404:function(){
           
@@ -21,5 +21,5 @@ $.ajaxSetup({
  });
 
 //默认登录
-//  $.get("https://test.scut18pie1.top/auth/fake/2",function(data,status,res){ 
+//  $.get("https://graduation2019.100steps.net/auth/fake/2",function(data,status,res){ 
 // })
