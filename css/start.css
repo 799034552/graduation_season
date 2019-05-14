@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
  } 
+
 .background{
     position: relative;
     height: 100vh;
@@ -27,23 +28,24 @@
     height: 52vh;
     top:20vh;
     left:15vw;
-    border:0.1vw solid gray;
-    box-shadow: 0.2vw 0.2vw gray;
+    border:0.2vw solid gray;
+    /* box-shadow: 0.2vw 0.2vw gray; */
     border-radius: 3vw;
     overflow: scroll;
+    padding: 2vw;
 }
-.information p{
-    position: absolute;
-    top:2.5vw;
-    left:2.5vw;
-    width: 95%;
-    height: 98%;
+.information .content{
+    /* text-align: center; */
+    width: 100%;
+    height: 100%;
+    overflow:scroll;
 }
 .button{
     position:absolute;
     width: 100vw;
     top:85vh;
     text-align: center;
+    cursor: pointer;
 }
 .button button{
     width: 30vw;
@@ -51,6 +53,8 @@
     border: 0.1vw solid black;
     border-radius: 1vw;
     font-size: 5vw;
+    border-radius: 3vw;
+    cursor: pointer;
 }
 /* 话题选择页面 */
 .bgchoiceTopic{
@@ -104,6 +108,7 @@
     top:9%;
     height: 70%;
     left:89%;
+    cursor: pointer;
 }
 .choice{
     position: absolute;
@@ -116,19 +121,20 @@
 }
 .choiceButton{
     position: absolute;
-    top:157vw;
+    top:160vw;
     width:100vw;
     text-align: center;
-    margin-bottom: 5vw;
+    margin-bottom: 8vw;
 }
 .choiceButton button{
-    height:5vh;
+    height:8vw;
     width:30vw;
     background-color: rgb(179, 178, 178);
     border-radius: 3vw;
     font-size: 5vw;
     color:gray;
     border: 0px;
+    cursor: pointer;
 }
 .rechoice{
     position: absolute;
@@ -142,6 +148,7 @@
     height:6.7vw;
     /* height:8vw; */
     margin-top: 2vw;
+    cursor: pointer;
 }
 
 .topicimg{
@@ -255,7 +262,8 @@
     width:20vw;
     height:8vw;
     background-color: white;
-    border: 0.1vw solid gray;
+    border: 0.2vw solid gray;
     border-radius: 2vw;
+    cursor: pointer;
 }
 
