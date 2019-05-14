@@ -14,10 +14,11 @@
   	<div id="base">
 
       <div id="topic">
-  		  <div id="put">
+
+  		 <div id="put">
   		     <p id="topicName"></p>
-  		     <textarea id="inputComment" maxlength="200"></textarea>
-  		     <button id="commitComment" onclick="sentComment();">发表评论</button>
+  		     <!-- <textarea id="inputComment" maxlength="200"></textarea>
+  		     <button id="commitComment" onclick="sentComment();">发表评论</button> -->
   		  </div>
   		  <div id="sort">
   		  	<div id="sort_time">
@@ -26,18 +27,24 @@
   		  	<div id="sort_hot">
   		  		<p id="sort_hot_text">按热度排序</p>
   		  	</div>
-  		  </div>
-  		  <div id="comment_hot">
-           
-  		  </div>
-  		  <div id="comment_time">
-  		  </div>
-        
-      </div>
-      <div id="reply_area">
-          <input class="input_reply" id="input_reply">
-          <button id="sent_reply" onclick="sentSubcomment();">发布</button>
+          <div id="blank">
+          </div>
+  		    </div>
+  		    <div id="comment_hot">             
+  		    </div>
+  		    <div id="comment_time">
+  		    </div>        
         </div>
-  	</div>
+        <div id="input_comment_area">
+          <input id="input_comment" placeholder="说点什么..">
+          <button id="sent_comment" onclick="sentComment();">发布</button>
+          <img id="topic_likes_img" onclick="topicLike();" src="../img/love.png">
+          <p id="topic_likes"></p>
+        </div>
+        <div id="reply_area">
+          <input class="input_reply" id="input_reply">
+          <button id="sent_reply" onclick="sentSubcomment();">发送</button>
+        </div>
+  	  </div>
   </body>
  </html>

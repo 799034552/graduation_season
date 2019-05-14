@@ -1,27 +1,30 @@
+body{
+	background: #FFFFFF;
+}
 textarea{resize:none;} 
 p{margin: 0;}
 #base{
-	position: absolute;
-	left: 0;
-	top:0;
-	width: 100%;
+     position: absolute;
+     left: 0;
+     top:0;
+     width: 100%;
 }
 
 #topic{
-	position: absolute;
-left: 0;
-top:0;
-width: 100%;
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
 }
 
 #topicName{
 	position: absolute;
-	top:9vw;
-	left: 0;
+	top:2.5vw;
+	left: 4vw;
 	margin: 0;
-    font-size: 6vw;
-    width: 100%;
-    text-align: center;
+    font-size: 4vw;
+    text-align: left;
+    font-weight: 700;
 }
 
 #inputComment{
@@ -46,15 +49,15 @@ width: 100%;
 
 #sort{
 	position: absolute;
-	top: 97.5vw;
+	top: 11vw;
 	width: 100%;
-	height:12.5vw;
+	height:10vw;
 	border-top-width:1px;
 	border-bottom-width: 1px;
 	border-left-width: 0;
     border-right-width: 0; 
 	border-style: solid;
-	border-color: rgb(169, 169, 169);
+	border-color: rgb(222, 222, 222);
 	left: 0;
 }
 
@@ -64,8 +67,8 @@ width: 100%;
 	left: 5vw;
 	width: 35vw;
 	width: 42vw;
-	height:9.5vw;
-	background-color: rgba(22, 155, 213, 1);
+	height:7vw;
+	background-color: #FFFFFF;
     border: none;
     border-radius: 5px;
 }
@@ -76,15 +79,15 @@ width: 100%;
 	top:1.5vw;
 	right: 5vw;
 	width: 42vw;
-	height:9.5vw;
+	height:7vw;
 	background-color: #FFFFFF;
     border: none;
     border-radius: 5px;
 }
 #sort_time_text{
 	position: absolute;
-	top:calc(50% - 3.33333vw);
-	font-size: 5vw; 
+	top:calc(50% - 2.77777777vw);
+	font-size: 4vw; 
 	margin: 0px;
 	width: 100%;
 	text-align: center;
@@ -93,24 +96,24 @@ width: 100%;
 
 #sort_hot_text{
 	position: absolute;
-	top:calc(50% - 3.33333vw);
-	font-size: 5vw; 
+	top:calc(50% - 2.77777777vw);
+	font-size: 4vw; 
 	margin: 0px;
 	width: 100%;
 	text-align: center;
-	color: #FFFFFF;
+	color: rgba(22, 155, 213, 1);
 }
 
 #comment_hot{
 	position: absolute;
-	top:calc(110vw + 2px);
+	top:calc(21vw + 2px);
 	width: 100%;
 	left: 0;
 }
 
 #comment_time{
 	position: absolute;
-	top:calc(110vw + 2px);
+	top:calc(21vw + 2px);
 	width: 100%;
 	left: 0;
 }
@@ -120,52 +123,53 @@ width: 100%;
  	width: 100%;
  	height:2.5vw;
  	top:0;
- 	border-top-width: 0;
- 	border-bottom-width: 1px;
- 	border-left-width:0;
- 	border-right-width:0;  
- 	border-style: solid;
- 	border-color: rgb(169, 169, 169);
+ 	border: 0;
 }
 
 .avatar{
 	position: absolute;
-	top:1.5vw;
-	left: 1.5vw;
-	height:10vw;
-	width: 10vw;
+	top:4vw;
+	left: 4vw;
+	height:8vw;
+	width: 8vw;
+	border: none;
+    border-radius: 4vw;
+
 }
 
 .username{
 	position: absolute;
-	top:3vw;
-	font-size: 5vw;
-	left: 12.5vw;
+	top:4.5vw;
+	font-size: 3.5vw;
+	left: 13.5vw;
+	color:rgb(174, 174, 174);
 }
 
 .likes{
 	position: absolute;
-	top:4vw;
+	top:11vw;
 	font-size: 3.5vw;
-	right: 12.5vw;
+	right: 4.2vw;
+	width: 10vw;
+	text-align: center;
+
 	}
 
 .like_img{
 	position: absolute;
-	top:2vw;
-	right: 3vw;
-	height:8vw;
-	width: 8vw;
+	top:5vw;
+	right: 6vw;
+	height:6vw;
+	width: 6vw;
     border: none;
-    border-radius: 5px;
     z-index: 10;
 }
 
 .content{
 	position: absolute;
-	top:12.5vw;
-	left: 12.5vw;
-	width: 75vw;
+	top:10.5vw;
+	left: 13.5vw;
+	width: 72vw;
 	font-size: 3.5vw;
 	word-wrap: break-word;
 	word-break: break-all;
@@ -194,18 +198,17 @@ width: 100%;
 
 .subcomment{
 	position: absolute;
-	right: 3vw;
-	left: 11.5vw;
+	right: 4.5vw;
+	left: 13.5vw;
 	height:2vw;
-	top:18vw;
-	background-color: rgb(215, 215, 215);
+	top:13vw;
 }
 
 .subcontent{
 	position: absolute;
-	left: 2vw;
-	top:2vw;
-	right: 2vw;
+	left: 8vw;
+	top:6vw;
+	right: 8vw;
 	font-size: 3.5vw;
 	word-wrap: break-word;
 	word-break: break-all;
@@ -216,30 +219,48 @@ width: 100%;
 }
 
 
+
+
 #reply_area{
 	position: fixed;
 	width: 100%;
+	height: 11vw;
 	bottom: 0;
 	left: 0;
 	z-index: 100;
+	background-color:#FFFFFF; 
 }
 
 .input_reply{
-	width: calc(80% - 2px);
-	height: calc(10vw - 4px);
+	width: calc(65% - 1px);
+	height: calc(7vw - 4px);
 	border-style: solid;
-	border-color:  rgb(215, 215, 215);
+	border-color:  rgb(242, 242, 242);
     border-width: 1px;
-    
-    float: left;
+     border-radius: calc(5vw - 2px);
+
     font-size: 3.5vw;
+    background-color:  rgb(242, 242, 242);
+    position: absolute;
+    left: 2vw;
+    bottom: 2vw;
+    padding-left:3vw;
+    padding-right: 3vw; 
 }
 
 #sent_reply{
-	float: left;
-	width: calc(20%  );
-	height:10vw;
+	position: absolute;
+	right: 3vw;
+	bottom: 2vw;	
+	width: 20% ;
+	height:7vw;
+	border-color: #FFFFFF;
+	background-color: #FFFFFF;
+	border-color:  rgb(169, 169, 169);
+	border-radius: 3.5vw ;
+	border-width: 1px; 
 	font-size: 3.5vw;
+	border-style: solid; 
 
 }
 
@@ -255,21 +276,21 @@ width: 100%;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 15vw;
+	height: 12vw;
 	border-top-width: 0;
  	border-bottom-width: 1px;
  	border-left-width:0;
  	border-right-width:0;  
  	border-style: solid;
- 	border-color: rgb(169, 169, 169);
+ 	border-color: rgb(242, 242, 242);
 }
 
 .subtopic{
 	position: absolute;
-	top: 4vw;
+	top: 3vw;
 	width: 100%;
 	text-align: center;
-	font-size: 5vw;
+	font-size: 4vw;
 }
 
 #back{
@@ -282,4 +303,140 @@ width: 100%;
 	font-size: 3vw;
 	left: 2vw;
 	color: #FF0000;
+}
+
+#blank{
+	position: absolute;
+	width: 100%;
+	top:0;
+	left: 0;
+	z-index: -100;
+}
+
+.border_div{
+	position: absolute;
+	top:0;
+    left: 14vw;
+    width: 80vw;
+    border-top-width: 0;
+ 	border-bottom-width: 1px;
+ 	border-left-width:0;
+ 	border-right-width:0;  
+ 	border-style: solid;
+ 	border-color: rgb(242, 242, 242);
+   z-index: -1;
+}
+
+.sub_avatar{
+	position: absolute;
+	height:6vw;
+	width: 6vw;
+	border: none;
+    border-radius: 3vw;
+	left: 0;
+	top: 0;
+}
+.sub_username{
+	position: absolute;
+	top:1vw;
+	font-size: 3.5vw;
+	left: 8vw;
+	color:rgb(174, 174, 174);
+}
+
+.more_subcomment{
+	position: absolute;
+	left: 8vw;
+	top:2vw;
+	right: 8vw;
+	font-size: 3.5vw;
+	word-wrap: break-word;
+	word-break: break-all;
+	color: rgba(22, 155, 213, 1);
+}
+.comment_foot{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top:5vw;
+	height: 20vw;
+	text-align: center;
+	font-size: 3.5vw;
+}
+
+#comment_detail{
+	height:5vw;
+	border-top-width: 0;
+ 	border-bottom-width: 1px;
+ 	border-left-width:0;
+ 	border-right-width:0;  
+ 	border-style: solid;
+ 	border-color: rgb(242, 242, 242);
+}
+
+
+#input_comment_area{
+	position: fixed;
+	width: 100%;
+	height: 11vw;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	background-color:#FFFFFF; 
+}
+#input_comment{
+	width: calc(65% - 1px);
+	height: calc(7vw - 4px);
+	border-style: solid;
+	border-color:  rgb(242, 242, 242);
+    border-width: 1px;
+     border-radius: calc(5vw - 2px);
+
+    font-size: 3.5vw;
+    background-color:  rgb(242, 242, 242);
+    position: absolute;
+    left: 2vw;
+    bottom: 2vw;
+    padding-left:3vw;
+    padding-right: 3vw;
+}
+
+#topic_likes_img{
+	position: absolute;
+	bottom: 2.5vw;
+	right: 16vw;
+	height: 6vw;
+	width: 6vw;
+}
+#topic_likes{
+	position: absolute;
+	right: 5.8vw;
+	font-size: 3.5vw;
+    width: 8vw;
+    text-align: center;
+	bottom: 3.25vw;
+}
+#back{
+	position: absolute;
+	top:2vw;
+	left: 4vw;
+	height:8vw;
+	width: 6.77vw;
+	border: none;
+}
+
+#sent_comment{
+	position: absolute;
+	right: 3vw;
+	bottom: 2vw;	
+	width: 20% ;
+	height:7vw;
+	border-color: #FFFFFF;
+	background-color: #FFFFFF;
+	border-color:  rgb(169, 169, 169);
+	border-radius: 3.5vw ;
+	border-width: 1px; 
+	font-size: 3.5vw;
+	border-style: solid; 
+	z-index: 100;
 }
