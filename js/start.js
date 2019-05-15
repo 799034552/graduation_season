@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var url = location.search; //获取泡泡页传过来的参数 
-    // var url = '?id=20&id=2&id=6&id=7&id=8'
+    // var url = '?id=150&id=2&id=6&id=7&id=8'
     if (url != '') {
         var topic_id = new Array();
         var args = {};
@@ -15,45 +15,30 @@ $(document).ready(function () {
             args[name] = value;
             topic_id[i] = value;
         }
+    
 
-
-     
-        // alert(topic_id[1]);
-        // $.ajax({
-        //     type: "get",
-        //     url: baseurl + '/topics',
-        //     data:
-        //         [
-        //             { "id": topic_id[0] },
-        //             { "id": topic_id[1] },
-        //             { "id": topic_id[2] },
-        //             { "id": topic_id[3] },
-        //             { "id": topic_id[4] },
-        //         ],
-        //     success: function (data) {
-        //         for (i = 0; i < 5; i++) {
-        //             $('.choice').append(
-        //                 '<div class="topic show">' +
-        //                 '<div>' +
-        //                 '<img class="topicimg" src="../img/topic.png" alt="new">' +
-        //                 '<img class="fireimg" src="../img/fire.png" alt="">' +
-        //                 '<p>' + data[i].title + '</p>' +
-        //                 '</div>' +
-        //                 '</div>'
-        //             )
-        //         }
-        //     },
-        //     error: function () {
-
-        //     }
-        // })
-
-        $.ajax({//获取topic
-            type: "get",
-            url: baseurl + '/topics',
-            data: { id: topic_id[0] },
-            success: function (data) {
-                alert('a');
+    //生成我的专属热搜，添加泡泡页传来的话题
+    $.get(baseurl + "/topics/" + topic_id[0], function (data, status) {
+        $('.choice').append(
+            '<div class="topic show">' +
+            '<div>' +
+            '<img class="topicimg" src="../img/topic.png" alt="new">' +
+            '<img class="fireimg" src="../img/fire.png" alt="">' +
+            '<p>' + data.title + '</p>' +
+            '</div>' +
+            '</div>'
+        )
+        $.get(baseurl + "/topics/" + topic_id[1], function (data, status) {
+            $('.choice').append(
+                '<div class="topic show">' +
+                '<div>' +
+                '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                '<img class="fireimg" src="../img/fire.png" alt="">' +
+                '<p>' + data.title + '</p>' +
+                '</div>' +
+                '</div>'
+            )
+            $.get(baseurl + "/topics/" + topic_id[2], function (data, status) {
                 $('.choice').append(
                     '<div class="topic show">' +
                     '<div>' +
@@ -63,11 +48,17 @@ $(document).ready(function () {
                     '</div>' +
                     '</div>'
                 )
-                $.ajax({
-                    type: "get",
-                    url: baseurl + '/topics',
-                    data: { id: topic_id[1] },
-                    success: function (data) {
+                $.get(baseurl + "/topics/" + topic_id[3], function (data, status) {
+                    $('.choice').append(
+                        '<div class="topic show">' +
+                        '<div>' +
+                        '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                        '<img class="fireimg" src="../img/fire.png" alt="">' +
+                        '<p>' + data.title + '</p>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                    $.get(baseurl + "/topics/" + topic_id[4], function (data, status) {
                         $('.choice').append(
                             '<div class="topic show">' +
                             '<div>' +
@@ -77,66 +68,14 @@ $(document).ready(function () {
                             '</div>' +
                             '</div>'
                         )
-                        $.ajax({
-                            type: "get",
-                            url: baseurl + '/topics',
-                            data: { id: topic_id[2] },
-                            success: function (data) {
-                                $('.choice').append(
-                                    '<div class="topic show">' +
-                                    '<div>' +
-                                    '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                                    '<img class="fireimg" src="../img/fire.png" alt="">' +
-                                    '<p>' + data.title + '</p>' +
-                                    '</div>' +
-                                    '</div>'
-                                )
-                                $.ajax({
-                                    type: "get",
-                                    url: baseurl + '/topics',
-                                    data: { id: topic_id[3] },
-                                    success: function (data) {
-                                        $('.choice').append(
-                                            '<div class="topic show">' +
-                                            '<div>' +
-                                            '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                                            '<img class="fireimg" src="../img/fire.png" alt="">' +
-                                            '<p>' + data.title + '</p>' +
-                                            '</div>' +
-                                            '</div>'
-                                        )
-                                        $.ajax({
-                                            type: "get",
-                                            url: baseurl + '/topics',
-                                            data: { id: topic_id[4] },
-                                            success: function (data) {
-                                                $('.choice').append(
-                                                    '<div class="topic show">' +
-                                                    '<div>' +
-                                                    '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                                                    '<img class="fireimg" src="../img/fire.png" alt="">' +
-                                                    '<p>' + data.title + '</p>' +
-                                                    '</div>' +
-                                                    '</div>'
-                                                )
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        })
-                    }
+                    })
                 })
-            },
-            error: function () {
-                // alert('失败了呢');
-            }
-
+            })
         })
-    }
-
+    })
+}
     //获取微信昵称
-       $.ajax({
+    $.ajax({
         type: 'get',
         url: baseurl + '/users',
         success: function (data, status) {
