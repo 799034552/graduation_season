@@ -2,6 +2,9 @@ var myData;
 var myid;
 var title;
 var getFinish = false;
+$(document).ready(function(){
+  $("#reply").hide();
+});
 $(function(){
   $.get(baseurl + "/users",function(data,status){
     myData = data;
@@ -39,11 +42,17 @@ function sentTopic(){
           ],
         }),
         success: function(data){
-          alert("发送成功");
-          window.location="bubble/index.html";
+          $("#reply").fadeIn("slow");
+          setTimeout(function(){
+            $("#reply").fadeOut("slow");
+            setTimeout(function(){
+              window.location="bubble/index.html";
+            },1000);
+          },1000);
+          
         },
-        error: function(){
-          alert("错误");
+        error: function(data){
+          alert("错误——"+data.message);
         }
       });
     }

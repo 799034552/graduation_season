@@ -466,12 +466,11 @@ p{margin: 0;}
 	background: rgb(188,188,188);
 	border-radius: 3.5vw ;
 	z-index: 100;
-
+	line-height: 12vw;
 }
 #reply_success_text{
 	position: absolute;
 	font-size: 4vw;
-	top:3vw;
 	width: 100%;
 	left:0;
 	text-align: center;
