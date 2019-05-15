@@ -4,7 +4,7 @@ $(document).ready(function () {
     if (url != '') {
         var topic_id = new Array();
         var args = {};
-        var query = url;
+        var  query = url;
         var pairs = query.split("&");
         for (var i = 0; i < pairs.length; i++) {
             var pos = pairs[i].indexOf("=");
@@ -142,6 +142,9 @@ $(document).ready(function () {
     })
 
     $('.choiceButton').click(function () {
+        var self = this;
+        this.disabled = true; //防止多次点击
+
         var list = $('.userChoiced').children();
         var topic_comment = new Array();
         if (list.length == 5) {
@@ -185,10 +188,11 @@ $(document).ready(function () {
                     
                 success: function (data, status) {
                     window.location.href = "bubble/index.html";
-
+                    self.disabled = false; // 恢复禁用
                 },
                 error: function (data) {
                     alert('发送失败');
+                    self.disabled = false; // 恢复禁用
                 }
             })
 
