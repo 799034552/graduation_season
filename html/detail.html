@@ -12,14 +12,14 @@
   </head>
   <body>
   	<div id="base">
-
+      <div id="reply_success">
+        <p id="reply_success_text">回复成功</p>
+      </div>
       <div id="topic">
-
-  		 <div id="put">
-  		     <p id="topicName"></p>
+  		  <p id="topicName"></p>
+        <p id="topic_content"></p>
   		     <!-- <textarea id="inputComment" maxlength="200"></textarea>
   		     <button id="commitComment" onclick="sentComment();">发表评论</button> -->
-  		  </div>
   		  <div id="sort">
   		  	<div id="sort_time">
   		  		<p id="sort_time_text">按时间排序</p>
@@ -30,12 +30,12 @@
   		  	</div>
           <div id="blank">
           </div>
-  		    </div>
+  		  </div>
   		    <div id="comment_hot">             
   		    </div>
   		    <div id="comment_time">
   		    </div>        
-        </div>
+      </div>
         <div id="input_comment_area">
           <input id="input_comment" placeholder="说点什么..">
           <button id="sent_comment" onclick="sentComment();">发布</button>

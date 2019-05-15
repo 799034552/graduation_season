@@ -4,7 +4,7 @@ var dataTime = '';//时间排序数据
 var dataHot = '';//热度排序数据
 var topicid;//当前话题id
 var commentid;//当前评论id
-var dataTime;
+
 //记录评论所在位置
 var idLikeHot = [];
 var idLikeTime = [];
@@ -15,7 +15,22 @@ var url = location.search;
 var requestid = url.split("id=");
 var timeReversal = false;
 
+function enter(){
+  document.getElementById("topicName").innerHTML = dataTime.title;
+  document.getElementById("topic_content").innerHTML = dataTime.content;
+  var contentTop = parseInt($("#topicName").css("height")) + parseInt($("#topic_content").css("top"));
+  document.getElementById("topic_likes").innerHTML = dataTime.likes;
+  var sortTop = parseInt($("#sort").css("top")) + parseInt($("#topic_content").css("height")) + parseInt($("#topicName").css("height"));
+  
+  var commentAreaTop = sortTop + parseInt($("#sort").css("height"));
+  $("#topic_content").css("top",contentTop);
+  $("#sort").css("top",sortTop);  
+  $("#comment_hot").css("top",commentAreaTop);
+  $("#comment_time").css("top",commentAreaTop);
+}
+
 function ajaxFinish(){
+  
     topicid = dataTime.id;//获取话题id
     dataTime.sort = "dataTime";
     dataHot = $.extend(true, {}, dataTime);//复制评论
@@ -25,22 +40,22 @@ function ajaxFinish(){
     loadComment(dataTime,"time",false);
     loadComment(dataHot,"hot",false);
     console.log(dataHot);    
-    document.getElementById("topicName").innerHTML = dataTime.title;
-    document.getElementById("topic_likes").innerHTML = dataTime.likes; 
-
+    // document.getElementById("topicName").innerHTML = dataTime.title;
+    // document.getElementById("topic_likes").innerHTML = dataTime.likes; 
 }
 
 //回复话题的刷新
 function refreshA(){
-  $("#reply_area").hide();
-  $("#subcomment_detail").remove();
-  $("#topic").show();
-  $("#comment_hot").show();
-  $("#comment_time").show();
-  $("#comment_hot").empty();
-  $("#comment_time").empty();
+  
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
     dataTime = data;
+    $("#reply_area").hide();
+    $("#subcomment_detail").remove();
+    $("#topic").show();
+    $("#comment_hot").show();
+    $("#comment_time").show();
+    $("#comment_hot").empty();
+    $("#comment_time").empty();
     ajaxFinish();
     if(hotSort){
       $("#comment_time").hide();
@@ -51,16 +66,17 @@ function refreshA(){
 }
 //回复评论的刷新
 function refreshB(){
-  $("#reply_area").hide();
-  $("#subcomment_detail").remove();
-  $("#topic").show();
-  $("#comment_hot").show();
-  $("#comment_time").show();
-  $("#comment_hot").empty();
-  $("#comment_time").empty();
+  
    var a;
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
     dataTime = data;
+    $("#reply_area").hide();
+    $("#subcomment_detail").remove();
+    $("#topic").show();
+    $("#comment_hot").show();
+    $("#comment_time").show();
+    $("#comment_hot").empty();
+    $("#comment_time").empty();
     ajaxFinish();
     if(hotSort){
       $("#comment_time").hide();
@@ -77,14 +93,17 @@ function refreshB(){
 //进入页面
 $(function(){
   //initiate();
-    $("#reply_area").hide();
+  $("#reply_success").hide();
+  $("#reply_area").hide();
   
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
             dataTime = data;
+            enter();
             ajaxFinish();
             $("#comment_time").hide();
   });
-   
+  ajaxFinish();
+  $("#comment_time").hide();
   $("#sent_comment").hide();
   //点击回复区外隐藏回复框
   $(document).mouseup(function (e) {
@@ -181,7 +200,10 @@ function sentSubcomment(){
         comment_id: commentid
       },
       success: function(data) {
-        alert("回复成功");
+         $("#input_reply").val("");
+         $("#reply_success").show();
+         setTimeout(function(){
+           $("#reply_success").fadeOut("slow");},1000);
         refreshB();
       },
       error: function () {
@@ -196,7 +218,8 @@ function sentComment(){
   var content = $("#input_comment").val();
   if(content==""){
     alert("请填写评论内容");
-  }else{
+  }else{     
+    console.log(content);
     $.ajax({
         type: "post",
         url: baseurl + "/comments",
@@ -205,7 +228,10 @@ function sentComment(){
           topic_id:topicid
         },
         success: function (data) {
-          alert("发布成功");
+          $("#input_comment").val("");
+          $("#reply_success").show();
+          setTimeout(function(){
+            $("#reply_success").fadeOut("slow");},1000);
           refreshA();
         },
         error: function () {
@@ -288,13 +314,7 @@ function loadComment(data, sort ,Reversal){
         $(comment_subcommentID).css("height", commentHeight);
         subcontentHeight = subcontentHeight + commentHeight;//累加子评论区高度
       }
-      //$(subcommentID).append(
-     //   "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"subcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
-     // )
-      //var moreSubcomment = "#subcontent_"+ sort + i;
-      //subcontentHeight = subcontentHeight + parseInt($(moreSubcomment).css("top"));
-      //$(moreSubcomment).css("top", subcontentHeight);     
-     // subcontentHeight = subcontentHeight + parseInt($(moreSubcomment).css("height")) ;
+
     }else {
       for(var j = 0; j < 3; j++){
          $(subcommentID).append(
@@ -389,9 +409,6 @@ function subcomment(subcommentNum , sequenceNum , data ){
               "<p class=\"likes\" id=\"comment_detail_likes\">"+data.comments[sequenceNum].likes+"</p>"+
               "<img src=\"../img/love.png\" class=\"like_img\" id=\"comment_detail_liked\" onclick = subLike("+data.comments[sequenceNum].id+",dataTime,dataHot,idLikeHot,idLikeTime,idLike);>"+                 
               "<p class=\"content\" onclick = reply("+data.id+","+data.comments[sequenceNum].id+",\"\"); id=\"comment_detail_content\">"+data.comments[sequenceNum].content+"</p>"+
-                  //"<div class=\"reply\" id=\"comment_detail_reply\" onclick = reply("+data.id+","+data.comments[sequenceNum].id+",\"\");>" +
-                  //  "<p class=\"reply_text\" >回复TA</p>"+
-                  //"</div>"+
             "</div>"
 
   )
@@ -416,9 +433,6 @@ function subcomment(subcommentNum , sequenceNum , data ){
               "<img class=\"avatar\" onclick = reply("+data.id+","+data.comments[sequenceNum].id+",\""+subcomment[i].creator.name+"\"); src="+subcomment[i].creator.avatar+">"+
               "<p class=\"username\" onclick = reply("+data.id+","+data.comments[sequenceNum].id+",\""+subcomment[i].creator.name+"\");>"+subcomment[i].creator.name+"</p>"+                  
               "<p class=\"content\" onclick = reply("+data.id+","+data.comments[sequenceNum].id+",\""+subcomment[i].creator.name+"\"); id=\"subcomment_detail_content_" + i +"\">"+subcomment[i].content+"</p>"+
-                  //"<div class=\"reply\" id=\"subcomment_detail_reply_" + i +"\" onclick = reply("+data.id+","+data.comments[sequenceNum].id+",\""+subcomment[i].creator.name+"\");>" +
-                   // "<p class=\"reply_text\" >回复TA</p>"+
-                  //"</div>"+
               "<div class=\"border_div\" id=\"subcomment_detail_border"+ i +"\"></div>"+
             "</div>"
         );
@@ -429,12 +443,10 @@ function subcomment(subcommentNum , sequenceNum , data ){
     var subcontentHeight = 0;
      
   
-    var contentHight = parseInt($(contentID).css("height"));  //获取内容高度
-   // var replyTop = parseInt($(replyID).css("top")) + contentHight;//获取按钮位置
+    var contentHight = parseInt($(contentID).css("height"));  //获取内容高
     var commentHeight = parseInt($(".username").css("top"))  + contentHight + parseInt($(contentID).css("top"));;//评论高度
 
     $(ID).css("top", commentTop);//调整评论位置
-    //$(replyID).css("top", replyTop);//调整回复按钮位置
     $(ID).css("height", commentHeight);
     commentTop = commentTop + parseInt($(ID).css("height"));//累加评论高度
 
@@ -497,41 +509,70 @@ function like(id , data ,data2,idLikeHot,idLikeTime,idLike ){
     success(data){
         console.log(data);
     }
-  })
-  if(idLike[id]){
-    var a1 = "#liked_time" + idLikeTime[id];
-    var a2 = "likes_time" + idLikeTime[id];
-    
-    
-    var b1 = "#liked_hot" + hotLikeSeat;
-    var b2 = "likes_hot" + hotLikeSeat;
-    //$(b1).attr('src', "");
-    // $(b).attr('src', "");
-    idLike[id] = false;
-    var newlikes = data.comments[timeLikeSeat].likes - 1;
-    data.comments[timeLikeSeat].likes = newlikes;
-    data2.comments[hotLikeSeat].likes = newlikes;
-    document.getElementById(b2).innerHTML = newlikes;
-    document.getElementById(a2).innerHTML = newlikes;
+   });
+  $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
+            for(var i = 0; i < getLength(dataTime.comments); i++){
+              for(var j in data.comments){
+                if(dataTime.comments[i].id == data.comments[j].id){
+                  var id = dataTime.comments[i].id;
+                  var hotseat = idLikeHot[id];
 
-    //ajax
-  }else{
+                  dataTime.comments[i].likes = data.comments[j].likes;
+                  dataTime.comments[i].liked = data.comments[j].liked;
+                  dataHot.comments[hotseat].likes =data.comments[j].likes;
+                  dataHot.comments[hotseat].liked =data.comments[j].liked;
 
-    var a1 = "#liked_time" + idLikeTime[id];
-    var a2 = "likes_time" + idLikeTime[id];
+                  var a1 = "#liked_time" + i;
+                  var b1 = "#liked_hot" + hotseat;
+                  document.getElementById(b2).innerHTML = data.comments[j].likes;
+                  document.getElementById(a2).innerHTML = data.comments[j].likes;
+                }
+              }
+            }
+  });
+  // var hotLikeSeat = idLikeHot[id];
+  // var timeLikeSeat = idLikeTime[id];
+  // $.ajax({
+  //   url:baseurl + "/likecomments/" + id,
+  //   method:"PUT",
+  //   success(data){
+  //       console.log(data);
+  //   }
+  // })
+  // if(idLike[id]){
+  //   var a1 = "#liked_time" + idLikeTime[id];
+  //   var a2 = "likes_time" + idLikeTime[id];
     
     
-    var b1 = "#liked_hot" + hotLikeSeat;
-    var b2 = "likes_hot" + hotLikeSeat;
-    //$(b1).attr('src', "");
-    // $(b).attr('src', "");
-    idLike[id] = true;
-    var newlikes = data.comments[timeLikeSeat].likes + 1;
-    data.comments[timeLikeSeat].likes = newlikes;
-    data2.comments[hotLikeSeat].likes = newlikes;
-    document.getElementById(b2).innerHTML = newlikes;
-    document.getElementById(a2).innerHTML = newlikes;
-  }
+  //   var b1 = "#liked_hot" + hotLikeSeat;
+  //   var b2 = "likes_hot" + hotLikeSeat;
+  //   //$(b1).attr('src', "");
+  //   // $(b).attr('src', "");
+  //   idLike[id] = false;
+  //   var newlikes = data.comments[timeLikeSeat].likes - 1;
+  //   data.comments[timeLikeSeat].likes = newlikes;
+  //   data2.comments[hotLikeSeat].likes = newlikes;
+  //   document.getElementById(b2).innerHTML = newlikes;
+  //   document.getElementById(a2).innerHTML = newlikes;
+
+  //   //ajax
+  // }else{
+
+  //   var a1 = "#liked_time" + idLikeTime[id];
+  //   var a2 = "likes_time" + idLikeTime[id];
+    
+    
+  //   var b1 = "#liked_hot" + hotLikeSeat;
+  //   var b2 = "likes_hot" + hotLikeSeat;
+  //   //$(b1).attr('src', "");
+  //   // $(b).attr('src', "");
+  //   idLike[id] = true;
+  //   var newlikes = data.comments[timeLikeSeat].likes + 1;
+  //   data.comments[timeLikeSeat].likes = newlikes;
+  //   data2.comments[hotLikeSeat].likes = newlikes;
+  //   document.getElementById(b2).innerHTML = newlikes;
+  //   document.getElementById(a2).innerHTML = newlikes;
+  // }
 }
 //子评论页点赞
 function subLike(id,data,data2,idLikeHot,idLikeTime,idLike){
