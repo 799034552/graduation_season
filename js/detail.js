@@ -177,32 +177,22 @@ $(function(){
       $("#input_comment").scrollIntoView(true)
       $("#input_comment").scrollIntoViewIfNeeded()
     }, 300)
-    var str = navigator.userAgent.toLowerCase()
-    var ver = str.match(/CPU iPhone OS (\d+)_(\d+)_?(\d+)?/i)
-    if (ver) { // 判断IOS设备
-      ver = parseInt(ver[1], 10)
-      if (ver !== 11) { // ios11 不需要做任何的处理
-        setTimeout(() => {
-          document.body.scrollTop = 9999
-        }, 600)
-      }
-    }
+  });
+  $("#input_comment").blur(function(){
+    setTimeout(() => {
+      document.body.scrollTop = 0
+    }, 600)
   });
   $("#input_reply").focus(function(){
     setTimeout(() => {
       $("#input_reply").scrollIntoView(true)
       $("#input_reply").scrollIntoViewIfNeeded()
     }, 300)
-    var str = navigator.userAgent.toLowerCase()
-    var ver = str.match(/CPU iPhone OS (\d+)_(\d+)_?(\d+)?/i)
-    if (ver) { // 判断IOS设备
-      ver = parseInt(ver[1], 10)
-      if (ver !== 11) { // ios11 不需要做任何的处理
-        setTimeout(() => {
-          document.body.scrollTop = 9999
-        }, 600)
-      }
-    }
+  });
+  $("#input_reply").blur(function(){
+    setTimeout(() => {
+      document.body.scrollTop = 0
+    }, 600)
   });
 
 })
