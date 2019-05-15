@@ -340,7 +340,7 @@ body .deleteBoxActive{
     margin-top:-150px;
     background: rgba(246, 184, 102, 0.90);
     color:white;
-    z-index: 20;
+    z-index:200;
     opacity: 0.7;
 }
 .toThirdPage{
@@ -353,7 +353,6 @@ body .deleteBoxActive{
     justify-content: center;
     align-items: center;
     border-radius:  20px 0 0 20px ;
-    z-index: 50;
     font-size: 1rem;
     width: 100px;
     height: 300px;
@@ -364,6 +363,7 @@ body .deleteBoxActive{
     margin-top:-150px;
     background: rgba(246, 184, 102, 0.90);
     color:white;
+    z-index:200;
 }
 .picBox{
     position: absolute;
