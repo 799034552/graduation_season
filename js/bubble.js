@@ -790,7 +790,7 @@ function createMy(){
     for(var i = 0;i<list.length-1;i++){
         sendData += ("topic_id=" + list[i].getAttribute("id"));
     }
-    window.location = baseurl + "start.html/" + sendData;
+    window.location = baseurl + "start.html?" + sendData;
 
 }
 function addother(){
