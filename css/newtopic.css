@@ -3,7 +3,7 @@
 	top:20vw;
 	width: 83vw;
 	left: calc(8.5vw - 3px);
-	font-size: 6vw;
+	font-size: 4vw;
     cursor: pointer;
     border: 5px solid rgba(255, 255, 255, 0.5);
 	border-radius: 3vw;
@@ -15,7 +15,7 @@
 	width: 83vw;
 	height: 45vw;
 	left: calc(8.5vw - 3px);
-	font-size: 6vw;
+	font-size: 4vw;
 	cursor: pointer;
 	border: 5px solid rgba(255, 255, 255, 0.5);
 	border-radius: 3vw;
@@ -23,7 +23,7 @@
 
 #commit_topic{
 	position: absolute;
-	top: 65vh;
+	top: 100vw;
 	width: 38.89vw;
 	height:12.5vw;
 	left: 30.555vw;
