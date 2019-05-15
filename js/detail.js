@@ -111,7 +111,7 @@ function refreshB(){
 //进入页面
 $(function(){
 
-  // initiate();
+ initiate();
   $("#reply_success").hide();
   $("#reply_area").hide();
 
@@ -151,16 +151,14 @@ $(function(){
   })
 //按热度排序
   $("#sort_hot").click(function(){
-    if(!hotSort){
-
       $("#sort_hot_text").css("color", "rgba(22, 155, 213, 1)");
       $("#sort_time_text").css("color", "#000000");
       $("#comment_time").hide();
       $("#comment_hot").show();
       hotSort = true;
-
-   }
+      refreshA();
   })
+
   $("#input_comment").focus(function(){
     $("#topic_likes_img").hide();
     $("#topic_likes").hide();
