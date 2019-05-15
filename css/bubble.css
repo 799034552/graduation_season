@@ -72,8 +72,6 @@ body .message{
     position: absolute;
     height: 527px;
     width: 527px;
-    background: -webkit-linear-gradient(rgb(235, 125, 255,0) 30%,rgb(235, 125, 255) 100%);
-   background: radial-gradient(rgb(235, 125, 255,0) 30%,rgb(235, 125, 255) 100%); /* 标准的语法 #8ec5fc*/
    box-shadow: 10px 10px 30px black ;
     border-radius: 50%;
     transform: scale(1);
@@ -123,20 +121,28 @@ body .deleteBoxActive{
     transform:scale(1);
 }
 .first .oneItem{
-    background: -webkit-linear-gradient(rgb(125 , 159, 255,0) 30%,rgb(125 , 159, 255) 100%);
-    background: radial-gradient(rgb(125 , 159, 255,0) 30%,rgb(125 , 159, 255) 100%); /* 标准的语法 #8ec5fc*/
+    background: -webkit-linear-gradient(rgb(125 , 159, 255,0) 30%,rgb(251, 232, 233) 100%);
+    background: radial-gradient(rgb(125 , 159, 255,0) 30%,rgb(251, 232, 233) 100%); /* 标准的语法 #8ec5fc*/
+}
+.second .oneItem{
+    background: -webkit-linear-gradient(rgb(125 , 159, 255,0) 30%,rgb(255, 232, 214) 100%);
+    background: radial-gradient(rgb(125 , 159, 255,0) 30%,rgb(255, 232, 214) 100%); /* 标准的语法 #8ec5fc*/
 }
 .third .oneItem{
-    background: -webkit-linear-gradient(rgb(151  , 125, 255,0) 30%,rgb(151  , 125, 255) 100%);
-    background: radial-gradient(rgb(151  , 125, 255,0) 30%,rgb(151  , 125, 255) 100%); /* 标准的语法 #8ec5fc*/
+    background: -webkit-linear-gradient(rgb(151  , 125, 255,0) 30%,rgb(234, 247, 255) 100%);
+    background: radial-gradient(rgb(151  , 125, 255,0) 30%,rgb(234, 247, 255) 100%); /* 标准的语法 #8ec5fc*/
 }
 .forth .oneItem{
-    background: -webkit-linear-gradient(rgb(255, 125, 191,0) 30%,rgb(255, 125, 191) 100%);
-    background: radial-gradient(rgb(255, 125, 191,0) 30%,rgb(255, 125, 191) 100%); /* 标准的语法 #8ec5fc*/
+    background: -webkit-linear-gradient(rgb(255, 125, 191,0) 30%,rgb(222, 249, 243) 100%);
+    background: radial-gradient(rgb(255, 125, 191,0) 30%,rgb(222, 249, 243) 100%); /* 标准的语法 #8ec5fc*/
 }
 .five .oneItem{
-    background: -webkit-linear-gradient(rgb(125 , 159, 255,0) 30%,rgb(125 , 159, 255) 100%);
-    background: radial-gradient(rgb(125 , 159, 255,0) 30%,rgb(125 , 159, 255) 100%); /* 标准的语法 #8ec5fc*/
+    background: -webkit-linear-gradient(rgb(125 , 159, 255,0) 30%,rgb(204, 251, 202) 100%);
+    background: radial-gradient(rgb(125 , 159, 255,0) 30%,rgb(204, 251, 202) 100%); /* 标准的语法 #8ec5fc*/
+}
+.add .oneItem{
+    background: -webkit-linear-gradient(rgb(125 , 159, 255,0) 30%,rgb(243, 202, 251) 100%);
+    background: radial-gradient(rgb(125 , 159, 255,0) 30%,rgb(243, 202, 251) 100%); /* 标准的语法 #8ec5fc*/
 }
 .first.animate{
     animation: myFirst 3s;
@@ -327,7 +333,8 @@ body .deleteBoxActive{
     padding:6px;
     top:50%;
     margin-top:-150px;
-    background: #f2f2f2;
+    background: rgba(246, 184, 102, 0.90);
+    color:white;
     z-index: 20;
     opacity: 0.7;
 }
@@ -349,7 +356,8 @@ body .deleteBoxActive{
     padding:6px;
     top:50%;
     margin-top:-150px;
-    background: #f2f2f2;
+    background: rgba(246, 184, 102, 0.90);
+    color:white;
     z-index: 20;
 }
 .picBox{
@@ -659,7 +667,7 @@ body .deleteBoxActive{
     overflow: scroll;
     z-index: 50;
     height: 100vh;
-    background: url("../img/bg (2).jpg");
+    background: url("../img/bg2.jpg");
     background-size: 100% 100%;
     background-position: bottom;
 

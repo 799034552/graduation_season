@@ -273,7 +273,11 @@ function reFresh(){
     timeouts[2] = setTimeout(function(){$(".third").css({'display':'flex'})},1000);
     timeouts[3] = setTimeout(function(){$(".forth").css({'display':'flex'})},1500);
     timeouts[4] = setTimeout(function(){$(".five").css({'display':'flex'})},1700);
-    timeouts[5] = setTimeout(function(){$(".add").css({'display':'flex'})},2000);
+    if(!addToMY){
+        timeouts[5] = setTimeout(function(){$(".add").css({'display':'flex'})},2000);
+
+    }
+    
 }
 
 //上一页
@@ -596,12 +600,13 @@ function hotCommentInit(){
     }
 }
 function goToMy(){
-    window.location = 'file:///C:/c/bbt/project/graduate/html/bubble/index.html';
+    window.location = "./index.html";
 }
 //添加到我的热搜
 function addToMy(){
-    reFresh();
     addToMY = true;
+    reFresh();
+    
     $(".s22Show").show();
     $(".s21Show").hide();
     mySwiper.detachEvents();
