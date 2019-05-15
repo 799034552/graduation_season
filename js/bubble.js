@@ -388,10 +388,16 @@ function isOver(){
     if(enterStatus === 0){
         if(ajaxCount >= 3){
             initiateAll();
+            $(".tool").css({
+                "opacity":'1'
+            });
         }
     } else {
         if(ajaxCount >= 4){
             initiateAll();
+            $(".tool").css({
+                "opacity":'1'
+            });
         }
     }
     

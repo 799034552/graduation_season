@@ -28,29 +28,34 @@
 	height:12.5vw;
 	left: 30.555vw;
 	font-size: 5vw;
+	border: 1px solid #dcdfe6;
 	border-radius: 6vw;
-	background-color: #67C23A;
+	background-color: #86c996;
 	color: #fff;
+	-webkit-appearance: none;
 }
 
 p{
 	margin: 0;
-	font-size: 10vw;
+	font-size: 7.25vw;
+	line-height: 10vw;
 	width: 100%;
+	height: 10vw;
+	color: #86c996;
 	text-align: center;
 }
 
 #heading{
 	position: absolute;
-	top: 0;
+	top: 3vw;
 	left: 0;
 	width: 100%;
 	border-top-width: 0;
- 	border-bottom-width: 1px;
+ 	border-bottom-width: 0;
  	border-left-width:0;
  	border-right-width:0;  
  	border-style: solid;
- 	border-color: rgb(169, 169, 169);
+ 	border-color: #86c996;
 
 }
 
