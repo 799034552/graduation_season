@@ -17,6 +17,7 @@ var myurl = "./index.html";
 var addTopicUrl = "/??";
 var timeouts = [];
 var count1 = 0;
+var scale = [1,0.9,0.95,1,0.8,0.7];//气泡缩放
 var hotSearch = 
     [
         {
@@ -127,10 +128,10 @@ var receiveData =     {
     ]
 }
 var myData;//用户个人信息
-
 //初始化
 $(function(){
-    
+    // var vConsole = new VConsole();
+
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     
@@ -233,11 +234,15 @@ $(function(){
         })
         
         e.stopPropagation();
+        
 
     });
+    document.cookie = "username = sfda";
     //热评的点击
     $(".hotComment").on('click','li',function(){
-        goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
+        console.log("myurl=" + window.location.href);
+       // window.location = "../detail.html?id=" + hotComment[Number(this.getAttribute("index"))].topic_id + "&from=" +window.location.href;
+         goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
 
     //热搜的点击
@@ -291,17 +296,17 @@ function isPicShow(status){
 
 //ios后退
 function pushHistory() {
-    console.log(document.URL);
-    history.pushState(null, null, document.URL);
-    window.addEventListener("popstate", function(e) {
-        console.log("回退");
-        //self.location.reload();
-    }, false);
-    var state = {
-        title : "",
-        url : "#"
-    };
-    window.history.replaceState(state, "", "#");
+    // console.log(document.URL);
+    // history.pushState(null, null, document.URL);
+    // window.addEventListener("popstate", function(e) {
+    //     console.log("回退");
+    //     //self.location.reload();
+    // }, false);
+    // var state = {
+    //     title : "",
+    //     url : "#"
+    // };
+    // window.history.replaceState(state, "", "#");
 };
 
 //初始化滑动插件
@@ -380,6 +385,7 @@ function dragInit(){
     console.log(temp.length);
     for(var i = 0;i<temp.length;i++){
         temp[i].addEventListener("touchstart",function(e){
+            
             console.log(this);
             startLocation[0] = e.touches[0].clientX;
             startLocation[1] = e.touches[0].clientY;
@@ -391,24 +397,23 @@ function dragInit(){
             timeOutEvent = setTimeout(function(){
                 timeOutEvent = 0;
                 isMoving = true;
+                
                 $(e.target).parents(".oneItemBox").addClass("beCloned");
-                console.log("显示");
                 $(".deleteBox").addClass("deleteBoxShow");
             },500);
 
         });
         temp[i].addEventListener("touchmove",function(e){
             if(!isMoving){
-                console.log("已清除");
                 clearTimeout(timeOutEvent);
             } else {
                 if(clone !== 0){
                     var x = e.touches[0].clientX;
                     var y = e.touches[0].clientY;
                     var height = $(".deleteBox").height();
-                    console.log(clone.css("transform"));
+                    var sa = scale[Number(clone[0].getAttribute("index"))];
                     clone.css({
-                        'transform':'translate(' + (x - startLocation[0]) + 'px,' + (y - startLocation[1]) + 'px)'
+                        'transform':'translate(' + (x - startLocation[0]) + 'px,' + (y - startLocation[1]) + 'px) ' + "scale(" + sa +")"
                     })
                     if(height > y){
                         $(".deleteBox").addClass("deleteBoxActive");
@@ -421,8 +426,10 @@ function dragInit(){
                 } else {
                     beCloned = $(e.target).parents(".oneItemBox");
                     clone = beCloned.clone(true);
+                    console.log(clone[0].style);
                     clone.addClass("clone");
                     $(".bubbleBox").append(clone);
+                    console.log(clone[0].style.transform);
                 }
                 e.stopPropagation();
                 e.preventDefault();
@@ -512,6 +519,19 @@ function goToAddTopic(){
     window.location = baseurl + addTopicUrl;
 }
 //刷新话题
+// function refreshTopic(){
+//     // if($(".animate").length>0){
+//     //     return;
+//     // }
+//     showTopic =  getFiveTop(receiveData.collection);
+//     var temp = document.getElementsByClassName("oneItem");
+//     console.log(showTopic);
+//     for(var i = 0;i < 5;i++){
+//         temp[i].getElementsByClassName("message")[0].innerHTML = showTopic[i].title;
+//         temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("index",i);
+//     }
+//     reFresh();
+// }
 function refreshTopic(){
     // if($(".animate").length>0){
     //     return;
@@ -521,7 +541,7 @@ function refreshTopic(){
     console.log(showTopic);
     for(var i = 0;i < 5;i++){
         temp[i].getElementsByClassName("message")[0].innerHTML = showTopic[i].title;
-        temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("index",i);
+        temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("id",showTopic[i].topic_id);
     }
     reFresh();
 
@@ -587,31 +607,74 @@ function addToMy(){
     mySwiper.detachEvents();
 }
 //添加至我的热搜榜
+// function  addToHotSearchList(){
+//     count1 = 0;
+//     if($(".animate").length > 0){
+//         return;
+//     }
+//     var sendData = [];
+//     var temp = $(".oneItem:visible");
+//     console.log(temp);
+//     var flag = false;
+//     for(var i = 0;i< temp.length-1;i++){
+//         flag = false;
+//         var a =Number(temp[i].getAttribute("id"));
+//         for(var j = 0;j < myData.collection.length;j++){
+//             if(showTopic[a].title === myData.collection[j].title){
+//                 flag = true;
+//             }
+
+//         }
+//         if(!flag){
+//             count1++;
+//             sendData.push(showTopic[a].title);
+//                 $.ajax({
+//                     url:baseurl+'/topics',
+//                     method:'post',
+//                     data:{title:showTopic[a].title,target_id:myData.id},
+//                     success(data,status){
+//                         count1--;
+//                         if(count1 === 0){
+//                             window.location = "./index.html";
+//                         }
+//                 }
+//         })
+//     }};
+//     console.log(sendData);
+//     console.log(myData);
+// }
 function  addToHotSearchList(){
-    count1 = 0;
-    if($(".animate").length > 0){
-        return;
-    }
-    var sendData = [];
     var temp = $(".oneItem:visible");
-    console.log(temp);
+    var sendData = [];
+    var sendData2 = [];
     var flag = false;
     for(var i = 0;i< temp.length-1;i++){
-        flag = false;
-        var a =Number(temp[i].getAttribute("index"));
-        for(var j = 0;j < myData.collection.length;j++){
-            if(showTopic[a].title === myData.collection[j].title){
-                flag = true;
+        var id = (Number(temp[i].getAttribute("id")));
+        for(var j = 0;j<hotSearch.length;j++){
+            if(id === Number(hotSearch[j].topic_id)){
+                sendData2.push(hotSearch[j].title);
             }
-
         }
-        if(!flag){
-            count1++;
-            sendData.push(showTopic[a].title);
+    };
+
+    for(var i = 0;i<myData.collection.length;i++){
+        flag = false;
+        for(var j = 0;j < sendData2.length;j++){
+            if(sendData2[j] === myData.collection[i].title){
+                sendData2[j] = "";
+                continue;
+            }
+        }
+    }
+    sendData2 = sendData2.filter(function(item){
+        return item !== "";
+    })
+    count1 = sendData2.length;
+    for(var i = 0;i<sendData2.length;i++){
                 $.ajax({
                     url:baseurl+'/topics',
                     method:'post',
-                    data:{title:showTopic[a].title,target_id:myData.id},
+                    data:{title:sendData2[i],target_id:myData.id},
                     success(data,status){
                         count1--;
                         if(count1 === 0){
@@ -619,8 +682,9 @@ function  addToHotSearchList(){
                         }
                 }
         })
-    }};
-    console.log(sendData);
+    }
+
+    console.log(sendData2);
     console.log(myData);
 
 
