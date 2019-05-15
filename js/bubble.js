@@ -254,13 +254,15 @@ $(function(){
     document.cookie = "username = sfda";
     //热评的点击
     $(".hotComment").on('click','li',function(){
-        window.localStorage.setItem("from",window.location.href+"?from");
+        //window.localStorage.setItem("from",window.location.href+"?from");
+        createFrom(2);
        // window.location = "../detail.html?id=" + hotComment[Number(this.getAttribute("index"))].topic_id + "&from=" +window.location.href;
          goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
 
     //热搜的点击
     $('.hotSearch').on('click','li:not(.hotSearchTitle)',function(){
+        createFrom(0);
         goToTopic(this.getAttribute("id"));
     });
 
@@ -329,20 +331,41 @@ function pushHistory() {
 
 //初始化滑动插件
 function slideInit(){
-    mySwiper = new Swiper('.swiper-container-h', {
-        initialSlide : 1 ,
-        on:{
-            sliderMove: function(){
-                $(".toFirstPage").hide();
-                $(".toThirdPage").hide();
-              },
-              transitionEnd: function(){
-                $(".toFirstPage").fadeIn();
-                $(".toThirdPage").fadeIn();
-              },
-        }
-        
-    })
+    var ru = /from=(.+?)($|\/|\#|\&)/
+    var from = (ru.exec(window.location.href));
+    if(from){
+        mySwiper = new Swiper('.swiper-container-h', {
+            initialSlide : Number(from[1]) ,
+            on:{
+                sliderMove: function(){
+                    $(".toFirstPage").hide();
+                    $(".toThirdPage").hide();
+                  },
+                  transitionEnd: function(){
+                    $(".toFirstPage").fadeIn();
+                    $(".toThirdPage").fadeIn();
+                  },
+            }
+            
+        })
+    } else {
+        mySwiper = new Swiper('.swiper-container-h', {
+            initialSlide : 1 ,
+            on:{
+                sliderMove: function(){
+                    $(".toFirstPage").hide();
+                    $(".toThirdPage").hide();
+                  },
+                  transitionEnd: function(){
+                    $(".toFirstPage").fadeIn();
+                    $(".toThirdPage").fadeIn();
+                  },
+            }
+            
+        })
+
+    }
+
 }
 //初始化二维码
 function codeInit(){
@@ -528,6 +551,7 @@ function change(e){
         "z-index":'999'
     }));
     setTimeout(function(){
+        createFrom(1);
         goToTopic(e.id);
     },1000);
     e.classList.add("myAnimate");
@@ -667,7 +691,7 @@ function  addToHotSearchList(){
     var sendData = [];
     var sendData2 = [];
     var flag = false;
-    for(var i = 0;i< temp.length-1;i++){
+    for(var i = 0;i< temp.length;i++){
         var id = (Number(temp[i].getAttribute("id")));
         for(var j = 0;j<hotSearch.length;j++){
             if(id === Number(hotSearch[j].topic_id)){
@@ -690,16 +714,27 @@ function  addToHotSearchList(){
     })
     count1 = sendData2.length;
     for(var i = 0;i<sendData2.length;i++){
-                $.ajax({
-                    url:baseurl+'/topics',
-                    method:'post',
-                    data:{title:sendData2[i],target_id:myData.id},
-                    success(data,status){
-                        count1--;
-                        if(count1 === 0){
-                            window.location = "./index.html";
-                        }
+        $.ajax({
+            url:baseurl + "/topics",
+            method:'POST',
+            headers:{
+                 "Content-Type":"application/json"
+            },
+            data:JSON.stringify({
+                target_id:myData.id,
+                list:[
+                    {
+                        title:sendData2[i],
+                        content: ""
+                    }
+                ]
+            }),
+            success(){
+                count1--;
+                if(count1 === 0){
+                    window.location = "./index.html";
                 }
+            }
         })
     }
 
@@ -761,4 +796,17 @@ function createMy(){
 function addother(){
     console.log(userId);
     window.location = "../newtopic.html?id=" + userId;
+}
+function createFrom(a){
+    var url;
+    var temp;
+    temp = window.location.href;
+    temp =  temp.replace(/from=(.+?)(&|#|$|\?)/g,"");
+    if(userId === myData.id){
+        temp = temp.replace(/\?/g,"");
+        url = temp+"?from="+a;
+    } else {
+        url = temp+"&from="+a;
+    }
+    window.localStorage.setItem("from",url);
 }

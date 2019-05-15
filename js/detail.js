@@ -76,7 +76,7 @@ function refreshB(){
 
 //进入页面
 $(function(){
-  //initiate();
+  initiate();
     $("#reply_area").hide();
   
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
@@ -577,16 +577,12 @@ function initiate(){
     var counter = 0;
     if (window.history && window.history.pushState) {
         $(window).on('popstate', function () {
-          var rule = /from=(.+?)$/;
-          var ruleResult = rule.exec(window.location.href);
-          if(ruleResult){
-            //window.location = ruleResult[1] + "?from=2";
-            console.log(ruleResult[1] + "?from=2");
+          var url = window.localStorage.getItem("from");
+          if(url){
+            window.location = url;
+          }else {
+            window.history.back(-1);
           }
-          //
-             alert("不可回退");  //如果需在弹框就有它
-            //  this.url
-            //self.location="orderinfo.html"; //如查需要跳转页面就用它
         });
     }
 
