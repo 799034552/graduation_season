@@ -637,6 +637,10 @@ function initiate(){
     var counter = 0;
     if (window.history && window.history.pushState) {
         $(window).on('popstate', function () {
+          if(/comment_/.test(window.location.href)){
+            return;
+          }
+          
           var url = window.localStorage.getItem("from");
           if(url){
             window.location = url;
