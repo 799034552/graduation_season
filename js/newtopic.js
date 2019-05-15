@@ -15,6 +15,9 @@ $(function(){
 function sentTopic(){
   if(getFinish){
     var title = $("#input_topic").val();
+    var content = $("#input_content").val();
+    console.log(title);
+    console.log(content);
     if(title==""){
       alert("还未输入话题名称");
     }else{
@@ -23,12 +26,21 @@ function sentTopic(){
       $.ajax({
         type: "post",
         url: baseurl + "/topics",
-        data: {
-          title: title,
-          target_id: myid
+        headers:{
+             "Content-Type":"application/json"
         },
+        data:JSON.stringify({
+          target_id: myid,
+          list:[
+            { 
+              title:title,
+              content:content||"",
+            }
+          ],
+        }),
         success: function(data){
           alert("发送成功");
+          window.location="bubble/index.html";
         },
         error: function(){
           alert("错误");
