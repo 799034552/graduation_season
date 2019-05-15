@@ -9,6 +9,7 @@ $(document).ready(function(){
   console.log(temp);
   if(temp){
     myid = temp[1];
+    getFinish = true; 
   } else {
     $.get(baseurl + "/users",function(data,status){
       myData = data;
