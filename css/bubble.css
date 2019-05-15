@@ -72,7 +72,7 @@ body .message{
     position: absolute;
     height: 527px;
     width: 527px;
-   box-shadow: 10px 10px 30px black ;
+   box-shadow: 10px 10px 10px black ;
     border-radius: 50%;
     transform: scale(1);
     transition: all 1.5s;
@@ -654,12 +654,12 @@ body .deleteBoxActive{
 .haveNoCom div{
 }
 .com{
-    background: url("../img/bg (3).jpg");
+    background: url("../img/bg33.jpg");
     background-size: 100% 100%;
     background-position: bottom;
 }
 .sea{
-    background: url("../img/bg (1).jpg");
+    background: url("../img/bg11.jpg");
     background-size: 100% 100%;
     background-position: bottom;
 }
@@ -685,10 +685,10 @@ body .deleteBoxActive{
     z-index: 100;
 }
 .firstToSecond{
-    box-shadow: 0 0 30px black ;
+    box-shadow: -8px 0 25px black ;
 }
 .secondToFirst{
-    box-shadow: 10px 0 20px black ;
+    box-shadow: 8px 0 25px black ;
 }
 
 

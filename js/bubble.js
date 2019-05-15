@@ -150,24 +150,9 @@ $(function(){
         myData = data;
         console.log(data);
         // $.ajax({
-        //     url:baseurl + "/topics",
-        //     method:'POST',
-        //     headers:{
-        //          "Content-Type":"application/json"
-        //     },
-        //     data:JSON.stringify({
-        //         target_id:2,
-        //         list:[
-        //             {
-        //                 title:"保护我方string",
-        //                 content: ""
-        //             },
-        //             {
-        //                 title:"还有20多天高考，我很慌",
-        //                 content:""
-        //             }
-        //         ]
-        //     }),
+        //     url:baseurl + "/users/collection",
+        //     method:'put',
+        //     data:{collection:[]},
         //     success(){
         //         console.log("ok");
         //     }
@@ -254,9 +239,7 @@ $(function(){
     document.cookie = "username = sfda";
     //热评的点击
     $(".hotComment").on('click','li',function(){
-        //window.localStorage.setItem("from",window.location.href+"?from");
         createFrom(2);
-       // window.location = "../detail.html?id=" + hotComment[Number(this.getAttribute("index"))].topic_id + "&from=" +window.location.href;
          goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
 
@@ -802,7 +785,7 @@ function createFrom(a){
     var url;
     var temp;
     temp = window.location.href;
-    temp =  temp.replace(/from=(.+?)(&|#|$|\?)/g,"");
+    temp =  temp.replace(/&?from=(.+?)(&|#|$|\?)/g,""); 
     if(userId === myData.id){
         temp = temp.replace(/\?/g,"");
         url = temp+"?from="+a;
@@ -811,3 +794,4 @@ function createFrom(a){
     }
     window.localStorage.setItem("from",url);
 }
+

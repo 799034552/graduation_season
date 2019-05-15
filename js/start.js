@@ -1,8 +1,9 @@
 $(document).ready(function () {
     var url = location.search; //获取泡泡页传过来的参数 
     // var url = '?id=150&id=2&id=6&id=7&id=8'
-    if (url != '') {
         var topic_id = new Array();
+    var topic_id_index = 0
+    if (url != '') {
         var args = {};
         var  query = url.replace('?', '');
         var pairs = query.split("&");
@@ -17,16 +18,15 @@ $(document).ready(function () {
             topic_id[i] = value;
         }
     //生成我的专属热搜，添加泡泡页传来的话题
-    var index = 0
     function getTopics() {
-        $.get(baseurl + "/topics/" + topic_id[index++], function (data, status) {
+        $.get(baseurl + "/topics/" + topic_id[topic_id_index++], function (data, status) {
             insertTopic(data.title);
-            if (topic_id[index]) {
+            if (topic_id[topic_id_index]) {
                 getTopics();
             }
         })
     }
-    if (topic_id[index]) {
+    if (topic_id[topic_id_index]) {
         getTopics()
     }
     // $.get(baseurl + "/topics/" + topic_id[0], function (data, status) {
@@ -44,14 +44,14 @@ $(document).ready(function () {
     //         })
     //     })
     // })
-}
     //获取微信昵称
+}
     $.ajax({
         type: 'get',
         url: baseurl + '/users',
         success: function (data, status) {
             // alert('a');
-            if (url == '') {
+            if (!topic_id[topic_id_index]) {
                 if (data.collection.length == 0) {
                     var name = data.name;
                     var user_id = data.id;
@@ -123,7 +123,7 @@ $(document).ready(function () {
             $(this).addClass("hide");
             if (list.length == 4) {//改变button的颜色
                 $('.choiceButton button').text('选好啦');
-                $('.choiceButton button').css('color', 'black');
+                $('.choiceButton button').css('background-color', 'rgb(246, 184, 102)');
             }
         }
     })
@@ -150,7 +150,7 @@ $(document).ready(function () {
         }
         if (list.length <= 4) {//改变button的文字
             $('.choiceButton button').text('选择五个话题');
-            $('.choiceButton button').css('color', 'gray');
+            $('.choiceButton button').css('background-color', 'rgb(249, 208, 155)');
         }
     })
 

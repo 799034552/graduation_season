@@ -5,7 +5,7 @@
 
 .background{
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     overflow: hidden;
     display: block;
@@ -42,6 +42,7 @@
     height: 100%;
     overflow: hidden;
     line-height: 8vw;
+    font-size: 4.3vw;
 }
 .information span{
     font-weight: bold;
@@ -71,31 +72,35 @@
 .bgchoiceTopic{
     position: relative;
     width: 100vw;
-    height: 100vh;
-    overflow: scroll;
+    min-height: 100vh;
+    overflow: hidden;
     display: none;
+    background-image: url(../img/bg22.jpg);
+    background-size: cover;
 }
 .choiceTitle{
-    position: absolute;
+    position: relative;
     width: 77vw;
     height: 6.3vw;
-    top:12.3vw;
-    left:13.5vw;
+    margin-top: 12.3vw;
+    margin-left: 13.5vw;
     font-size: 6vw;
     line-height: 6.3vw;
     font-family: HYYouYuanTiJ;
 }
 .pchoiced{
-    position: absolute;
-    top:21vw;
-    left:14vw;
+    position: relative;
+    margin-top: 5px;
+    margin-left: 10.4vw;
+    width: 79vw;
+    font-size: 4.5vw;
 }
 .userChoiced{
-    position: absolute;
-    top:27.5vw;
-    left:10.4vw;
+    position: relative;
+    margin-top: 1px;
+    margin-left: 10.4vw;
     width:79vw;
-    height: 10vw;
+    /*height: 10vw;*/
     text-align: center;
 }
 .userChoiced>p{
@@ -122,35 +127,40 @@
     cursor: pointer;
 }
 .choice{
-    position: absolute;
+    position: relative;
     width:79vw;
-    height: 65vw;
-    top:88vw;
-    left:10.4vw;
-    overflow:scroll;
+    /*height: 65vw;*/
+    margin: 0 auto;
+    /*left:10.4vw;*/
+    overflow: hidden;
     text-align: center;
 }
 .choiceButton{
-    position: absolute;
-    top:160vw;
+    position: relative;
+    margin-top: 20px;
     width:100vw;
     text-align: center;
     margin-bottom: 10vw;
 }
 .choiceButton button{
-    height:8vw;
-    width:30vw;
-    background-color: rgb(179, 178, 178);
-    border-radius: 3vw;
+    height: 8vw;
+    width: 35vw;
+    /*background-color: rgb(179, 178, 178);*/
+    border-radius: 4vw;
     font-size: 5vw;
-    color:gray;
+    line-height: 8vw;
+    /*color:gray;*/
     border: 0px;
     cursor: pointer;
+    -webkit-appearance: none;
+    background-color: rgb(249, 208, 155);
+    color: #fff;
 }
 .rechoice{
-    position: absolute;
-    top:83vw;
-    left:14vw;
+    position: relative;
+    margin-top: 20px;
+    margin-left: 14vw;
+    font-size: 4.5vw;
 }
 .topic{
     position: relative;
@@ -242,6 +252,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: left;
+    font-size: 4vw;
+}
+.userChoiced>p{
+    position: relative;
 }
 /* 引导页面 */
 .leading{

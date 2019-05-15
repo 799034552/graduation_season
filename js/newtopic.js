@@ -5,17 +5,26 @@ var getFinish = false;
 $(document).ready(function(){
   $("#reply").hide();
 });
+var rule = /id=(.*?)$/;
 $(function(){
-  $.get(baseurl + "/users",function(data,status){
-    myData = data;
-    myid = myData.id;
-    getFinish = true; 
-    console.log(data);    
-  });
+  var temp = rule.exec(window.location.href);
+  if(temp){
+    myid = temp[1];
+  } else {
+    $.get(baseurl + "/users",function(data,status){
+      myData = data;
+      myid = myData.id;
+      getFinish = true; 
+      console.log(data);    
+    });
+
+  }
+
 })
 
 
 function sentTopic(){
+  console.log(myid);
   if(getFinish){
     var title = $("#input_topic").val();
     var content = $("#input_content").val();
