@@ -256,8 +256,11 @@ body .deleteBoxActive{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 15;
+    z-index: 50;
+    opacity: 0;
+    transition: all 2s;
 }
+
 .refresh button{
     background: url("../img/button_create.svg");
     background-size: 110% 110%;
@@ -462,7 +465,8 @@ body .deleteBoxActive{
     display: flex;
     align-items: center;
     margin-bottom:54px; 
-    background: white;
+    background: rgba(255,255,255,.7);
+    
 }
 .love{
     position: absolute;
@@ -591,7 +595,7 @@ body .deleteBoxActive{
     list-style: none;
     margin-top:100px;
     margin-bottom:100px;
-    background: white;
+    background :rgba(255,255,255,.7);
 }
 .hotSearch li{
     
@@ -664,12 +668,11 @@ body .deleteBoxActive{
     background-position: bottom;
 }
 .bubbleBox{
-    overflow: scroll;
+    position: relative;
+    
     z-index: 50;
-    height: 100vh;
-    background: url("../img/bg22.jpg");
-    background-size: 100% 100%;
-    background-position: bottom;
+    height: 100%;
+    min-height: 2000px;
 
 }
 .light{
@@ -689,6 +692,14 @@ body .deleteBoxActive{
 }
 .secondToFirst{
     box-shadow: 8px 0 25px black ;
+}
+.upbubble{
+    background: url("../img/bg22.jpg");
+    background-size: 100% 100%;
+    background-position: bottom;
+    overflow: scroll;
+    height: 100vh;
+    width:100vw;
 }
 
 
