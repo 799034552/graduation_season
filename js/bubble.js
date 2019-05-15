@@ -787,10 +787,11 @@ function getAnother(id){
 function createMy(){
     var sendData = [];
     var list = $(".oneItem");
-    for(var i = 0;i<list.length-1;i++){
-        sendData += ("topic_id=" + list[i].getAttribute("id"));
+    for(var i = 0;i<list.length-2;i++){
+        sendData += ("topic_id=" + list[i].getAttribute("id") + "&");
     }
-    window.location = baseurl + "start.html?" + sendData;
+    sendData += ("topic_id=" + list[i].getAttribute("id"));
+    window.location = "../start.html?" + sendData;
 
 }
 function addother(){

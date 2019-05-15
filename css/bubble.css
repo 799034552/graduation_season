@@ -338,7 +338,6 @@ body .deleteBoxActive{
     background: rgba(246, 184, 102, 0.90);
     color:white;
     z-index: 20;
-    box-shadow: 0 0 30px black ;
     opacity: 0.7;
 }
 .toThirdPage{
@@ -361,7 +360,6 @@ body .deleteBoxActive{
     top:50%;
     margin-top:-150px;
     background: rgba(246, 184, 102, 0.90);
-    box-shadow: 0 0 30px black ;
     color:white;
 }
 .picBox{
@@ -505,7 +503,7 @@ body .deleteBoxActive{
     height: 182px;
     width: 182px;
     margin-left: 2vw;
-    border-radius: 7vw;
+    border-radius: 50%;
     left:10vw;
     border:0.3vw black solid;
 }
@@ -685,6 +683,12 @@ body .deleteBoxActive{
     border-bottom:rgba(255, 255, 255, 0.8) 10px solid;
     border-radius: 100%;
     z-index: 100;
+}
+.firstToSecond{
+    box-shadow: 0 0 30px black ;
+}
+.secondToFirst{
+    box-shadow: 10px 0 20px black ;
 }
 
 

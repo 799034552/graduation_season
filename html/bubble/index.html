@@ -25,12 +25,13 @@
             <div class="swiper-container swiper-container-h">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
+                            <div onclick = "toNext()" class = "toThirdPage firstToSecond">泡泡页</div>
                         <div class = "maxShow sea">
                             <div class = "searchTop">
                                 <img alt = "这里是图片">
                                 <div>热搜榜</div>
                             </div>
-                            <div onclick = "toNext()" class = "toThirdPage">泡泡页</div>
+                            
                             <div onclick="isPicShow(1)" class = "showSearch">生成我<br>的专属<br>热搜</div>
                             <ul class = "hotSearch">
                                 <li class = "hotSearchTitle">热搜榜</li>
@@ -50,8 +51,8 @@
                     </div>
                     <div class="swiper-slide">
                         <div class = "s22Show back" onclick = "backToSecond()"></div>
-                        <div onclick="toForward()" class = "s21Show toFirstPage">热搜榜</div>
-                        <div onclick="toNext()" class = "s21Show toThirdPage">热评榜</div>
+                        <div onclick="toForward()" class = "s21Show toFirstPage secondToFirst">热搜榜</div>
+                        <div onclick="toNext()" class = "s21Show toThirdPage firstToSecond">热评榜</div>
                         <div class = "deleteBox">
                             拖动到这里隐藏
                         </div>
@@ -121,12 +122,13 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
+                            <div onclick = "toForward()" class = "toFirstPage secondToFirst">泡泡页</div>
                        <div class = "maxShow com">
                             <div class = "searchTop">
                                 <img alt = "这里是图片">
                                 <div>热搜榜</div>
                             </div>
-                            <div onclick = "toForward()" class = "toFirstPage">泡泡页</div>
+                            
                             <div onclick="isPicShow(1)" class = "showSearch">生成我<br>的专属<br>热搜</div>
                             <div class = "haveNoCom"><div>你这边没有热评哟</div></div>
                             <ul class = "hotComment">
