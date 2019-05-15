@@ -4,9 +4,7 @@ var title;
 var getFinish = false;
 $(document).ready(function(){
   $("#reply").hide();
-});
-var rule = /id=(.*?)$/;
-$(function(){
+  var rule = /id=(.*?)$/;
   var temp = rule.exec(window.location.href);
   if(temp){
     myid = temp[1];
@@ -17,11 +15,8 @@ $(function(){
       getFinish = true; 
       console.log(data);    
     });
-
   }
-
-})
-
+});
 
 function sentTopic(){
   console.log(myid);
