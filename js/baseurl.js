@@ -15,7 +15,7 @@ $.ajaxSetup({
           
       },
       500:function(){
-          alert("后端的锅");
+          console.log("后端的锅");
       }
     }
  });
