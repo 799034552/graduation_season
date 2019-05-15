@@ -83,9 +83,8 @@ $(function(){
             dataTime = data;
             ajaxFinish();
             $("#comment_time").hide();
-        });
-  
-
+  });
+   
   $("#sent_comment").hide();
   //点击回复区外隐藏回复框
   $(document).mouseup(function (e) {
@@ -105,7 +104,12 @@ $(function(){
     }else{
       $("#comment_time").empty();
       timeReversal = !timeReversal;
-      loadComment(dataTime,"time",timeReversal);      
+      loadComment(dataTime,"time",timeReversal);
+      if(timeReversal){
+        $("#sort_img").attr("src","../img/sort_old.png"); 
+      }else{
+        $("#sort_img").attr("src","../img/sort_new.png");
+      } 
     }
   })
 //按热度排序
@@ -267,22 +271,46 @@ function loadComment(data, sort ,Reversal){
     
     if(subcommentNum==0){
       ;
-    }else{
-      for(var j = 0; j < 1; j++){
+    }else if(subcommentNum<4){
+      for(var j = 0; j < subcommentNum; j++){
          $(subcommentID).append(
-          "<img class=\"sub_avatar\"  src= " + data.comments[i].subcomments[j].creator.avatar + ">"+
-          "<p class=\"sub_username\">" + data.comments[i].subcomments[j].creator.name +"</p>"+
-          "<p class=\"subcontent\" id=\"subcontent_" + sort + i + "_" + j + "\">"+data.comments[i].subcomments[j].content+"</p>"
+          "<div id=\"subcomment_" + sort + i + "_" + j + "\" class=\"comment_subcomment\" >"+
+            "<img class=\"sub_avatar\"  src= " + data.comments[i].subcomments[j].creator.avatar + ">"+
+            "<p class=\"sub_username\">" + data.comments[i].subcomments[j].creator.name +"</p>"+
+            "<p class=\"subcontent\" id=\"subcontent_" + sort + i + "_" + j + "\">"+data.comments[i].subcomments[j].content+"</p>"+
+          "</div>"
           );
-         var subcontentID = "#subcontent_" + sort + i + "_" + j;   
-         if(j == 0){
-          subcontentHeight = parseInt($(subcontentID).css("top"));
-         }//获取初始高度
-          
-
-          $(subcontentID).css("top", subcontentHeight);
-          var subcontentTop = parseInt($(subcontentID).css("height")) ;//获取子评论高度
-          subcontentHeight = subcontentHeight + subcontentTop;//累加子评论区高度
+         var comment_subcommentID ="#subcomment_"+ sort + i + "_" + j;
+         
+         var subcontentID = "#subcontent_" + sort + i + "_" + j; 
+         var commentHeight = parseInt($(subcontentID).css("height")) + parseInt($(comment_subcommentID).css("height"));
+        $(comment_subcommentID).css("top", subcontentHeight);
+        $(comment_subcommentID).css("height", commentHeight);
+        subcontentHeight = subcontentHeight + commentHeight;//累加子评论区高度
+      }
+      //$(subcommentID).append(
+     //   "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"subcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
+     // )
+      //var moreSubcomment = "#subcontent_"+ sort + i;
+      //subcontentHeight = subcontentHeight + parseInt($(moreSubcomment).css("top"));
+      //$(moreSubcomment).css("top", subcontentHeight);     
+     // subcontentHeight = subcontentHeight + parseInt($(moreSubcomment).css("height")) ;
+    }else {
+      for(var j = 0; j < 3; j++){
+         $(subcommentID).append(
+          "<div id=\"subcomment_" + sort + i + "_" + j + "\" class=\"comment_subcomment\" >"+
+            "<img class=\"sub_avatar\"  src= " + data.comments[i].subcomments[j].creator.avatar + ">"+
+            "<p class=\"sub_username\">" + data.comments[i].subcomments[j].creator.name +"</p>"+
+            "<p class=\"subcontent\" id=\"subcontent_" + sort + i + "_" + j + "\">"+data.comments[i].subcomments[j].content+"</p>"+
+          "</div>"
+          );
+         var comment_subcommentID ="#subcomment_"+ sort + i + "_" + j;
+         
+         var subcontentID = "#subcontent_" + sort + i + "_" + j; 
+         var commentHeight = parseInt($(subcontentID).css("height")) + parseInt($(comment_subcommentID).css("height"));
+        $(comment_subcommentID).css("top", subcontentHeight);
+        $(comment_subcommentID).css("height", commentHeight);
+        subcontentHeight = subcontentHeight + commentHeight;//累加子评论区高度
       }
       $(subcommentID).append(
         "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"subcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
@@ -344,7 +372,7 @@ function subcomment(subcommentNum , sequenceNum , data ){
   $("#base").append(
             "<div id=\"subcomment_detail\">"+
               "<div id=\"subcomment_detail_head\">"+
-              "<img id=\"back\" onclick=\"back("+ sequenceNum + ", hotSort )\" src=\"../img/cross.png\">"+
+              "<img id=\"back\" onclick=\"back("+ sequenceNum + ", hotSort )\" src=\"../img/back.png\">"+
               "<p class=\"subtopic\">" +data.comments[sequenceNum].creator.name+ "的评论</p>"+
               "</div>"+
             "</div>"
