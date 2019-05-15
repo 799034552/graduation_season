@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var url = location.search; //获取泡泡页传过来的参数 
-    // var url = '?id=1&id=2&id=6&id=7&id=8'
+    // var url = '?id=20&id=2&id=6&id=7&id=8'
     if (url != '') {
         var topic_id = new Array();
         var args = {};
@@ -15,41 +15,132 @@ $(document).ready(function () {
             args[name] = value;
             topic_id[i] = value;
         }
-        $.ajax({
+
+
+     
+        // alert(topic_id[1]);
+        // $.ajax({
+        //     type: "get",
+        //     url: baseurl + '/topics',
+        //     data:
+        //         [
+        //             { "id": topic_id[0] },
+        //             { "id": topic_id[1] },
+        //             { "id": topic_id[2] },
+        //             { "id": topic_id[3] },
+        //             { "id": topic_id[4] },
+        //         ],
+        //     success: function (data) {
+        //         for (i = 0; i < 5; i++) {
+        //             $('.choice').append(
+        //                 '<div class="topic show">' +
+        //                 '<div>' +
+        //                 '<img class="topicimg" src="../img/topic.png" alt="new">' +
+        //                 '<img class="fireimg" src="../img/fire.png" alt="">' +
+        //                 '<p>' + data[i].title + '</p>' +
+        //                 '</div>' +
+        //                 '</div>'
+        //             )
+        //         }
+        //     },
+        //     error: function () {
+
+        //     }
+        // })
+
+        $.ajax({//获取topic
             type: "get",
             url: baseurl + '/topics',
-            data:
-                [
-                    { "id": topic_id[0] },
-                    { "id": topic_id[1] },
-                    { "id": topic_id[2] },
-                    { "id": topic_id[3] },
-                    { "id": topic_id[4] },
-                ],
+            data: { id: topic_id[0] },
             success: function (data) {
-                for (i = 0; i < 5; i++) {
-                    $('.choice').append(
-                        '<div class="topic show">' +
-                        '<div>' +
-                        '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                        '<img class="fireimg" src="../img/fire.png" alt="">' +
-                        '<p>' + data[i].title + '</p>' +
-                        '</div>' +
-                        '</div>'
-                    )
-                }
+                alert('a');
+                $('.choice').append(
+                    '<div class="topic show">' +
+                    '<div>' +
+                    '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                    '<img class="fireimg" src="../img/fire.png" alt="">' +
+                    '<p>' + data.title + '</p>' +
+                    '</div>' +
+                    '</div>'
+                )
+                $.ajax({
+                    type: "get",
+                    url: baseurl + '/topics',
+                    data: { id: topic_id[1] },
+                    success: function (data) {
+                        $('.choice').append(
+                            '<div class="topic show">' +
+                            '<div>' +
+                            '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                            '<img class="fireimg" src="../img/fire.png" alt="">' +
+                            '<p>' + data.title + '</p>' +
+                            '</div>' +
+                            '</div>'
+                        )
+                        $.ajax({
+                            type: "get",
+                            url: baseurl + '/topics',
+                            data: { id: topic_id[2] },
+                            success: function (data) {
+                                $('.choice').append(
+                                    '<div class="topic show">' +
+                                    '<div>' +
+                                    '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                                    '<img class="fireimg" src="../img/fire.png" alt="">' +
+                                    '<p>' + data.title + '</p>' +
+                                    '</div>' +
+                                    '</div>'
+                                )
+                                $.ajax({
+                                    type: "get",
+                                    url: baseurl + '/topics',
+                                    data: { id: topic_id[3] },
+                                    success: function (data) {
+                                        $('.choice').append(
+                                            '<div class="topic show">' +
+                                            '<div>' +
+                                            '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                                            '<img class="fireimg" src="../img/fire.png" alt="">' +
+                                            '<p>' + data.title + '</p>' +
+                                            '</div>' +
+                                            '</div>'
+                                        )
+                                        $.ajax({
+                                            type: "get",
+                                            url: baseurl + '/topics',
+                                            data: { id: topic_id[4] },
+                                            success: function (data) {
+                                                $('.choice').append(
+                                                    '<div class="topic show">' +
+                                                    '<div>' +
+                                                    '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                                                    '<img class="fireimg" src="../img/fire.png" alt="">' +
+                                                    '<p>' + data.title + '</p>' +
+                                                    '</div>' +
+                                                    '</div>'
+                                                )
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
             },
             error: function () {
-
+                // alert('失败了呢');
             }
+
         })
     }
-    //获取微信昵称
 
-    $.ajax({
+    //获取微信昵称
+       $.ajax({
         type: 'get',
         url: baseurl + '/users',
         success: function (data, status) {
+            // alert('a');
             if (url == '') {
                 if (data.collection.length == 0) {
                     var name = data.name;
@@ -62,6 +153,7 @@ $(document).ready(function () {
                 }
             } else {
                 var name = data.name;
+                $('.topic span').text(name);
                 $('.user_id').text(user_id);
 
             }
@@ -70,6 +162,7 @@ $(document).ready(function () {
 
         }
     })
+
     $('.button button').click(function () {
         $('.background').css('display', 'none');
         $('.bgchoiceTopic').css('display', 'block');
@@ -161,40 +254,91 @@ $(document).ready(function () {
             topic_comment[3] = $('.userChoiced div:nth-child(4) p').text();
             topic_comment[4] = $('.userChoiced div:nth-child(5) p').text();
             var user_id = $('.user_id').text();
+            // $.ajax({
+            //     type: 'post',
+            //     url: baseurl + '/topics',
+            //     data:
+            //         [
+            //             {
+            //                 title: topic_comment[0],
+            //                 target_id: user_id,
+            //             },
+            //             {
+            //                 title: topic_comment[1],
+            //                 target_id: user_id
+            //             },
+            //             {
+            //                 title: topic_comment[2],
+            //                 target_id: user_id
+            //             },
+            //             {
+            //                 title: topic_comment[3],
+            //                 target_id: user_id
+            //             },
+            //             {
+            //                 title: topic_comment[4],
+            //                 target_id: user_id
+            //             },
+            //         ],
+            //     success: function (data, status) {
+            //         window.location.href = "bubble/index.html";
+
+            //     },
+            //     error: function (data) {
+            //         alert('请求失败');
+            //     }
+
+            // })
             $.ajax({
-                type: 'post',
+                type: "post",
                 url: baseurl + '/topics',
-                data:
-                    [
-                        {
-                            title: topic_comment[0],
+                data: {
+                    title: topic_comment[0],
+                    target_id: user_id,
+                },
+                success: function () {
+                    $.ajax({
+                        type: "post",
+                        url: baseurl + '/topics',
+                        data: {
+                            title: topic_comment[1],
                             target_id: user_id,
                         },
-                        {
-                            title: topic_comment[1],
-                            target_id: user_id
-                        },
-                        {
-                            title: topic_comment[2],
-                            target_id: user_id
-                        },
-                        {
-                            title: topic_comment[3],
-                            target_id: user_id
-                        },
-                        {
-                            title: topic_comment[4],
-                            target_id: user_id
-                        },
-                    ],
-                success: function (data, status) {
-                    window.location.href = "bubble/index.html";
-
-                },
-                error: function (data) {
-                    alert('请求失败');
+                        success: function () {
+                            $.ajax({
+                                type: "post",
+                                url: baseurl + '/topics',
+                                data: {
+                                    title: topic_comment[2],
+                                    target_id: user_id,
+                                },
+                                success: function () {
+                                    $.ajax({
+                                        type: "post",
+                                        url: baseurl + '/topics',
+                                        data: {
+                                            title: topic_comment[3],
+                                            target_id: user_id,
+                                        },
+                                        success: function () {
+                                            $.ajax({
+                                                type: "post",
+                                                url: baseurl + '/topics',
+                                                data: {
+                                                    title: topic_comment[4],
+                                                    target_id: user_id,
+                                                },
+                                                success: function () {
+                                                    window.location.href = "bubble/index.html";
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
                 }
-
             })
 
         }
