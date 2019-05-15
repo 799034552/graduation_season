@@ -1,23 +1,81 @@
-$(document).ready(function () { 
+$(document).ready(function () {
+    var url = location.search; //获取泡泡页传过来的参数 
+    // var url = '?id=1&id=2&id=6&id=7&id=8'
+    if (url != '') {
+        var topic_id = new Array();
+        var args = {};
+        var query = url;
+        var pairs = query.split("&");
+        for (var i = 0; i < pairs.length; i++) {
+            var pos = pairs[i].indexOf("=");
+            if (pos == -1) continue;
+            var name = pairs[i].substring(0, pos);
+            var value = pairs[i].substring(pos + 1);
+            value = decodeURIComponent(value);
+            args[name] = value;
+            topic_id[i] = value;
+        }
+        $.ajax({
+            type: "get",
+            url: baseurl + '/topics',
+            data:
+                [
+                    { "id": topic_id[0] },
+                    { "id": topic_id[1] },
+                    { "id": topic_id[2] },
+                    { "id": topic_id[3] },
+                    { "id": topic_id[4] },
+                ],
+            success: function (data) {
+                for (i = 0; i < 5; i++) {
+                    $('.choice').append(
+                        '<div class="topic show">' +
+                        '<div>' +
+                        '<img class="topicimg" src="../img/topic.png" alt="new">' +
+                        '<img class="fireimg" src="../img/fire.png" alt="">' +
+                        '<p>' + data[i].title + '</p>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                }
+            },
+            error: function () {
+
+            }
+        })
+    }
+    //获取微信昵称
+
+    $.ajax({
+        type: 'get',
+        url: baseurl + '/users',
+        success: function (data, status) {
+            if (url == '') {
+                if (data.collection.length == 0) {
+                    var name = data.name;
+                    var user_id = data.id;
+                    $('.topic span').text(name);
+                    $('.user_id').text(user_id);
+                }
+                else {
+                    window.location.href = "bubble/index.html";
+                }
+            } else {
+                var name = data.name;
+                $('.user_id').text(user_id);
+
+            }
+        },
+        error: function () {
+
+        }
+    })
     $('.button button').click(function () {
         $('.background').css('display', 'none');
         $('.bgchoiceTopic').css('display', 'block');
     })
-    //获取微信昵称
-    var name;
-        $.ajax({
-            type:'get',
-            url:baseurl+'/users',
-            success:function(data,status){
-                name=data.name;
-                $('.topic span').text(name);
-            },
-            error:function(){ 
-              
-            }
-        })
-        //引导页面图片滑动
-        var mySwiper = new Swiper('.swiper-container', {
+    //引导页面图片滑动
+    var mySwiper = new Swiper('.swiper-container', {
         direction: 'horizontal',
         pagination: {
             el: '.swiper-pagination',
@@ -41,6 +99,12 @@ $(document).ready(function () {
         var list = $('.userChoiced').children();
         console.log(list);
         $('.userChoiced>p').remove();
+        var self = this;//防止多次点击
+        this.disabled = true;
+        function recover() {
+            self.disabled = false;
+        }
+        setTimeout(recover, 1000);
         if (list.length <= 4) {
             $('.userChoiced').append(//添加话题
                 '<div class="show">' +
@@ -67,7 +131,7 @@ $(document).ready(function () {
         $('.choice').append(
             '<div class="topic show">' +
             '<div>' +
-            '<img class="topicimg" src="../img/topic.png" alt="">' +
+            '<img class="topicimg" src="../img/topic.png" alt="new">' +
             '<img class="fireimg" src="../img/fire.png" alt="">' +
             '<p>' + content1 + '</p>' +
             '<div>' + topicId1 + '</div>' +
@@ -87,35 +151,52 @@ $(document).ready(function () {
         }
     })
 
-    //传输话题id
     $('.choiceButton').click(function () {
         var list = $('.userChoiced').children();
+        var topic_comment = new Array();
         if (list.length == 5) {
-            var topic_id1 = $('.userChoiced div:nth-child(1) div').text();
-            var topic_id2 = $('.userChoiced div:nth-child(2) div').text();
-            var topic_id3 = $('.userChoiced div:nth-child(3) div').text();
-            var topic_id4 = $('.userChoiced div:nth-child(4) div').text();
-            var topic_id5 = $('.userChoiced div:nth-child(5) div').text();
-            console.log(topic_id1);
-            console.log(topic_id2);
-            console.log(topic_id3);
-            console.log(topic_id4);
-            console.log(topic_id5);
+            topic_comment[0] = $('.userChoiced div:nth-child(1) p').text();
+            topic_comment[1] = $('.userChoiced div:nth-child(2) p').text();
+            topic_comment[2] = $('.userChoiced div:nth-child(3) p').text();
+            topic_comment[3] = $('.userChoiced div:nth-child(4) p').text();
+            topic_comment[4] = $('.userChoiced div:nth-child(5) p').text();
+            var user_id = $('.user_id').text();
             $.ajax({
-                type:'put',
-                url:baseurl+'/users/collection',
-                data:{
-                    "collection":[topic_id1,topic_id2,topic_id3,topic_id4,topic_id5]
-                },
-                success:function(data,status){
-                   window.location.href = "bubble/index.html";
-                //    window.location.href = "https://graduation2019.100steps.net/auth/jump";
+                type: 'post',
+                url: baseurl + '/topics',
+                data:
+                    [
+                        {
+                            title: topic_comment[0],
+                            target_id: user_id,
+                        },
+                        {
+                            title: topic_comment[1],
+                            target_id: user_id
+                        },
+                        {
+                            title: topic_comment[2],
+                            target_id: user_id
+                        },
+                        {
+                            title: topic_comment[3],
+                            target_id: user_id
+                        },
+                        {
+                            title: topic_comment[4],
+                            target_id: user_id
+                        },
+                    ],
+                success: function (data, status) {
+                    window.location.href = "bubble/index.html";
 
                 },
-                error:function(result){ 
-                   alert('请求用户信息失败');
+                error: function (data) {
+                    alert('请求失败');
                 }
+
             })
+
         }
     })
 })
