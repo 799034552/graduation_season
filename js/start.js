@@ -15,8 +15,6 @@ $(document).ready(function () {
             args[name] = value;
             topic_id[i] = value;
         }
-    
-
     //生成我的专属热搜，添加泡泡页传来的话题
     $.get(baseurl + "/topics/" + topic_id[0], function (data, status) {
         $('.choice').append(
@@ -193,90 +191,39 @@ $(document).ready(function () {
             topic_comment[3] = $('.userChoiced div:nth-child(4) p').text();
             topic_comment[4] = $('.userChoiced div:nth-child(5) p').text();
             var user_id = $('.user_id').text();
-            // $.ajax({
-            //     type: 'post',
-            //     url: baseurl + '/topics',
-            //     data:
-            //         [
-            //             {
-            //                 title: topic_comment[0],
-            //                 target_id: user_id,
-            //             },
-            //             {
-            //                 title: topic_comment[1],
-            //                 target_id: user_id
-            //             },
-            //             {
-            //                 title: topic_comment[2],
-            //                 target_id: user_id
-            //             },
-            //             {
-            //                 title: topic_comment[3],
-            //                 target_id: user_id
-            //             },
-            //             {
-            //                 title: topic_comment[4],
-            //                 target_id: user_id
-            //             },
-            //         ],
-            //     success: function (data, status) {
-            //         window.location.href = "bubble/index.html";
-
-            //     },
-            //     error: function (data) {
-            //         alert('请求失败');
-            //     }
-
-            // })
             $.ajax({
-                type: "post",
+                type: 'post',
                 url: baseurl + '/topics',
-                data: {
-                    title: topic_comment[0],
-                    target_id: user_id,
+                headers:{
+                    "Content-Type":"application/json"
                 },
-                success: function () {
-                    $.ajax({
-                        type: "post",
-                        url: baseurl + '/topics',
-                        data: {
-                            title: topic_comment[1],
-                            target_id: user_id,
+                data: JSON.stringify({
+                    target_id:user_id,
+                    list:[
+                        {
+                            title : topic_comment[0],
                         },
-                        success: function () {
-                            $.ajax({
-                                type: "post",
-                                url: baseurl + '/topics',
-                                data: {
-                                    title: topic_comment[2],
-                                    target_id: user_id,
-                                },
-                                success: function () {
-                                    $.ajax({
-                                        type: "post",
-                                        url: baseurl + '/topics',
-                                        data: {
-                                            title: topic_comment[3],
-                                            target_id: user_id,
-                                        },
-                                        success: function () {
-                                            $.ajax({
-                                                type: "post",
-                                                url: baseurl + '/topics',
-                                                data: {
-                                                    title: topic_comment[4],
-                                                    target_id: user_id,
-                                                },
-                                                success: function () {
-                                                    window.location.href = "bubble/index.html";
-                                                }
-                                            })
-                                        }
-                                    })
-                                }
-                            })
+                        {
+                            title:topic_comment[1],
+                        },
+                        {
+                            title:topic_comment[2],
+                        },
+                        {
+                            title:topic_comment[3],
+                        },
+                        {
+                            title:topic_comment[4],
                         }
-                    })
+                    ]
+                }),
+                    
+                success: function (data, status) {
+                    window.location.href = "bubble/index.html";
+
+                },
+                error: function (data) {
+                    alert('发送失败');
                 }
             })
 

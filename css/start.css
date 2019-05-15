@@ -7,7 +7,7 @@
     position: relative;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow:scroll;
     display: block;
 }
 
@@ -46,10 +46,10 @@
 .button{
     position:absolute;
     width: 100vw;
-    top:150vw;
+    top:141vw;
     text-align: center;
     cursor: pointer;
-    margin-top: 5vw;
+    margin-bottom: 5vw;
 }
 .button button{
     width: 30vw;
@@ -128,7 +128,7 @@
     top:160vw;
     width:100vw;
     text-align: center;
-    margin-bottom: 8vw;
+    margin-bottom: 10vw;
 }
 .choiceButton button{
     height:8vw;
@@ -170,6 +170,7 @@
 }
 .topic div p{
     position:absolute;
+    font-size:4vw;
     width:80%;
     height:100%;
     left:10vw;
