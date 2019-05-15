@@ -1,6 +1,6 @@
 #input_topic{
 	position: absolute;
-	top:29vw;
+	top:20vw;
 	width: 83vw;
 	left: calc(8.5vw - 3px);
 	font-size: 6vw;
@@ -11,9 +11,9 @@
 
 #input_content{
 	position: absolute;
-	top:45vw;
+	top:35vw;
 	width: 83vw;
-	height: 47vw;
+	height: 45vw;
 	left: calc(8.5vw - 3px);
 	font-size: 6vw;
 	cursor: pointer;
@@ -23,7 +23,7 @@
 
 #commit_topic{
 	position: absolute;
-	bottom: 30vw;
+	top: 65vh;
 	width: 38.89vw;
 	height:12.5vw;
 	left: 30.555vw;
