@@ -17,55 +17,15 @@ $(document).ready(function () {
         }
     //生成我的专属热搜，添加泡泡页传来的话题
     $.get(baseurl + "/topics/" + topic_id[0], function (data, status) {
-        $('.choice').append(
-            '<div class="topic show">' +
-            '<div>' +
-            '<img class="topicimg" src="../img/topic.png" alt="new">' +
-            '<img class="fireimg" src="../img/fire.png" alt="">' +
-            '<p>' + data.title + '</p>' +
-            '</div>' +
-            '</div>'
-        )
+        insertTopic(data.title)
         $.get(baseurl + "/topics/" + topic_id[1], function (data, status) {
-            $('.choice').append(
-                '<div class="topic show">' +
-                '<div>' +
-                '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                '<img class="fireimg" src="../img/fire.png" alt="">' +
-                '<p>' + data.title + '</p>' +
-                '</div>' +
-                '</div>'
-            )
+            insertTopic(data.title)
             $.get(baseurl + "/topics/" + topic_id[2], function (data, status) {
-                $('.choice').append(
-                    '<div class="topic show">' +
-                    '<div>' +
-                    '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                    '<img class="fireimg" src="../img/fire.png" alt="">' +
-                    '<p>' + data.title + '</p>' +
-                    '</div>' +
-                    '</div>'
-                )
+                insertTopic(data.title)
                 $.get(baseurl + "/topics/" + topic_id[3], function (data, status) {
-                    $('.choice').append(
-                        '<div class="topic show">' +
-                        '<div>' +
-                        '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                        '<img class="fireimg" src="../img/fire.png" alt="">' +
-                        '<p>' + data.title + '</p>' +
-                        '</div>' +
-                        '</div>'
-                    )
+                    insertTopic(data.title)
                     $.get(baseurl + "/topics/" + topic_id[4], function (data, status) {
-                        $('.choice').append(
-                            '<div class="topic show">' +
-                            '<div>' +
-                            '<img class="topicimg" src="../img/topic.png" alt="new">' +
-                            '<img class="fireimg" src="../img/fire.png" alt="">' +
-                            '<p>' + data.title + '</p>' +
-                            '</div>' +
-                            '</div>'
-                        )
+                        insertTopic(data.title)
                     })
                 })
             })
@@ -201,18 +161,23 @@ $(document).ready(function () {
                     target_id:user_id,
                     list:[
                         {
-                            title : topic_comment[0],
+                            content:"",
+                            title:topic_comment[0],
                         },
                         {
+                            content:"",
                             title:topic_comment[1],
                         },
                         {
+                            content:"",
                             title:topic_comment[2],
                         },
                         {
+                            content:"",
                             title:topic_comment[3],
                         },
                         {
+                            content:"",
                             title:topic_comment[4],
                         }
                     ]
@@ -231,3 +196,14 @@ $(document).ready(function () {
     })
 })
 
+function insertTopic(title){
+    $('.choice').append(
+        '<div class="topic show">' +
+        '<div>' +
+        '<img class="topicimg" src="../img/topic.png" alt="new">' +
+        '<img class="fireimg" src="../img/fire.png" alt="">' +
+        '<p>' + title + '</p>' +
+        '</div>' +
+        '</div>'
+    )
+}
