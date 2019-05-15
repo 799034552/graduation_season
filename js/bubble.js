@@ -134,7 +134,6 @@ $(function(){
 
     slideInit();//初始化滑动插件
     $(".maxShow").show();
-    
     pushHistory();//ios后退
 
     //检测是否是二维码进来的
@@ -145,19 +144,34 @@ $(function(){
         enterStatus = 0;
     }
     dragInit();
-        // $.ajax({
-        //     url:baseurl + "/users/collection",
-        //     method:'put',
-        //     data:{collection:[1,2,3,4,5,6,7,8,9,10,11,12,1,13]},
-        //     success(){
-        //         console.log("ok");
-        //     }
-        // })
         //  $.get("https://graduation2019.100steps.net/auth/fake/2",function(data,status,res){
     //获取用户信息
     $.get(baseurl + '/users',function(data,status,res){
         myData = data;
-        console.log(data)
+        console.log(data);
+        // $.ajax({
+        //     url:baseurl + "/topics",
+        //     method:'POST',
+        //     headers:{
+        //          "Content-Type":"application/json"
+        //     },
+        //     data:JSON.stringify({
+        //         target_id:2,
+        //         list:[
+        //             {
+        //                 title:"保护我方string",
+        //                 content: ""
+        //             },
+        //             {
+        //                 title:"还有20多天高考，我很慌",
+        //                 content:""
+        //             }
+        //         ]
+        //     }),
+        //     success(){
+        //         console.log("ok");
+        //     }
+        // })
         if(myData.collection.length === 0){
             enterStatus = 1;
         } else {
@@ -240,7 +254,7 @@ $(function(){
     document.cookie = "username = sfda";
     //热评的点击
     $(".hotComment").on('click','li',function(){
-        console.log("myurl=" + window.location.href);
+        window.localStorage.setItem("from",window.location.href+"?from");
        // window.location = "../detail.html?id=" + hotComment[Number(this.getAttribute("index"))].topic_id + "&from=" +window.location.href;
          goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
