@@ -4,7 +4,7 @@ $(document).ready(function () {
     if (url != '') {
         var topic_id = new Array();
         var args = {};
-        var  query = url;
+        var  query = url.replace('?', '');
         var pairs = query.split("&");
         for (var i = 0; i < pairs.length; i++) {
             var pos = pairs[i].indexOf("=");
@@ -12,25 +12,38 @@ $(document).ready(function () {
             var name = pairs[i].substring(0, pos);
             var value = pairs[i].substring(pos + 1);
             value = decodeURIComponent(value);
+            if (name != 'id') continue;
             args[name] = value;
             topic_id[i] = value;
         }
     //生成我的专属热搜，添加泡泡页传来的话题
-    $.get(baseurl + "/topics/" + topic_id[0], function (data, status) {
-        insertTopic(data.title)
-        $.get(baseurl + "/topics/" + topic_id[1], function (data, status) {
-            insertTopic(data.title)
-            $.get(baseurl + "/topics/" + topic_id[2], function (data, status) {
-                insertTopic(data.title)
-                $.get(baseurl + "/topics/" + topic_id[3], function (data, status) {
-                    insertTopic(data.title)
-                    $.get(baseurl + "/topics/" + topic_id[4], function (data, status) {
-                        insertTopic(data.title)
-                    })
-                })
-            })
+    var index = 0
+    function getTopics() {
+        $.get(baseurl + "/topics/" + topic_id[index++], function (data, status) {
+            insertTopic(data.title);
+            if (topic_id[index]) {
+                getTopics();
+            }
         })
-    })
+    }
+    if (topic_id[index]) {
+        getTopics()
+    }
+    // $.get(baseurl + "/topics/" + topic_id[0], function (data, status) {
+    //     insertTopic(data.title)
+    //     $.get(baseurl + "/topics/" + topic_id[1], function (data, status) {
+    //         insertTopic(data.title)
+    //         $.get(baseurl + "/topics/" + topic_id[2], function (data, status) {
+    //             insertTopic(data.title)
+    //             $.get(baseurl + "/topics/" + topic_id[3], function (data, status) {
+    //                 insertTopic(data.title)
+    //                 $.get(baseurl + "/topics/" + topic_id[4], function (data, status) {
+    //                     insertTopic(data.title)
+    //                 })
+    //             })
+    //         })
+    //     })
+    // })
 }
     //获取微信昵称
     $.ajax({
