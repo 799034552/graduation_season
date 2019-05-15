@@ -6,6 +6,7 @@ $(document).ready(function(){
   $("#reply").hide();
   var rule = /id=(.*?)$/;
   var temp = rule.exec(window.location.href);
+  console.log(temp);
   if(temp){
     myid = temp[1];
   } else {
