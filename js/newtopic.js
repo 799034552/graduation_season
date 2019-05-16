@@ -106,7 +106,7 @@ function sentTopic(){
           
         },
         error: function(data){
-          alert("错误——"+data.message);
+          alert("错误——"+data.responseJOSN.message);
         }
       });
     }
