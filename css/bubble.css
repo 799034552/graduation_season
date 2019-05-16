@@ -54,17 +54,18 @@ body .deleteBoxShow{
     transition: all 0s;
 }
 body .message{
-    height: 527px;
-    width: 527px;
     display:flex;
     align-items: center;
     justify-content: center;
     padding-left:  50px;
     padding-right:  50px;
     z-index: 200;
-
     text-align: center;
     word-break: normal;
+    display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 4;
+overflow: hidden;
 }
 .oneItem{
     color:black;
@@ -598,12 +599,24 @@ body .deleteBoxActive{
     background :rgba(255,255,255,.7);
 }
 .hotSearch li{
-    
     border-top: 2px solid #CCC;
-    height: 175px;
+    min-height: 175px;
     display: flex;
     align-items: center;
     padding-left: 50px;
+}
+.hotSearch li:not(.hotSearchTitle){
+    font-size: 0.69rem;
+}
+.hotSearch li div{
+    /* overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    text-overflow:ellipsis; */
+    width: 1200px;
+}
+.hotSearch li img{
+    margin-right:10px;
 }
 .hotSearchTitle{
     display: flex;
@@ -653,9 +666,11 @@ body .deleteBoxActive{
     justify-content: center;
     align-items: center;
     display: none;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 .haveNoCom div{
+    color:#CCC;
+    font-family: Georgia, serif;
 }
 .com{
     background: url("../img/bg33.jpg");
@@ -701,7 +716,30 @@ body .deleteBoxActive{
     height: 100vh;
     width:100vw;
 }
+#reply_success{
+    display: none;
+	position: fixed;
+	top:50vw;
+	left: 30vw;
+	width: 40vw;
+	height: 12vw;
+	background: rgba(188,188,188,.8);
+	border-radius: 3.5vw ;
+	z-index: 100;
+	line-height: 12vw;
 
+}
+#reply_success_text{
+    margin:0;
+    padding:0;
+	font-size: 4vw;
+	width: 100%;
+	height: 12vw;
+	line-height: 12vw;
+	left:0;
+	text-align: center;
+	color: #FFFFFF;
+}
 
 
 

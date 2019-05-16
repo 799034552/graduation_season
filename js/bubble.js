@@ -18,115 +18,10 @@ var addTopicUrl = "/??";
 var timeouts = [];
 var count1 = 0;
 var scale = [1,0.9,0.95,1,0.8,0.7];//气泡缩放
-var hotSearch = 
-    [
-        {
-            id: 123,
-            title: "string",
-        },
-        {
-            id: 123,
-            title: "string",
-        },
-        {
-            id: 123,
-            title: "string",
-        },
-        {
-            id: 123,
-            title: "string",
-        },
-    ]
+var hotSearch ;
 
-var hotComment = 
-    [
-        {
-        id: 1,
-        title: '矮冬瓜',
-        heat:{
-            id: 12,
-            name: 'string',
-            avatar: '../../img/king2.svg',
-            likes:34,
-            content:'的撒发二个而噩噩高大的嘎啊打发打发'
-        },
-        
-    },
-    {
-        id: 1,
-        title:'阿尔泰',
-        heat:{
-            id: 12,
-            name: '发',
-            avatar: '../../img/king2.svg',
-            likes:34,
-            content:'是否恢复深V萨特挖'
-        },
-    },
-    {
-        id: 1,
-        title:'案发前而且',
-        heat:{
-            id: 12,
-            name: 'string',
-            avatar: '../../img/king2.svg',
-            likes:34,
-            content:'爱过对方打电话通话'
-        },
-    },
-    {
-        id: 1,
-        title:'艾尔群若群',
-        heat:{
-            id: 12,
-            name: 'string',
-            avatar: '../../img/king2.svg',
-            likes:34,
-            content:'迅速放斯嘎尔天'
-        },
-        
-    },
-]
-var receiveData =     {
-    id: 123,
-    sex: 'integer(0为女, 1为男)',
-    name: 'string',
-    avatar: 'string(url)',
-    collection:[
-        {
-            id: 1,
-            title: '1111'
-        },
-        {
-            id: 2,
-            title: '2222'
-        },
-        {
-            id: 3,
-            title: '3333'
-        },
-        {
-            id: 4,
-            title: '444'
-        },
-        {
-            id: 5,
-            title: '555'
-        },
-        {
-            id: 6,
-            title: '666'
-        },
-        {
-            id: 7,
-            title: '777'
-        },
-        {
-            id: 8,
-            title: '888'
-        },
-    ]
-}
+var hotComment;
+var receiveData;
 var myData;//用户个人信息
 //初始化
 $(function(){
@@ -135,6 +30,7 @@ $(function(){
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     pushHistory();//ios后退
+    
 
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.search);
@@ -581,9 +477,11 @@ function refreshTopic(){
 //渲染热搜榜
 function hopSearchInit(){
     $(".hotSearch li:not(.hotSearchTitle)").remove();
+    console.log("hotinit");
     for(var i = 0; i < hotSearch.length;i++){
         var temp = document.createElement("li");
-        temp.innerHTML = (i+1)+"、" + hotSearch[i].title;
+        $(temp).append("<div><img src = '../../img/fire.png'>" + hotSearch[i].title + "</div>");
+        //temp.innerHTML = (i+1)+"、" + hotSearch[i].title;
         temp.setAttribute("id",hotSearch[i].topic_id);
         document.getElementsByClassName("hotSearch")[0].appendChild(temp);
     }
@@ -721,7 +619,12 @@ function  addToHotSearchList(){
             success(){
                 count1--;
                 if(count1 === 0){
-                    window.location = "./index.html";
+                    $("#reply_success").fadeIn("fast");
+                    setTimeout(function(){
+                        $("#reply_success").fadeOut("fast");
+                        window.location = "./index.html";
+                    },300);
+                    
                 }
             }
         })
@@ -729,7 +632,6 @@ function  addToHotSearchList(){
 
     console.log(sendData2);
     console.log(myData);
-
 
 }
 function backToSecond(){
