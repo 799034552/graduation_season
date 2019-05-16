@@ -2,10 +2,11 @@ var myData;
 var myid;
 var title;
 var getFinish = false;
+var temp;
 $(document).ready(function(){
   $("#reply").hide();
   var rule = /id=(.*?)$/;
-  var temp = rule.exec(window.location.href);
+  temp = rule.exec(window.location.href);
   console.log(temp);
   if(temp){
     myid = temp[1];
@@ -74,7 +75,11 @@ function sentTopic(){
           setTimeout(function(){
             $("#reply").fadeOut("slow");
             setTimeout(function(){
-              window.location="bubble/index.html";
+              if(temp){
+                window.location="bubble/index.html?userid=" + temp[1];
+              } else {
+                window.location="bubble/index.html";
+              }
             },1000);
           },1000);
           
