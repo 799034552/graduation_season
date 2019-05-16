@@ -160,8 +160,7 @@ $(document).ready(function() {
     })
 
     $('.choiceButton').click(function() {
-        var self = this;
-        this.disabled = true; //防止多次点击
+        $(".choiceButton").children().prop('disabled',true); //防止多次点击
 
         var list = $('.userChoiced').children();
         var topic_comment = new Array();
@@ -200,11 +199,11 @@ $(document).ready(function() {
 
                 success: function(data, status) {
                     window.location.href = "bubble/index.html";
-                    self.disabled = false; // 恢复禁用
+                    $(".choiceButton").children().prop('disabled',false); // 恢复禁用
                 },
                 error: function(data) {
                     alert('发送失败');
-                    self.disabled = false; // 恢复禁用
+                    $(".choiceButton").children().prop('disabled',false); // 恢复禁用
                 }
             })
 
