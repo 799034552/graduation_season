@@ -26,12 +26,9 @@ var myData;//用户个人信息
 //初始化
 $(function(){
     $(".hotComment li").hide();
-    initiate();
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     pushHistory();//ios后退
-    
-
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.search);
     if(ruleResult){
@@ -142,13 +139,13 @@ $(function(){
     document.cookie = "username = sfda";
     //热评的点击
     $(".hotComment").on('click','li',function(){
-        createFrom(2);
+        changeUrl(2);
          goToTopic(hotComment[Number(this.getAttribute("index"))].topic_id);
     });
 
     //热搜的点击
     $('.hotSearch').on('click','li:not(.hotSearchTitle)',function(){
-        createFrom(0);
+        changeUrl(0);
         goToTopic(this.getAttribute("id"));
     });
 
@@ -217,7 +214,7 @@ function pushHistory() {
 
 //初始化滑动插件
 function slideInit(){
-    var ru = /from=(.+?)($|\/|\#|\&)/
+    var ru = /#from=(.+?)($|\/|\#|\&)/
     var from = (ru.exec(window.location.href));
     if(from){
         mySwiper = new Swiper('.swiper-container-h', {
@@ -251,7 +248,7 @@ function slideInit(){
         })
 
     }
-
+    window.history.replaceState("","",window.location.href.replace(/#from.*$/,""));
 }
 //初始化二维码
 function codeInit(){
@@ -480,7 +477,7 @@ function change(e){
     //     "z-index":"0"
     // })
     setTimeout(function(){
-        createFrom(1);
+        changeUrl(1);
         goToTopic(e.id);
     },1000);
     e.classList.add("myAnimate");
@@ -489,24 +486,7 @@ function change(e){
 function goToAddTopic(){
     window.location = baseurl + addTopicUrl;
 }
-//刷新话题
-// function refreshTopic(){
-//     // if($(".animate").length>0){
-//     //     return;
-//     // }
-//     showTopic =  getFiveTop(receiveData.collection);
-//     var temp = document.getElementsByClassName("oneItem");
-//     console.log(showTopic);
-//     for(var i = 0;i < 5;i++){
-//         temp[i].getElementsByClassName("message")[0].innerHTML = showTopic[i].title;
-//         temp[i].getElementsByClassName("message")[0].parentNode.setAttribute("index",i);
-//     }
-//     reFresh();
-// }
 function refreshTopic(){
-    // if($(".animate").length>0){
-    //     return;
-    // }
     showTopic =  getFiveTop(receiveData.collection);
     var temp = document.getElementsByClassName("oneItem");
     console.log(showTopic);
@@ -525,7 +505,6 @@ function hopSearchInit(){
     for(var i = 0; i < hotSearch.length;i++){
         var temp = document.createElement("li");
         $(temp).append("<div><img src = '../../img/fire.png'>" + hotSearch[i].title + "</div>");
-        //temp.innerHTML = (i+1)+"、" + hotSearch[i].title;
         temp.setAttribute("id",hotSearch[i].topic_id);
         document.getElementsByClassName("hotSearch")[0].appendChild(temp);
     }
@@ -580,43 +559,7 @@ function addToMy(){
     $(".s21Show").hide();
     mySwiper.detachEvents();
 }
-//添加至我的热搜榜
-// function  addToHotSearchList(){
-//     count1 = 0;
-//     if($(".animate").length > 0){
-//         return;
-//     }
-//     var sendData = [];
-//     var temp = $(".oneItem:visible");
-//     console.log(temp);
-//     var flag = false;
-//     for(var i = 0;i< temp.length-1;i++){
-//         flag = false;
-//         var a =Number(temp[i].getAttribute("id"));
-//         for(var j = 0;j < myData.collection.length;j++){
-//             if(showTopic[a].title === myData.collection[j].title){
-//                 flag = true;
-//             }
-
-//         }
-//         if(!flag){
-//             count1++;
-//             sendData.push(showTopic[a].title);
-//                 $.ajax({
-//                     url:baseurl+'/topics',
-//                     method:'post',
-//                     data:{title:showTopic[a].title,target_id:myData.id},
-//                     success(data,status){
-//                         count1--;
-//                         if(count1 === 0){
-//                             window.location = "./index.html";
-//                         }
-//                 }
-//         })
-//     }};
-//     console.log(sendData);
-//     console.log(myData);
-// }
+//添加到我的热搜榜
 function  addToHotSearchList(){
     var temp = $(".oneItem:visible");
     var sendData = [];
@@ -734,24 +677,15 @@ function addother(){
     console.log(userId);
     window.location = "../newtopic.html?id=" + userId;
 }
-function createFrom(a){
-    var url;
-    var temp;
-    temp = window.location.href;
-    temp =  temp.replace(/&?from=(.+?)(&|#|$|\?)/g,""); 
-    if(userId === myData.id){
-        temp = temp.replace(/\?/g,"");
-        url = temp+"?from="+a;
-    } else {
-        url = temp+"&from="+a;
-    }
-    window.localStorage.setItem("from",url);
-}
 
 function initiate(){
     window.history.pushState("","","#");
       if (window.history && window.history.pushState) {
           $(window).on('popstate', function () {
+              var i = 100;
+              while(i--){
+               // window.history.back(1);
+              }
             window.history.forward(1);
 
           });
@@ -763,5 +697,8 @@ function initiate(){
           console.log("Ddd");
       }
 
+  }
+  function changeUrl(target){
+    window.history.replaceState("","",window.location.href + ("#from=" + target));
   }
 

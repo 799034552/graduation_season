@@ -110,11 +110,8 @@ function refreshB(){
     }
   });
 }
-
 //进入页面
 $(function(){
-
- initiate();
   $("#reply_success").hide();
   $("#reply_area").hide();
 
@@ -629,26 +626,3 @@ function topicLike(){
   })
 }
 
-
-function initiate(){
-  $(document).ready(function (e) {
-    var counter = 0;
-    if (window.history && window.history.pushState) {
-        $(window).on('popstate', function () {
-          if(/comment_/.test(window.location.href)){
-            return;
-          }
-          
-          var url = window.localStorage.getItem("from");
-          if(url){
-            window.location = url;
-          }else {
-            window.history.back(-1);
-          }
-        });
-    }
-
-    window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
-    window.history.forward(1);
-  });
-}
