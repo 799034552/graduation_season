@@ -1,6 +1,7 @@
 
 var mySwiper;//滑动页面
 var timeOutEvent; //检测长按的标志
+var timeOutEvent2;//热评长按标志
 var startLocation = []; // 开始点击的坐标
 var clone;//克隆出来的对象
 var beCloned;//被克隆的对象
@@ -28,6 +29,7 @@ var myData;//用户个人信息
 $(function(){
     $(".hotComment li").hide();
     slideInit();//初始化滑动插件
+    delInit();
     $(".maxShow").show();
     pushHistory();//ios后退
     //检测是否是二维码进来的
@@ -97,6 +99,14 @@ $(function(){
         })
 
     })
+    
+    //删除热搜
+    $(".hotSearch").on("click",".del",function(e){
+        var index = Number($(this).parent("li")[0].getAttribute("id"));
+        $(this).parent("li").addClass("readyDel")
+        console.log("de",index,$(this).parent("li"));
+        e.stopPropagation();
+    })
     document.getElementsByClassName("picBoxMask")[0].addEventListener("click",function(e){
         if(e.target.id == "two"){
             return;
@@ -138,7 +148,6 @@ $(function(){
         
 
     });
-    document.cookie = "username = sfda";
     //热评的点击
     $(".hotComment").on('click','li',function(){
         changeUrl(2);
@@ -350,13 +359,42 @@ function cancelDrag(){
     $(".bubbleBox .oneItemBox").off("touchmove");
     $(".bubbleBox .oneItemBox").off("touchend");
 }
+//删除话题的长按
+function delInit(){
+    var temp = document.getElementsByClassName("hotSearch")[0];
+    console.log(temp);
+    temp.addEventListener("touchstart",function(e){
+        timeOutEven2t = setTimeout(function(){
+            timeOutEvent2 = 0;
+            $(".del").show();
+            window.history.pushState("","",window.location.href);
+            window.addEventListener("popstate",function(){
+                console.log("back");
+                $(".del").hide();
+
+            })
+        },500);
+    });
+    temp.addEventListener("touchmove",function(e){
+        if(!timeOutEvent){
+            clearTimeout(timeOutEvent);
+        } else {
+        }
+    })
+    temp.addEventListener("touchend",function(e){
+        if(timeOutEvent!=0){ 
+            clearTimeout(timeOutEvent);
+        } 
+    })
+
+
+}
 //初始化拖拽
 function dragInit(){
     var temp = document.getElementsByClassName("oneItemBox");
     console.log(temp.length);
     for(var i = 0;i<temp.length;i++){
         temp[i].addEventListener("touchstart",function(e){
-            
             console.log(this);
             startLocation[0] = e.touches[0].clientX;
             startLocation[1] = e.touches[0].clientY;
@@ -518,6 +556,7 @@ function hopSearchInit(){
     for(var i = 0; i < hotSearch.length;i++){
         var temp = document.createElement("li");
         $(temp).append("<div><img src = '../../img/fire.png'>" + hotSearch[i].title + "</div>");
+        $(temp).append("<img class = 'del' src = '../../img/del.svg'>");
         temp.setAttribute("id",hotSearch[i].topic_id);
         document.getElementsByClassName("hotSearch")[0].appendChild(temp);
     }
@@ -713,5 +752,23 @@ function initiate(){
   }
   function changeUrl(target){
     window.history.replaceState("","",window.location.href + ("#from=" + target));
+  }
+
+
+
+  function comfireDel(){
+    //   var de = $(".readyDel");
+    //   for(var i = 0 ;i<de.length;i++){
+    //       console.log(de[i].getAttribute("id"));
+    //       $.ajax({
+    //           url:baseurl + "/topics/" + Number(de[i].getAttribute("id")),
+    //           method:"delete",
+    //           success(data){
+    //               console.log(data);
+    //           }
+
+    //       })
+    //   }
+
   }
 

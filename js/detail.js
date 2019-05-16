@@ -626,3 +626,8 @@ function topicLike(){
   })
 }
 
+function intoDelete(){
+  
+}
+
+
