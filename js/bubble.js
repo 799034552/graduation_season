@@ -25,7 +25,7 @@ var receiveData;
 var myData;//用户个人信息
 //初始化
 $(function(){
-    // var vConsole = new VConsole();
+    $(".hotComment li").hide();
     initiate();
     slideInit();//初始化滑动插件
     $(".maxShow").show();
@@ -96,6 +96,13 @@ $(function(){
              isOver();
          })
         })
+
+    })
+    document.getElementsByClassName("picBoxMask")[0].addEventListener("click",function(e){
+        if(e.target.id == "two"){
+            return;
+        }
+        isPicShow(0);
 
     })
     //动画结束后删除动画避免复制时干扰
@@ -248,12 +255,40 @@ function slideInit(){
 }
 //初始化二维码
 function codeInit(){
+
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         width : 500,
         height : 500
     });
     qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
+    drawAndShareImage();
+    function drawAndShareImage() {
+            var myImage = new Image();
+            myImage.src = "../../img/two.jpg";    
+            myImage.crossOrigin = "anonymous";
+            myImage.onload = function () {
+                console.log(this.height,this.width);
+                var wid1 = 400;
+                var hei1 = 900;
+                var canvas = document.createElement("canvas"); 
+                canvas.width = this.width;
+                canvas.height = this.height;
+                var context = canvas.getContext("2d");
+                context.rect(0, 0, canvas.width, canvas.height);
+                context.fillStyle = "#fff";
+                context.fill();
+                context.drawImage(myImage, 0, 0, this.width, this.height);
+                myImage2 = $('#qrcode').find('img')[0];
+                myImage2.crossOrigin = "anonymous";
+                console.log(myImage,myImage2);
+                context.drawImage(myImage2, wid1, hei1, 300, 300);
+                var base64 = canvas.toDataURL("image/jpg");  
+                var img = document.getElementById('two');
+                    document.getElementById('two').src = base64;
+                img.setAttribute('src', base64);
 
+            }
+        }
 }
 
 //全部初始化
@@ -644,8 +679,9 @@ function  addToHotSearchList(){
 
 }
 function backToSecond(){
-    reFresh();
     addToMY = false;
+    reFresh();
+    
     $(".s22Show").hide();
     $(".s21Show").show();
     $(".deleteBox").removeClass("deleteBoxShow");
@@ -721,5 +757,11 @@ function initiate(){
           });
       }
   
+  }
+  function hideTwo(e){
+      if(e.target.id === "two"){
+          console.log("Ddd");
+      }
+
   }
 

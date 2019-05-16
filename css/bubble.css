@@ -367,22 +367,10 @@ body .deleteBoxActive{
     z-index:200;
 }
 .picBox{
-    position: absolute;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     z-index: 999;
-    top:0;
-    width:850px;
-    height: 1050px;
-    left:0;
-    right:0;
-    bottom:0;
-    margin:auto auto;
-    /* border:1px black solid; */
-    background: url("../img/qrcode_box.png");
-    background-size: 100% 100%;
+    border-radius: 60px;
+    overflow: hidden;
 }
 .picMessage{
     margin-top: 30px;
@@ -408,6 +396,9 @@ body .deleteBoxActive{
 }
 .picBoxMask{
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top:0;
     left: 0;
     width:100vw;
@@ -458,7 +449,6 @@ body .deleteBoxActive{
 .hotComment li{
     padding:0;
     margin:0;
-    display: block;
     position: relative;
     height:18vw;
     border:2px black solid;
@@ -613,7 +603,8 @@ body .deleteBoxActive{
     word-wrap: normal;
     white-space: nowrap;
     text-overflow:ellipsis; */
-    width: 1200px;
+    width: 1050px;
+    margin: 30px 0;
 }
 .hotSearch li img{
     margin-right:10px;
@@ -629,7 +620,10 @@ body .deleteBoxActive{
     display: none;
 }
 .s2Show{
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .s1Show{
     display: none;
@@ -740,6 +734,23 @@ body .deleteBoxActive{
 	text-align: center;
 	color: #FFFFFF;
 }
+.tipMes{
+    text-align: center;
+    line-height: 150px;
+    font-size: 0.8rem;
+    height: 150px;
+    width:800px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.7);
+}
+#qrcode{
+    display: none;
+}
+#two{
+    width: 800px;
+    height: auto;
+}
+
 
 
 
