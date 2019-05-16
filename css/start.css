@@ -11,6 +11,7 @@
     display: block;
     background-image: url(../img/bg22.jpg);
     background-size: cover;
+    background-attachment: fixed;
 }
 
 /* 活动介绍页 */
@@ -60,6 +61,7 @@
     height: 10vw;
     /*border: 0.1vw solid black;*/
     border: 0;
+    margin-bottom: 20px;
     /*border-radius: 1vw;*/
     font-size: 5vw;
     border-radius: 5vw;
@@ -70,13 +72,15 @@
 }
 /* 话题选择页面 */
 .bgchoiceTopic{
-    position: relative;
+    position: absolute;
+    top: 0;
     width: 100vw;
     min-height: 100vh;
-    overflow: hidden;
+    overflow: scroll;
     display: none;
     background-image: url(../img/bg22.jpg);
     background-size: cover;
+    background-attachment: fixed;
 }
 .choiceTitle{
     position: relative;
@@ -122,7 +126,7 @@
 .userChoiced div .cross{
     position: absolute;
     top:9%;
-    height: 70%;
+    height: 4.9vw;
     left:89%;
     cursor: pointer;
 }
@@ -132,7 +136,7 @@
     /*height: 65vw;*/
     margin: 0 auto;
     /*left:10.4vw;*/
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-align: center;
 }
 .choiceButton{
@@ -166,7 +170,7 @@
     position: relative;
     width: 79vw;
     margin: 0 auto;
-    height:6.9vw;
+    min-height:6.9vw;
     /* height:8vw; */
     margin-top: 2vw;
     cursor: pointer;
@@ -174,6 +178,12 @@
 .topic div{
     height: 100%;
     width: 100%;
+}
+.topic-bg {
+    border: .2vw solid #a6a6a6;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,.7);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
 .topicimg{
     width: 100%;
@@ -183,19 +193,19 @@
     position: absolute;
     left:5vw;
     top:10%;
-    height:70%;
+    height: 4.9vw;
 }
 .topic div p{
-    position:absolute;
+    position: relative;
     font-size:4vw;
     width:80%;
-    height:100%;
+    /*height:100%;*/
     left:10vw;
     top:-0.5vw;
     line-height: 6.9vw;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
     text-align: left;
     
 }
@@ -211,8 +221,11 @@
     overflow: hidden;
 }
 @keyframes hide{
+    from{
+        height: auto;
+    }
     to{
-        height: 0vw;
+        height: 0;
         width: 0vw;
         margin-top: 0vw; 
     }
@@ -222,7 +235,7 @@
     animation-delay: 0s;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 @keyframes show{
     from{
@@ -232,25 +245,35 @@
     }
     to{
         width: 100%;
-        height:6.9vw;
+        height: auto;
         /* height:8vw; */
         margin-top: 2vw;
     }
 }
 /* 话题添加 */
-.userChoiced div{
+.userChoiced>div{
     position: relative;
+    min-height:6.9vw;
+    height: auto;
+    border: .2vw solid #a6a6a6;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,.7);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    cursor: pointer;
+}
+.userChoiced>div>div {
+    display: none;
 }
 .userChoiced p{
-    position: absolute;
+    position: relative;
     width:85%;
     height:100%;
     left:3vw;
     top:0vw;
     line-height: 6.5vw;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
     text-align: left;
     font-size: 4vw;
 }
