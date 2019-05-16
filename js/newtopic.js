@@ -2,6 +2,7 @@ var myData;
 var myid;
 var title;
 var getFinish = false;
+var getFinish2 = false;
 var temp;
 $(document).ready(function(){
   $("#reply").hide();
@@ -11,14 +12,22 @@ $(document).ready(function(){
   if(temp){
     myid = temp[1];
     getFinish = true; 
+    $.get(baseurl + "/users/" + temp[1],function(data,status){
+        myData = data;
+        console.log(data);
+        myid = myData.id;
+        getFinish2 = true;    
+      });
   } else {
     $.get(baseurl + "/users",function(data,status){
       myData = data;
       myid = myData.id;
       getFinish = true; 
-      console.log(data);    
+      console.log(data);
+      getFinish2 = true;    
     });
   }
+  
   $("#input_topic").focus(function(){
     setTimeout(() => {
       $("#input_topic").scrollIntoView(true)
@@ -42,16 +51,28 @@ $(document).ready(function(){
     }, 600)
   });
 });
+//检查是否重话题
+function check(title){
+  var same = false;
+  for(var i in myData.collection){
+    if(myData.collection[i].title == title){
+      same = true;
+      break;
+    }    
+  }
+  return same;
+}
 
 function sentTopic(){
-  console.log(myid);
-  if(getFinish){
+  if(getFinish&&getFinish2){   
     var title = $("#input_topic").val();
     var content = $("#input_content").val();
     console.log(title);
     console.log(content);
     if(title==""){
       alert("还未输入话题名称");
+    }else if(check(title)){
+      alert("不能发布相同的话题哦");
     }else{
       console.log(title);
       console.log(myid);
@@ -85,7 +106,7 @@ function sentTopic(){
           
         },
         error: function(data){
-          alert("错误——"+data.message);
+          alert("错误——"+data.responseJOSN.message);
         }
       });
     }

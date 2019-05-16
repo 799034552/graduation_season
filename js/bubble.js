@@ -19,6 +19,7 @@ var timeouts = [];
 var count1 = 0;
 var scale = [1,0.9,0.95,1,0.8,0.7];//气泡缩放
 var hotSearch ;
+var makecount = 100;
 
 var hotComment;
 var receiveData;
@@ -30,7 +31,8 @@ $(function(){
     $(".maxShow").show();
     pushHistory();//ios后退
     //检测是否是二维码进来的
-    var ruleResult = rule.exec(window.location.search);
+    var ruleResult = rule.exec(window.location.href);
+    console.log(window.location.search);
     if(ruleResult){
         userId = Number(ruleResult[1]);
     } else {
@@ -252,10 +254,12 @@ function slideInit(){
 }
 //初始化二维码
 function codeInit(){
-
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        width : 500,
-        height : 500
+        
+        width : 300,
+        height : 300
+        // colorDark : "#f6b764",
+        // colorLight : "#ffffff",
     });
     qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
     drawAndShareImage();
@@ -276,13 +280,22 @@ function codeInit(){
                 context.fill();
                 context.drawImage(myImage, 0, 0, this.width, this.height);
                 myImage2 = $('#qrcode').find('img')[0];
-                myImage2.crossOrigin = "anonymous";
-                console.log(myImage,myImage2);
-                context.drawImage(myImage2, wid1, hei1, 300, 300);
-                var base64 = canvas.toDataURL("image/jpg");  
-                var img = document.getElementById('two');
-                    document.getElementById('two').src = base64;
-                img.setAttribute('src', base64);
+                if(myImage2.src == ""){
+                    setTimeout(function(){
+                        if(makecount--){
+                            drawAndShareImage();
+                        }
+                    },500);
+                } else {
+                    myImage2.crossOrigin = "anonymous";
+                    console.log(myImage,myImage2);
+                    context.drawImage(myImage2, wid1, hei1, 300, 300);
+                    var base64 = canvas.toDataURL("image/jpg");  
+                    var img = document.getElementById('two');
+                        document.getElementById('two').src = base64;
+                    img.setAttribute('src', base64);
+                }
+
 
             }
         }
