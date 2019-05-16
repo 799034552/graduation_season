@@ -606,7 +606,7 @@ body .deleteBoxActive{
     padding-left: 50px;
 }
 .hotSearch li:not(.hotSearchTitle){
-    font-size: 0.69rem;
+    font-size: 1rem;
 }
 .hotSearch li div{
     /* overflow: hidden;

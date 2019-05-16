@@ -26,7 +26,7 @@ var myData;//用户个人信息
 //初始化
 $(function(){
     // var vConsole = new VConsole();
-
+    initiate();
     slideInit();//初始化滑动插件
     $(".maxShow").show();
     pushHistory();//ios后退
@@ -432,9 +432,18 @@ function change(e){
     if($(e).parents(".animate").length !== 0){
         return;
     }
-    console.log($(e).parent(".oneItemBox").css({
+    $(e).parent(".oneItemBox").css({
         "z-index":'999'
-    }));
+    });
+    $(".bubbleBox").css({
+        "z-index":"300"
+    })
+    // $(".toThirdPage").css({
+    //     "z-index":"0"
+    // })
+    // $(".toFirstPage").css({
+    //     "z-index":"0"
+    // })
     setTimeout(function(){
         createFrom(1);
         goToTopic(e.id);
@@ -702,4 +711,15 @@ function createFrom(a){
     }
     window.localStorage.setItem("from",url);
 }
+
+function initiate(){
+    window.history.pushState("","","#");
+      if (window.history && window.history.pushState) {
+          $(window).on('popstate', function () {
+            window.history.forward(1);
+
+          });
+      }
+  
+  }
 
