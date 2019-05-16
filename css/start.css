@@ -11,6 +11,7 @@
     display: block;
     background-image: url(../img/bg22.jpg);
     background-size: cover;
+    background-attachment: fixed;
 }
 
 /* 活动介绍页 */
@@ -60,6 +61,7 @@
     height: 10vw;
     /*border: 0.1vw solid black;*/
     border: 0;
+    margin-bottom: 20px;
     /*border-radius: 1vw;*/
     font-size: 5vw;
     border-radius: 5vw;
