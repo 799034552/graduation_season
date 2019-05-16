@@ -45,15 +45,15 @@ function ajaxFinish(){
     dataHot.sort = "dataHot";
     //渲染评论
     loadComment(dataTime,"time",timeReversal);
-    loadComment(dataHot,"hot",false);
-    console.log(dataHot);    
+    loadComment(dataHot,"hot",false);   
     // document.getElementById("topicName").innerHTML = dataTime.title;
     // document.getElementById("topic_likes").innerHTML = dataTime.likes; 
 }
 
-//回复话题的刷新
+//刷新
 function refreshA(){ 
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
+    canlike = true;
     dataTime = data;
     $("#reply_area").hide();
     $("#subcomment_detail").remove();
@@ -101,8 +101,11 @@ function refreshB(){
         subcomment(getLength(dataTime.comments[num].subcomments) , num , dataTime );
       }
       if(replySub){
-        window.location.hash = "#";
-        window.location.hash = "#sub_foot";
+        var a = parseInt($("#sub_foot").css("top"));
+        window.scrollTo({ 
+            top: a, 
+            behavior: "instant" 
+        })
       }
     }
   });
@@ -279,7 +282,6 @@ function sentComment(){
   if(content==""){
     alert("请填写评论内容");
   }else{     
-    console.log(content);
     $.ajax({
         type: "post",
         url: baseurl + "/comments",
@@ -545,9 +547,14 @@ function back(sequenceNum,hotSort){
   }
     $("#subcomment_detail").remove();
     $("#topic").show();
-    var a = "comment_" + type + sequenceNum;
-    window.location.hash = "#";
-    window.location.hash = a;
+    var a = "#comment_" + type + sequenceNum;
+    var seat = parseInt($(a).css("top"));
+    window.scrollTo({ 
+            top: seat, 
+            behavior: "instant" 
+        })
+    // window.location.hash = "#";
+    // window.location.hash = a;
 
 }
 
@@ -579,26 +586,7 @@ function like(id , data ,data2,idLikeHot,idLikeTime,idLike ){
     url:baseurl + "/likecomments/" + id,
     method:"PUT",
     success(data){
-        $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
-            for(var i = 0; i < getLength(dataTime.comments); i++){
-              for(var j in data.comments){
-                if(dataTime.comments[i].id == data.comments[j].id){
-                  var Hid = dataTime.comments[i].id;
-                  var hotseat = idLikeHot[Hid];
-
-                  dataTime.comments[i].likes = data.comments[j].likes;
-                  dataTime.comments[i].liked = data.comments[j].liked;
-                  dataHot.comments[hotseat].likes =data.comments[j].likes;
-                  dataHot.comments[hotseat].liked =data.comments[j].liked;
-                  var a1 = "likes_time" + i;
-                  var b1 = "likes_hot" + hotseat;
-                  document.getElementById(b1).innerHTML = data.comments[j].likes;
-                  document.getElementById(a1).innerHTML = data.comments[j].likes;
-                  canlike = true;
-                }
-              }
-            }
-        });
+        refreshA();
     }
    });
   }
