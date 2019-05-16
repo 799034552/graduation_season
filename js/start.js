@@ -116,7 +116,7 @@ $(document).ready(function() {
         if (list.length <= 4) {
             $('.userChoiced').append( //添加话题
                 '<div class="show">' +
-                '<img class="bg" src="../img/topic.png" alt="">' +
+                // '<img class="bg" src="../img/topic.png" alt="">' +
                 '<p>' + content + '</p>' +
                 '<img class="cross" src="../img/cross.png" alt=""></img>' +
                 '<div>' + topicId + '</div>' +
@@ -126,27 +126,30 @@ $(document).ready(function() {
                 $(this).removeClass("show");
             }
             $(this).addClass("hide");
+            setTimeout(function (){
+                $(self).remove();
+            }, 1000)
             if (list.length == 4) { //改变button的颜色
                 $('.choiceButton button').text('选好啦');
                 $('.choiceButton button').css('background-color', 'rgb(246, 184, 102)');
             }
         }
     })
-    $("body").delegate(".cross", "click", function() { //删除话题并在备选话题恢复
-        var content1 = $(this).parent().find('p').text();
-        var topicId1 = $(this).parent().find('div').text();
+    $("body").delegate(".userChoiced .show", "click", function() { //删除话题并在备选话题恢复
+        var content1 = $(this).find('p').text();
+        var topicId1 = $(this).find('div').text();
         console.log(topicId1);
         $('.choice').append(
             '<div class="topic show">' +
-            '<div>' +
-            '<img class="topicimg" src="../img/topic.png" alt="new">' +
+            '<div class="topic-bg">' +
+            // '<img class="topicimg" src="../img/topic.png" alt="new">' +
             '<img class="fireimg" src="../img/fire.png" alt="">' +
             '<p>' + content1 + '</p>' +
             '<div>' + topicId1 + '</div>' +
             '</div>' +
             '</div>'
         )
-        $(this).parent().remove();
+        $(this).remove();
         var list = $('.userChoiced').children();
         if (list.length == 0) {
             $('.userChoiced').append(
@@ -214,8 +217,8 @@ $(document).ready(function() {
 function insertTopic(title) {
     $('.choice').append(
         '<div class="topic show">' +
-        '<div>' +
-        '<img class="topicimg" src="../img/topic.png" alt="new">' +
+        '<div  class="topic-bg">' +
+        // '<img class="topicimg" src="../img/topic.png" alt="new">' +
         '<img class="fireimg" src="../img/fire.png" alt="">' +
         '<p>' + title + '</p>' +
         '</div>' +
