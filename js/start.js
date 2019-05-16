@@ -126,9 +126,9 @@ $(document).ready(function() {
                 $(this).removeClass("show");
             }
             $(this).addClass("hide");
-            // setTimeout(function (){
-            //     $(self).remove();
-            // }, 1000)
+            setTimeout(function (){
+                $(self).remove();
+            }, 1000)
             if (list.length == 4) { //改变button的颜色
                 $('.choiceButton button').text('选好啦');
                 $('.choiceButton button').css('background-color', 'rgb(246, 184, 102)');
