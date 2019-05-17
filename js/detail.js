@@ -46,8 +46,6 @@ function ajaxFinish(){
     //渲染评论
     loadComment(dataTime,"time",timeReversal);
     loadComment(dataHot,"hot",false);   
-    // document.getElementById("topicName").innerHTML = dataTime.title;
-    // document.getElementById("topic_likes").innerHTML = dataTime.likes; 
 }
 
 //刷新
@@ -72,8 +70,7 @@ function refreshA(){
   });
 }
 //回复评论的刷新
-function refreshB(){
-  
+function refreshB(){ 
    var a;
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
     dataTime = data;
@@ -85,6 +82,7 @@ function refreshB(){
     $("#comment_hot").empty();
     $("#comment_time").empty();
     ajaxFinish();
+    canlike = true;
     if(hotSort){
       $("#comment_time").hide();
       a = "comment_hot" + idLikeHot[commentid];
@@ -110,6 +108,41 @@ function refreshB(){
     }
   });
 }
+
+//点赞子评论页刷新
+function refreshC(){ 
+   var a;
+  $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
+    dataTime = data;
+    $("#reply_area").hide();
+    $("#subcomment_detail").remove();
+    $("#topic").show();
+    $("#comment_hot").show();
+    $("#comment_time").show();
+    $("#comment_hot").empty();
+    $("#comment_time").empty();
+    ajaxFinish();
+    canlike = true;
+    if(hotSort){
+      $("#comment_time").hide();
+      a = "comment_hot" + idLikeHot[commentid];
+    }else{
+      $("#comment_hot").hide();
+      a = "comment_time" + [commentid];
+    }
+    if(sb){
+      if(sortHot){
+        var num = idLikeHot[lastSbid];
+        subcomment(getLength(dataHot.comments[num].subcomments) , num , dataHot );
+      }else{
+        var num = idLikeTime[lastSbid];
+        subcomment(getLength(dataTime.comments[num].subcomments) , num , dataTime );
+      }
+    }
+  });
+}
+
+
 //进入页面
 $(function(){
   //pushHistory();
@@ -123,7 +156,7 @@ $(function(){
             ajaxFinish();
             $("#comment_time").hide();
   });
-  $("#sent_comment").hide();
+  // $("#sent_comment").hide();
   //点击回复区外隐藏回复框
   $(document).mouseup(function (e) {
         var con = $("#reply_area");   // 设置目标区域
@@ -160,19 +193,19 @@ $(function(){
       refreshA();
   })
 
-  $("#input_comment").focus(function(){
-    $("#topic_likes_img").hide();
-    $("#topic_likes").hide();
-    $("#sent_comment").show();
-  })
-  $("#input_comment").blur(function(){
-    var content = $("#input_comment").val();
-    if(content==""){
-    $("#sent_comment").hide();
-    $("#topic_likes_img").show();
-    $("#topic_likes").show();
-    }
-  })
+  // $("#input_comment").focus(function(){
+  //   $("#topic_likes_img").hide();
+  //   $("#topic_likes").hide();
+  //   $("#sent_comment").show();
+  // })
+  // $("#input_comment").blur(function(){
+  //   var content = $("#input_comment").val();
+  //   if(content==""){
+  //   $("#sent_comment").hide();
+  //   $("#topic_likes_img").show();
+  //   $("#topic_likes").show();
+  //   }
+  // })
   $("#input_comment").focus(function(){
     setTimeout(() => {
       $("#input_comment").scrollIntoView(true)
@@ -225,9 +258,9 @@ $(function(){
 function reply(topicId, comId, subcommentCreatorId){
  //清空评论框
   $("#input_comment").val("");
-  $("#sent_comment").hide();
-  $("#topic_likes_img").show();
-  $("#topic_likes").show();
+  // $("#sent_comment").hide();
+  // $("#topic_likes_img").show();
+  // $("#topic_likes").show();
 
 
   if(subcommentCreatorId===""){
@@ -262,10 +295,10 @@ function sentSubcomment(){
       },
       success: function(data) {
          $("#input_reply").val("");
-         $("#reply_success").show();
+         $("#reply_success").show();        
+         refreshB();
          setTimeout(function(){
            $("#reply_success").fadeOut("slow");},1000);
-        refreshB();
       },
       error: function () {
         alert("错误");
@@ -293,9 +326,9 @@ function sentComment(){
           setTimeout(function(){
             $("#reply_success").fadeOut("slow");},1000);
           refreshA();
-          $("#sent_comment").hide();
-          $("#topic_likes_img").show();
-          $("#topic_likes").show();
+          // $("#sent_comment").hide();
+          // $("#topic_likes_img").show();
+          // $("#topic_likes").show();
         },
         error: function () {
           alert("错误");
@@ -315,9 +348,6 @@ function comment(topicid ,commentID, i ,sort, avatar, content, creatorName, like
               "<img src=\"../img/love.png\" class=\"like_img\" id=\"liked_"+ sort + i +"\" onclick = like("+id+",dataTime,dataHot,idLikeHot,idLikeTime,idLike);>"+
                   
                   "<p class=\"content\" id=\"content_"+ sort + i +"\" onclick = reply("+topicid+","+id+",\"\");>"+ content +"</p>"+
-                  // "<div class=\"reply\" id=\"reply_"+ sort + i +"\">" +
-                  //   //"<p class=\"reply_text\" onclick = reply("+topicid+","+id+",\"\");>回复TA</p>"+
-                  // "</div>"+
                   "<div class=\"subcomment\" id=\"subcomment_"+ sort + i +"\">"+
                   "</div>"+
                "<div class = \"border_div\" id=\"border_"+ sort + i +"\">"+
@@ -400,7 +430,7 @@ function loadComment(data, sort ,Reversal){
         subcontentHeight = subcontentHeight + commentHeight;//累加子评论区高度
       }
       $(subcommentID).append(
-        "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"subcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
+        "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"openSubcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
       )
       var moreSubcomment = "#subcontent_"+ sort + i;
       subcontentHeight = subcontentHeight + parseInt($(moreSubcomment).css("top"));
@@ -448,12 +478,22 @@ function loadComment(data, sort ,Reversal){
   var footTop = parseInt($(foot).css("top")) + commentTop;
   $(foot).css("top", footTop);
   commentTop = footTop + parseInt($(foot).css("height"));
-  $("#blank").css("height", commentTop);
+  var blockHeight = commentTop + parseInt($("#sort").css("top"));
+  $("#blank_topic").css("height", blockHeight);
 }  
 
+function openSubcomment(subcommentNum , sequenceNum , data){
+  subcomment(subcommentNum , sequenceNum , data );
+  window.scrollTo({ 
+            top: 0, 
+            behavior: "instant" 
+  });
+}
 
 //调至子评论页面
 function subcomment(subcommentNum , sequenceNum , data ){
+  $("#blank_topic").hide();
+  $("#blank_sub").show();
   lastSbid = data.comments[sequenceNum].id;
   sb = true;
   $("#input_comment_area").hide();
@@ -529,6 +569,8 @@ function subcomment(subcommentNum , sequenceNum , data ){
   var foot = "#sub_foot"
   var footTop = parseInt($(foot).css("top")) + commentTop;
   $(foot).css("top", footTop);
+  var blankHeight = footTop + parseInt($(foot).css("height"));
+  $("#blank_sub").css("height",blankHeight);
 
 
 }
@@ -536,6 +578,8 @@ function subcomment(subcommentNum , sequenceNum , data ){
 //从子评论页面后退
 function back(sequenceNum,hotSort){
   sb = false;
+  $("#blank_sub").hide();
+  $("#blank_topic").show();
   $("#input_comment_area").show();
   var type="";
   if(hotSort){
@@ -577,29 +621,33 @@ function sortHot(data){
 
 function like(id , data ,data2,idLikeHot,idLikeTime,idLike ){
   if(canlike){
-  canlike = false;
-  var hotLikeSeat = idLikeHot[id];
-  var timeLikeSeat = idLikeTime[id];
-  $.ajax({
-    url:baseurl + "/likecomments/" + id,
-    method:"PUT",
-    success(data){
-        refreshA();
-    }
-   });
+    canlike = false;
+    var hotLikeSeat = idLikeHot[id];
+    var timeLikeSeat = idLikeTime[id];
+    $.ajax({
+      url:baseurl + "/likecomments/" + id,
+      method:"PUT",
+      success(data){
+          refreshA();
+      }
+     });
   }
 }
 //子评论页点赞
 function subLike(id,data,data2,idLikeHot,idLikeTime,idLike){
-  like(id,data,data2,idLikeHot,idLikeTime,idLike);
-  var a = idLikeTime[id];
-  if(idLike[id]){
-    document.getElementById("comment_detail_likes").innerHTML = data.comments[a].likes;
-    // $(a).attr('src', "");
-  }else{
-    // $(a).attr('src', "");
-    document.getElementById("comment_detail_likes").innerHTML = data.comments[a].likes;
- }
+  if(canlike){
+    canlike = false;
+    var hotLikeSeat = idLikeHot[id];
+    var timeLikeSeat = idLikeTime[id];
+    $.ajax({
+      url:baseurl + "/likecomments/" + id,
+      method:"PUT",
+      success(data){
+          refreshC();
+      }
+     });
+  }
+
 
 }
 

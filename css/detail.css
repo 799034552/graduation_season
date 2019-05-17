@@ -20,7 +20,7 @@ p{margin: 0;}
 #topicName{
 	position: absolute;
 	top:2.5vw;
-	width: 92vw;
+	width: 78vw;
 	left: 4vw;
 	margin: 0;	
     font-size: 4vw;
@@ -303,7 +303,15 @@ p{margin: 0;}
 	color: #FF0000;
 }
 
-#blank{
+#blank_topic{
+	position: absolute;
+	width: 100%;
+	top:0;
+	left: 0;
+	z-index: -100;
+}
+
+#blank_sub{
 	position: absolute;
 	width: 100%;
 	top:0;
@@ -401,18 +409,18 @@ p{margin: 0;}
 
 #topic_likes_img{
 	position: absolute;
-	bottom: 2.5vw;
-	right: 16vw;
+	top: 2.3vw;
+	right: 9vw;
 	height: 6vw;
 	width: 6vw;
 }
 #topic_likes{
 	position: absolute;
-	right: 5.8vw;
+	right: 2vw;
 	font-size: 3.5vw;
     width: 8vw;
     text-align: center;
-	bottom: 3.25vw;
+	top: 2.9vw;
 }
 #back{
 	position: absolute;
