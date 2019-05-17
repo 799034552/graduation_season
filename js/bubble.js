@@ -29,7 +29,6 @@ var myData;//用户个人信息
 $(function(){
     $(".hotComment li").hide();
     slideInit();//初始化滑动插件
-    delInit();
     $(".maxShow").show();
     pushHistory();//ios后退
     //检测是否是二维码进来的
@@ -67,6 +66,7 @@ $(function(){
         }
        console.log("用户的身份是:",enterStatus);
         if(enterStatus === 0 ){
+            delInit();
             codeInit();
             receiveData = myData;
         } else {
@@ -118,7 +118,6 @@ $(function(){
             success(data){
                 console.log(data);
             }
-
         })
         
         e.stopPropagation();
@@ -247,8 +246,6 @@ function slideInit(){
                 sliderMove: function(){
                     $(".toFirstPage").hide();
                     $(".toThirdPage").hide();
-                    console.log("Eeee");
-                    console.log(timeOutEvent2);
                     if(timeOutEvent2){
                         clearTimeout(timeOutEvent2);
                         timeOutEvent2 = 0;
