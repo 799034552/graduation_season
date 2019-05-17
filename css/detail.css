@@ -303,7 +303,15 @@ p{margin: 0;}
 	color: #FF0000;
 }
 
-#blank{
+#blank_topic{
+	position: absolute;
+	width: 100%;
+	top:0;
+	left: 0;
+	z-index: -100;
+}
+
+#blank_sub{
 	position: absolute;
 	width: 100%;
 	top:0;

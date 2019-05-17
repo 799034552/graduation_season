@@ -73,7 +73,7 @@ function refreshA(){
 }
 //回复评论的刷新
 function refreshB(){
-  
+  canlike = true;
    var a;
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
     dataTime = data;
@@ -261,10 +261,10 @@ function sentSubcomment(){
       },
       success: function(data) {
          $("#input_reply").val("");
-         $("#reply_success").show();
+         $("#reply_success").show();        
+         refreshB();
          setTimeout(function(){
            $("#reply_success").fadeOut("slow");},1000);
-        refreshB();
       },
       error: function () {
         alert("错误");
@@ -447,12 +447,15 @@ function loadComment(data, sort ,Reversal){
   var footTop = parseInt($(foot).css("top")) + commentTop;
   $(foot).css("top", footTop);
   commentTop = footTop + parseInt($(foot).css("height"));
-  $("#blank").css("height", commentTop);
+  var blockHeight = commentTop + parseInt($("#sort").css("top"));
+  $("#blank_topic").css("height", blockHeight);
 }  
 
 
 //调至子评论页面
 function subcomment(subcommentNum , sequenceNum , data ){
+  $("#blank_topic").hide();
+  $("#blank_sub").show();
   lastSbid = data.comments[sequenceNum].id;
   sb = true;
   $("#input_comment_area").hide();
@@ -528,6 +531,8 @@ function subcomment(subcommentNum , sequenceNum , data ){
   var foot = "#sub_foot"
   var footTop = parseInt($(foot).css("top")) + commentTop;
   $(foot).css("top", footTop);
+  var blankHeight = footTop + parseInt($(foot).css("height"));
+  $("#blank_sub").css("height",blankHeight);
 
 
 }
@@ -535,6 +540,8 @@ function subcomment(subcommentNum , sequenceNum , data ){
 //从子评论页面后退
 function back(sequenceNum,hotSort){
   sb = false;
+  $("#blank_sub").hide();
+  $("#blank_topic").show();
   $("#input_comment_area").show();
   var type="";
   if(hotSort){
@@ -576,29 +583,33 @@ function sortHot(data){
 
 function like(id , data ,data2,idLikeHot,idLikeTime,idLike ){
   if(canlike){
-  canlike = false;
-  var hotLikeSeat = idLikeHot[id];
-  var timeLikeSeat = idLikeTime[id];
-  $.ajax({
-    url:baseurl + "/likecomments/" + id,
-    method:"PUT",
-    success(data){
-        refreshA();
-    }
-   });
+    canlike = false;
+    var hotLikeSeat = idLikeHot[id];
+    var timeLikeSeat = idLikeTime[id];
+    $.ajax({
+      url:baseurl + "/likecomments/" + id,
+      method:"PUT",
+      success(data){
+          refreshA();
+      }
+     });
   }
 }
 //子评论页点赞
 function subLike(id,data,data2,idLikeHot,idLikeTime,idLike){
-  like(id,data,data2,idLikeHot,idLikeTime,idLike);
-  var a = idLikeTime[id];
-  if(idLike[id]){
-    document.getElementById("comment_detail_likes").innerHTML = data.comments[a].likes;
-    // $(a).attr('src', "");
-  }else{
-    // $(a).attr('src', "");
-    document.getElementById("comment_detail_likes").innerHTML = data.comments[a].likes;
- }
+  if(canlike){
+    canlike = false;
+    var hotLikeSeat = idLikeHot[id];
+    var timeLikeSeat = idLikeTime[id];
+    $.ajax({
+      url:baseurl + "/likecomments/" + id,
+      method:"PUT",
+      success(data){
+          refreshB();
+      }
+     });
+  }
+
 
 }
 
