@@ -21,16 +21,28 @@ var count1 = 0;
 var scale = [1,0.9,0.95,1,0.8,0.7];//气泡缩放
 var hotSearch ;
 var makecount = 100;
-var isMoving2 = false;
+
 var hotComment;
 var receiveData;
 var myData;//用户个人信息
 //初始化
 $(function(){
+    var isMoving2 = false;
+    window.addEventListener('pageshow', function () {
+        if (isPageHide) {
+            console.log("eee");
+            window.location.reload();
+            
+        }
+    });
+    window.addEventListener('pagehide', function () {
+        isPageHide = true;
+        console.log("222");
+    });
     $(".hotComment li").hide();
     slideInit();//初始化滑动插件
     $(".maxShow").show();
-    pushHistory();//ios后退
+    //pushHistory();//ios后退
     //检测是否是二维码进来的
     var ruleResult = rule.exec(window.location.href);
     console.log(window.location.search);
@@ -234,17 +246,16 @@ function isPicShow(status){
 
 //ios后退
 function pushHistory() {
-    // console.log(document.URL);
-    // history.pushState(null, null, document.URL);
-    // window.addEventListener("popstate", function(e) {
-    //     console.log("回退");
-    //     //self.location.reload();
-    // }, false);
-    // var state = {
-    //     title : "",
-    //     url : "#"
-    // };
-    // window.history.replaceState(state, "", "#");
+    //history.pushState(null, null, document.URL);
+    window.addEventListener("popstate", function(e) {
+        console.log("回退");
+        //self.location.reload();
+    }, false);
+    var state = {
+        title : "",
+        url : "#"
+    };
+    window.history.replaceState(state, "", "#");
 };
 
 //初始化滑动插件
@@ -404,10 +415,10 @@ function delInit(){
             window.history.pushState("","",window.location.href);
             window.addEventListener("popstate",function(){
                 isMoving2 = false;
-                
                 console.log("back");
                 $(".del").fadeOut();
-
+                changeUrl(0);
+                location.reload();
             })
         },500);
     });

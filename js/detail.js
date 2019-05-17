@@ -112,6 +112,7 @@ function refreshB(){
 }
 //进入页面
 $(function(){
+  //pushHistory();
   $("#reply_success").hide();
   $("#reply_area").hide();
 
@@ -629,5 +630,20 @@ function topicLike(){
 function intoDelete(){
   
 }
+function pushHistory() {
+  console.log(document.URL);
+  //history.pushState(null, null, document.URL);
+  window.addEventListener("popstate", function(e) {
+      console.log("回退");
+      history.back();
+      console.log(self.location);
+      self.location.reload();
+  }, false);
+  var state = {
+      title : "",
+      url : "#"
+  };
+  window.history.pushState(state, "", "#");
+};
 
 
