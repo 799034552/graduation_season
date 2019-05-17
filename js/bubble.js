@@ -30,14 +30,11 @@ $(function(){
     var isMoving2 = false;
     window.addEventListener('pageshow', function () {
         if (isPageHide) {
-            console.log("eee");
             window.location.reload();
-            
         }
     });
     window.addEventListener('pagehide', function () {
         isPageHide = true;
-        console.log("222");
     });
     $(".hotComment li").hide();
     slideInit();//初始化滑动插件
@@ -109,7 +106,6 @@ $(function(){
              isOver();
          })
         })
-
     })
     
     //删除热搜
@@ -405,20 +401,21 @@ function cancelDrag(){
 //删除话题的长按
 function delInit(){
     var temp = document.getElementsByClassName("hotSearch")[0];
-    console.log(temp);
-    
     temp.addEventListener("touchstart",function(e){
         timeOutEvent2 = setTimeout(function(){
             isMoving2 = true;
             timeOutEvent2 = 0;
             $(".del").fadeIn();
+            mySwiper.detachEvents();
             window.history.pushState("","",window.location.href);
             window.addEventListener("popstate",function(){
+                mySwiper.attachEvents();
+                
                 isMoving2 = false;
                 console.log("back");
                 $(".del").fadeOut();
                 changeUrl(0);
-                location.reload();
+                reFreshButCom();
             })
         },500);
     });
@@ -651,7 +648,6 @@ function goToMy(){
 function addToMy(){
     addToMY = true;
     reFresh();
-    
     $(".s22Show").show();
     $(".s21Show").hide();
     mySwiper.detachEvents();
@@ -674,7 +670,12 @@ function  addToHotSearchList(){
     for(var i = 0;i<myData.collection.length;i++){
         flag = false;
         for(var j = 0;j < sendData2.length;j++){
-            if(sendData2[j] === myData.collection[i].title){
+            var a = sendData2[j].replace(/&/g,'&amp;');
+            a = a.replace(/'/g,"&apos;");
+            a = a.replace(/"/g,"&quot;");
+            a = a.replace(/</g,"&lt;");
+            a = a.replace(/>/g,"&gt;");
+            if(a === myData.collection[i].title){
                 sendData2[j] = "";
                 continue;
             }
@@ -815,5 +816,37 @@ function initiate(){
           })
       }
 
+  }
+
+
+  function reFreshButCom(){
+      var icount = 0;
+    $.get(baseurl + '/users',function(data,status,res){
+        myData = data;
+        if(enterStatus === 0 ){
+            receiveData = myData;
+        }
+        if(enterStatus == 0){
+            userId = myData.id;
+        }
+         //获取热搜榜
+         $.get(baseurl + "/users/" + userId + "/heattopics" ,function(data,status){
+             hotSearch = data;
+             icount++;
+             if(icount === 2){
+                hotCommentInit();
+                refreshTopic();
+             }
+         })
+         //获取热评榜
+         $.get(baseurl + "/users/" + userId + "/heatcomments" ,function(data,status){
+             hotComment = data;
+             icount++;
+             if(icount === 2){
+                hotCommentInit();
+                refreshTopic();
+             }
+         })
+        })
   }
 
