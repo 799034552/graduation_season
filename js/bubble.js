@@ -21,7 +21,7 @@ var count1 = 0;
 var scale = [1,0.9,0.95,1,0.8,0.7];//气泡缩放
 var hotSearch ;
 var makecount = 100;
-
+var isMoving2 = false;
 var hotComment;
 var receiveData;
 var myData;//用户个人信息
@@ -102,9 +102,25 @@ $(function(){
     
     //删除热搜
     $(".hotSearch").on("click",".del",function(e){
+        var temp =  $(".hotSearch li:not(.hotSearchTitle)");
+        var temp2 = $(".readyDel");
+        console.log(temp,temp2);
+        console.log(temp.length - temp2.length);
+        if((temp.length - temp2.length) <= 5){
+            alert("不能小于5个话题");
+            return;
+        }
         var index = Number($(this).parent("li")[0].getAttribute("id"));
-        $(this).parent("li").addClass("readyDel")
-        console.log("de",index,$(this).parent("li"));
+        $(this).parent("li").addClass("readyDel");
+        $.ajax({
+            url:baseurl + "/topics/" + index,
+            method:"delete",
+            success(data){
+                console.log(data);
+            }
+
+        })
+        
         e.stopPropagation();
     })
     document.getElementsByClassName("picBoxMask")[0].addEventListener("click",function(e){
@@ -133,14 +149,6 @@ $(function(){
                     hotComment = data;
                     hotCommentInit();
                 })
-                // var temp = $(_this).find("span");
-                // if(liked === 0){
-                //     temp.html(Number(temp.html())+1);
-                //     hotComment[index].heat.liked++;
-                // } else {
-                //     temp.html(Number(temp.html())-1)
-                //     hotComment[index].heat.liked--;
-                // }
             }
         })
         
@@ -157,7 +165,12 @@ $(function(){
     //热搜的点击
     $('.hotSearch').on('click','li:not(.hotSearchTitle)',function(){
         changeUrl(0);
-        goToTopic(this.getAttribute("id"));
+
+        if(isMoving2 === false){
+            goToTopic(this.getAttribute("id"));
+        } else {
+            $(this).removeClass("readyDel");
+        }
     });
 
         
@@ -234,6 +247,12 @@ function slideInit(){
                 sliderMove: function(){
                     $(".toFirstPage").hide();
                     $(".toThirdPage").hide();
+                    console.log("Eeee");
+                    console.log(timeOutEvent2);
+                    if(timeOutEvent2){
+                        clearTimeout(timeOutEvent2);
+                        timeOutEvent2 = 0;
+                    }
                   },
                   transitionEnd: function(){
                     $(".toFirstPage").fadeIn();
@@ -249,6 +268,12 @@ function slideInit(){
                 sliderMove: function(){
                     $(".toFirstPage").hide();
                     $(".toThirdPage").hide();
+                    console.log("Eeee");
+                    console.log(timeOutEvent2);
+                    if(timeOutEvent2){
+                        clearTimeout(timeOutEvent2);
+                        timeOutEvent2 = 0;
+                    }
                   },
                   transitionEnd: function(){
                     $(".toFirstPage").fadeIn();
@@ -270,7 +295,10 @@ function codeInit(){
         // colorDark : "#f6b764",
         // colorLight : "#ffffff",
     });
-    qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
+    setTimeout(()=>{
+        qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
+    },5000);
+    
     drawAndShareImage();
     function drawAndShareImage() {
             var myImage = new Image();
@@ -363,27 +391,35 @@ function cancelDrag(){
 function delInit(){
     var temp = document.getElementsByClassName("hotSearch")[0];
     console.log(temp);
+    
     temp.addEventListener("touchstart",function(e){
-        timeOutEven2t = setTimeout(function(){
+        timeOutEvent2 = setTimeout(function(){
+            isMoving2 = true;
             timeOutEvent2 = 0;
             $(".del").show();
+            $(".messager").show();
             window.history.pushState("","",window.location.href);
             window.addEventListener("popstate",function(){
+                isMoving2 = false;
+                
                 console.log("back");
                 $(".del").hide();
+                $(".messager").hide();
 
             })
         },500);
     });
     temp.addEventListener("touchmove",function(e){
-        if(!timeOutEvent){
-            clearTimeout(timeOutEvent);
+        if(timeOutEvent2){
+            clearTimeout(timeOutEvent2);
+            timeOutEvent2 = 0;
         } else {
         }
     })
     temp.addEventListener("touchend",function(e){
-        if(timeOutEvent!=0){ 
-            clearTimeout(timeOutEvent);
+        if(timeOutEvent2){ 
+            clearTimeout(timeOutEvent2);
+            timeOutEvent2 = 0;
         } 
     })
 
@@ -757,18 +793,18 @@ function initiate(){
 
 
   function comfireDel(){
-    //   var de = $(".readyDel");
-    //   for(var i = 0 ;i<de.length;i++){
-    //       console.log(de[i].getAttribute("id"));
-    //       $.ajax({
-    //           url:baseurl + "/topics/" + Number(de[i].getAttribute("id")),
-    //           method:"delete",
-    //           success(data){
-    //               console.log(data);
-    //           }
+      var de = $(".readyDel");
+      for(var i = 0 ;i<de.length;i++){
+          console.log(de[i].getAttribute("id"));
+          $.ajax({
+              url:baseurl + "/topics/" + Number(de[i].getAttribute("id")),
+              method:"delete",
+              success(data){
+                  console.log(data);
+              }
 
-    //       })
-    //   }
+          })
+      }
 
   }
 
