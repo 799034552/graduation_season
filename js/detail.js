@@ -72,8 +72,7 @@ function refreshA(){
   });
 }
 //回复评论的刷新
-function refreshB(){
-  canlike = true;
+function refreshB(){ 
    var a;
   $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
     dataTime = data;
@@ -85,6 +84,7 @@ function refreshB(){
     $("#comment_hot").empty();
     $("#comment_time").empty();
     ajaxFinish();
+    canlike = true;
     if(hotSort){
       $("#comment_time").hide();
       a = "comment_hot" + idLikeHot[commentid];
@@ -110,6 +110,41 @@ function refreshB(){
     }
   });
 }
+
+//点赞子评论页刷新
+function refreshC(){ 
+   var a;
+  $.get(baseurl + "/topics/" + requestid[1] ,function(data,status){
+    dataTime = data;
+    $("#reply_area").hide();
+    $("#subcomment_detail").remove();
+    $("#topic").show();
+    $("#comment_hot").show();
+    $("#comment_time").show();
+    $("#comment_hot").empty();
+    $("#comment_time").empty();
+    ajaxFinish();
+    canlike = true;
+    if(hotSort){
+      $("#comment_time").hide();
+      a = "comment_hot" + idLikeHot[commentid];
+    }else{
+      $("#comment_hot").hide();
+      a = "comment_time" + [commentid];
+    }
+    if(sb){
+      if(sortHot){
+        var num = idLikeHot[lastSbid];
+        subcomment(getLength(dataHot.comments[num].subcomments) , num , dataHot );
+      }else{
+        var num = idLikeTime[lastSbid];
+        subcomment(getLength(dataTime.comments[num].subcomments) , num , dataTime );
+      }
+    }
+  });
+}
+
+
 //进入页面
 $(function(){
   $("#reply_success").hide();
@@ -399,7 +434,7 @@ function loadComment(data, sort ,Reversal){
         subcontentHeight = subcontentHeight + commentHeight;//累加子评论区高度
       }
       $(subcommentID).append(
-        "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"subcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
+        "<p class=\"more_subcomment\" id=\"subcontent_"+ sort + i + "\" onclick=\"openSubcomment("+subcommentNum+"," + i+ ","+data.sort+");\">查看全部的" + subcommentNum + "条回复</p>"
       )
       var moreSubcomment = "#subcontent_"+ sort + i;
       subcontentHeight = subcontentHeight + parseInt($(moreSubcomment).css("top"));
@@ -451,6 +486,13 @@ function loadComment(data, sort ,Reversal){
   $("#blank_topic").css("height", blockHeight);
 }  
 
+function openSubcomment(subcommentNum , sequenceNum , data){
+  subcomment(subcommentNum , sequenceNum , data );
+  window.scrollTo({ 
+            top: 0, 
+            behavior: "instant" 
+  });
+}
 
 //调至子评论页面
 function subcomment(subcommentNum , sequenceNum , data ){
@@ -605,7 +647,7 @@ function subLike(id,data,data2,idLikeHot,idLikeTime,idLike){
       url:baseurl + "/likecomments/" + id,
       method:"PUT",
       success(data){
-          refreshB();
+          refreshC();
       }
      });
   }
