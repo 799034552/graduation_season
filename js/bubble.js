@@ -107,18 +107,28 @@ $(function(){
         console.log(temp,temp2);
         console.log(temp.length - temp2.length);
         if((temp.length - temp2.length) <= 5){
-            alert("不能小于5个话题");
-            return;
+            $(".errorMess").css({
+                "display":"none"
+            });
+            setTimeout(()=>{
+                $(".errorMess").css({
+                    "display":"block"
+                })
+
+            },10);
+
+        } else {
+            var index = Number($(this).parent("li")[0].getAttribute("id"));
+            $(this).parent("li").addClass("readyDel");
+            $.ajax({
+                url:baseurl + "/topics/" + index,
+                method:"delete",
+                success(data){
+                    console.log(data);
+                }
+            })
         }
-        var index = Number($(this).parent("li")[0].getAttribute("id"));
-        $(this).parent("li").addClass("readyDel");
-        $.ajax({
-            url:baseurl + "/topics/" + index,
-            method:"delete",
-            success(data){
-                console.log(data);
-            }
-        })
+
         
         e.stopPropagation();
     })
@@ -132,6 +142,7 @@ $(function(){
     //动画结束后删除动画避免复制时干扰
     $('.oneItemBox').on("webkitAnimationEnd",function(){
         this.classList.remove("animate");
+        $(".cancelScrool").removeClass("cancelScrool");
     })
     //点赞
     $(".hotComment").on('click',".love",function(e){
@@ -187,6 +198,7 @@ function reFresh(){
     })
     $(".second")[0].setAttribute("style","dispaly:none")
     $(".oneItemBox").addClass("animate");
+    $(".bubbleBox").addClass("cancelScrool");
     for(var i = 0;i<6;i++){
         clearTimeout(timeouts[i]);
     }
@@ -286,16 +298,11 @@ function slideInit(){
 //初始化二维码
 function codeInit(){
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        
+        text:"https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id,
         width : 300,
-        height : 300
-        // colorDark : "#f6b764",
-        // colorLight : "#ffffff",
+        height : 300,
+        correctLevel : QRCode.CorrectLevel.H,
     });
-    setTimeout(()=>{
-        qrcode.makeCode("https://graduation2019.100steps.net/public/html/bubble?userid=" + myData.id);
-    },5000);
-    
     drawAndShareImage();
     function drawAndShareImage() {
             var myImage = new Image();
@@ -393,15 +400,13 @@ function delInit(){
         timeOutEvent2 = setTimeout(function(){
             isMoving2 = true;
             timeOutEvent2 = 0;
-            $(".del").show();
-            $(".messager").show();
+            $(".del").fadeIn();
             window.history.pushState("","",window.location.href);
             window.addEventListener("popstate",function(){
                 isMoving2 = false;
                 
                 console.log("back");
-                $(".del").hide();
-                $(".messager").hide();
+                $(".del").fadeOut();
 
             })
         },500);
@@ -589,7 +594,7 @@ function hopSearchInit(){
     for(var i = 0; i < hotSearch.length;i++){
         var temp = document.createElement("li");
         $(temp).append("<div><img src = '../../img/fire.png'>" + hotSearch[i].title + "</div>");
-        $(temp).append("<img class = 'del' src = '../../img/del.svg'>");
+        $(temp).append("<img class = 'del' src = '../../img/delete.svg'>");
         temp.setAttribute("id",hotSearch[i].topic_id);
         document.getElementsByClassName("hotSearch")[0].appendChild(temp);
     }
@@ -626,10 +631,6 @@ function hotCommentInit(){
             temp.find(".oneCommentTopic div").html(hotComment[i].title);
             temp.find(".commentMessage").html(hotComment[i].heat.content);
             temp.find(".love span").html(hotComment[i].heat.likes);
-
-
-        
-        
     }
 }
 function goToMy(){
