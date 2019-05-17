@@ -46,8 +46,6 @@ function ajaxFinish(){
     //渲染评论
     loadComment(dataTime,"time",timeReversal);
     loadComment(dataHot,"hot",false);   
-    // document.getElementById("topicName").innerHTML = dataTime.title;
-    // document.getElementById("topic_likes").innerHTML = dataTime.likes; 
 }
 
 //刷新
@@ -157,7 +155,7 @@ $(function(){
             ajaxFinish();
             $("#comment_time").hide();
   });
-  $("#sent_comment").hide();
+  // $("#sent_comment").hide();
   //点击回复区外隐藏回复框
   $(document).mouseup(function (e) {
         var con = $("#reply_area");   // 设置目标区域
@@ -194,19 +192,19 @@ $(function(){
       refreshA();
   })
 
-  $("#input_comment").focus(function(){
-    $("#topic_likes_img").hide();
-    $("#topic_likes").hide();
-    $("#sent_comment").show();
-  })
-  $("#input_comment").blur(function(){
-    var content = $("#input_comment").val();
-    if(content==""){
-    $("#sent_comment").hide();
-    $("#topic_likes_img").show();
-    $("#topic_likes").show();
-    }
-  })
+  // $("#input_comment").focus(function(){
+  //   $("#topic_likes_img").hide();
+  //   $("#topic_likes").hide();
+  //   $("#sent_comment").show();
+  // })
+  // $("#input_comment").blur(function(){
+  //   var content = $("#input_comment").val();
+  //   if(content==""){
+  //   $("#sent_comment").hide();
+  //   $("#topic_likes_img").show();
+  //   $("#topic_likes").show();
+  //   }
+  // })
   $("#input_comment").focus(function(){
     setTimeout(() => {
       $("#input_comment").scrollIntoView(true)
@@ -259,9 +257,9 @@ $(function(){
 function reply(topicId, comId, subcommentCreatorId){
  //清空评论框
   $("#input_comment").val("");
-  $("#sent_comment").hide();
-  $("#topic_likes_img").show();
-  $("#topic_likes").show();
+  // $("#sent_comment").hide();
+  // $("#topic_likes_img").show();
+  // $("#topic_likes").show();
 
 
   if(subcommentCreatorId===""){
@@ -327,9 +325,9 @@ function sentComment(){
           setTimeout(function(){
             $("#reply_success").fadeOut("slow");},1000);
           refreshA();
-          $("#sent_comment").hide();
-          $("#topic_likes_img").show();
-          $("#topic_likes").show();
+          // $("#sent_comment").hide();
+          // $("#topic_likes_img").show();
+          // $("#topic_likes").show();
         },
         error: function () {
           alert("错误");
@@ -349,9 +347,6 @@ function comment(topicid ,commentID, i ,sort, avatar, content, creatorName, like
               "<img src=\"../img/love.png\" class=\"like_img\" id=\"liked_"+ sort + i +"\" onclick = like("+id+",dataTime,dataHot,idLikeHot,idLikeTime,idLike);>"+
                   
                   "<p class=\"content\" id=\"content_"+ sort + i +"\" onclick = reply("+topicid+","+id+",\"\");>"+ content +"</p>"+
-                  // "<div class=\"reply\" id=\"reply_"+ sort + i +"\">" +
-                  //   //"<p class=\"reply_text\" onclick = reply("+topicid+","+id+",\"\");>回复TA</p>"+
-                  // "</div>"+
                   "<div class=\"subcomment\" id=\"subcomment_"+ sort + i +"\">"+
                   "</div>"+
                "<div class = \"border_div\" id=\"border_"+ sort + i +"\">"+
