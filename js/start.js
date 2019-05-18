@@ -221,13 +221,12 @@ $(document).ready(function() {
 function showStep() {
     $('#step').show();
     $('#step .content').fadeIn();
-    document.getElementById('step').addEventListener('touchmove', function(e){
-        e.preventDefault();
-    }, false);
+    $('.background, .bgchoiceTopic').addClass('overflow-hidden');
 }
 function hideStep() {
     $('#step .content').hide();
     $('#step').hide();
+    $('.background, .bgchoiceTopic').removeClass('overflow-hidden');
 }
 
 function insertTopic(title) {
