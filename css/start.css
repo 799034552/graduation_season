@@ -25,6 +25,22 @@
 .logo img{
     height: 35vw;
 }
+#showStep {
+    position: absolute;
+    right: 5vw;
+    top: 5vw;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 5vw;
+    /*border: 1px solid #DCDFE6;*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    background: rgba(246, 184, 102, .3);
+    text-align: center;
+    line-height: 10vw;
+    color: #E6A23C;
+    font-size: 7.5vw;
+    font-weight: bold;
+}
 .information{
     position: relative;
     width: 70vw;
@@ -45,6 +61,7 @@
     overflow: hidden;
     line-height: 8vw;
     font-size: 4.3vw;
+    text-align: center;
 }
 .information span{
     font-weight: bold;
@@ -70,6 +87,32 @@
     -webkit-appearance: none;
     background-color: rgb(249, 208, 155);
     color: #fff;
+}
+/* step弹框 */
+#step {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.7);
+    z-index: 10;
+}
+#step>.content {
+    position: relative;
+    top: 10vh;
+    display: none;
+    max-height: calc(80vh - 10vw);
+    width: 75vw;
+    margin: 0 auto;
+    padding: 5vw;
+    border-radius: 5vw;
+    background: rgb(255, 245, 203);
+    text-align: center;
+    font-size: 4.5vw;
+    color: #303133;
+    overflow: scroll;
 }
 /* 话题选择页面 */
 .bgchoiceTopic{
@@ -327,4 +370,3 @@
     border-radius: 2vw;
     cursor: pointer;
 }
-

@@ -35,18 +35,25 @@
         <div class="logo">
             <img src="../img/logo.png" alt="">
         </div>
+        <div id="showStep" onclick="showStep()">?</div>
         <div class="information">
             <p class="content">
                 <span>活动介绍</span><br/>
-                “华南芒果莲雾鲤工大学”、“华工今天爆水管了吗”，火热更新的话题热搜榜，你是否想过自己的名字也能出现在上面？<br/>
-                “跪求生发秘籍”、“还我蚂蚁森林能量”，好友对你的关键词是什么呢？<br/>
-                【我的热搜你做主】为你解锁专属热搜榜，下面来看看活动小攻略吧！<br/>
+                “华南芒果莲雾鲤工大学”<br/>
+                “华工今天爆水管了吗”<br/>
+                火热更新的话题热搜榜<br/>
+                你是否想过自己也能出现在上面？<br/>
                 <br/>
-                首先为自己选择一些有关于你的初始话题，点击创建你的专属热搜榜。<br/>
-                分享二维码给你的好友，邀请他们来参与你的话题讨论，评论点赞，生成你的热搜话题榜。<br/>
-                另外扫描好友的二维码也可进入ta的热搜榜评论点赞哦！<br/>
+                “跪求生发秘籍”<br/>
+                “还我蚂蚁森林能量”<br/>
+                好友对你的关键词是什么呢？<br/>
                 <br/>
-                马上开启你的热搜之旅吧~
+                “大佬带我学习”<br/>
+                “你的桌上到底有多少化妆品”<br/>
+                又有什么问题想问问你的好友呢？<br/>
+                <br/>
+                【我的热搜你做主】<br/>
+                为你解锁专属热搜榜<br/>
             </p>
         </div>
         <div class="button">
@@ -211,6 +218,27 @@
                 选择5个话题
             </button>
         </div>
+    </div>
+    <!-- step弹框 -->
+    <div id="step" onclick="hideStep()">
+            <div class="content" onclick="event.stopPropagation()">
+                Step 1<br/>
+                选择一些与你相关的话题<br/>
+                点击创建你的专属热搜榜<br/>
+                <br/>
+                Step 2<br/>
+                分享二维码给你的好友<br/>
+                邀请他们来参与你的话题讨论<br/>
+                评论点赞添加话题<br/>
+                生成你的热搜话题榜<br/>
+                <br/>
+                Step 3<br/>
+                扫描好友的二维码进入<span style="color: rgb(112,173,71);">ta的热搜榜</span><br/>
+                也可进行相同的互动哦！<br/>
+                <br/>
+                马上开启你的热搜之旅吧~<br/>
+                <div style="position: absolute;right: 0;top: 0;width: 10vw;color: #F56C6C;font-size: 10vw;line-height: 10vw;" onclick="hideStep()">×</div>
+            </div>
     </div>
     <div class="user_id" style="display: none;"></div>
 </body>

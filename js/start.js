@@ -53,6 +53,9 @@ $(document).ready(function() {
         success: function(data, status) {
             // alert('a');
             userData = data;
+            if (userData.collection.length == 0) {
+                $('p.content').append('下面来看看活动小攻略吧！<br/>')
+            }
             $('.button button').css('background-color', 'rgb(246, 184, 102)');
         },
         error: function() {
@@ -63,9 +66,10 @@ $(document).ready(function() {
     $('.button button').click(function() {
         var name = userData.name;
         var user_id = userData.id;
-        if (userData.length != 0) {
+        if (JSON.stringify(userData) != "{}") {
             if (!topic_id[topic_id_index]) {
                 if (userData.collection.length == 0) {
+                    showStep();
                     $('.topic span').text(name);
                     $('.user_id').text(user_id);
                     $('.background').css('display', 'none');
@@ -213,6 +217,18 @@ $(document).ready(function() {
         }
     })
 })
+
+function showStep() {
+    $('#step').show();
+    $('#step .content').fadeIn();
+    document.getElementById('step').addEventListener('touchmove', function(e){
+        e.preventDefault();
+    }, false);
+}
+function hideStep() {
+    $('#step .content').hide();
+    $('#step').hide();
+}
 
 function insertTopic(title) {
     $('.choice').append(
