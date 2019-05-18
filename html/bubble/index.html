@@ -46,6 +46,24 @@
                         <div class = "s22Show back" onclick = "backToSecond()"></div>
                         <div onclick="toForward()" class = "s21Show toFirstPage secondToFirst">热搜榜</div>
                         <div onclick="toNext()" class = "s21Show toThirdPage firstToSecond">热评榜</div>
+                        <div id="showStep" onclick="showStep()">?</div>
+                        <div id="step" onclick="hideStep()">
+                            <div class="content" onclick="event.stopPropagation()">
+                                    <div class="swiper-container1">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide"><img src = "../../img/tips1.png"></div>
+                                            <div class="swiper-slide"><img src = "../../img/tips2.png"></div>
+                                            <div class="swiper-slide"><img src = "../../img/tips3.png"></div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
+                               
+                            <div style="position: absolute;right: 0;z-index:100;top: 0;width: 10vw;color: #F56C6C;font-size: 10vw;line-height: 10vw;" onclick="hideStep()">×</div>
+                            
+                        </div>
+                        <div class = "guideTip">滑动可以查看下一步</div>
+                    </div>
                         <div id="reply_success">
                             <p id="reply_success_text">添加成功</p>
                         </div>

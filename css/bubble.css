@@ -252,7 +252,7 @@ body .deleteBoxActive{
 .tool{
     position: absolute;
     bottom:20px;
-    display:flex;
+    display:none;
     width: 100%;
     flex-direction: column;
     justify-content: center;
@@ -680,7 +680,7 @@ body .deleteBoxActive{
 .bubbleBox{
     position: relative;
     
-    z-index: 50;
+    z-index: 1;
     height: 100%;
     min-height: 2000px;
 
@@ -851,6 +851,79 @@ body .cancelScrool {
     100%{
         transform: scale(0);
     }
+}
+
+#step {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.7);
+    z-index: 10;
+}
+#step .content {
+    position: relative;
+    top: 10vh;
+    display: none;
+    max-height: calc(80vh - 10vw);
+    width: 75vw;
+    margin: 0 auto;
+    padding: 3vw 5vw;
+    border-radius: 5vw;
+    background: rgb(255, 245, 203);
+    text-align: center;
+    font-size: 4.5vw;
+    color: #303133;
+    overflow: scroll;
+}
+#showStep {
+    position: absolute;
+    right: 5vw;
+    top: 5vw;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 5vw;
+    /*border: 1px solid #DCDFE6;*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    background: rgba(246, 184, 102, .3);
+    text-align: center;
+    line-height: 10vw;
+    color: #E6A23C;
+    font-size: 7.5vw;
+    font-weight: bold;
+    z-index: 500;
+}
+.guideTip{
+    position: relative;
+    max-height: calc(80vh - 10vw);
+    top:20vw;
+    width: 75vw;
+    margin: 0 auto;
+    border-radius: 5vw;
+    background: rgba(255, 245, 203,0);
+    text-align: center;
+    font-size: 4.5vw;
+    color: white;
+    font-weight: bold;
+    overflow: scroll;
+}
+.content img {
+    height: 60vh;
+}
+body .swiper-button-next{
+    color:#f6b866;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23f6b866'%2F%3E%3C%2Fsvg%3E");
+   width:150px;
+    height: 150px;
+    background-size: 150px 150px;
+}
+body .swiper-button-prev{
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23f6b866'%2F%3E%3C%2Fsvg%3E");
+   width:150px;
+    height: 150px;
+    background-size: 150px 150px;
 }
 
 

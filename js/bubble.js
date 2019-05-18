@@ -39,6 +39,10 @@ $(function(){
     });
     $(".hotComment li").hide();
     slideInit();//初始化滑动插件
+    if(!localStorage.getItem("old")){
+        localStorage.setItem("old","1");
+        showStep();
+    }
     $(".maxShow").show();
     //pushHistory();//ios后退
     //检测是否是二维码进来的
@@ -259,8 +263,18 @@ function pushHistory() {
 function slideInit(){
     var ru = /#from=(.+?)($|\/|\#|\&)/
     var from = (ru.exec(window.location.href));
+    
+    mySwiper1 = new Swiper('.swiper-container1', {
+        observer:true,observeParents:true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+
+    })
     if(from){
         mySwiper = new Swiper('.swiper-container-h', {
+            observer:true,observeParents:true,
             initialSlide : Number(from[1]) ,
             on:{
                 sliderMove: function(){
@@ -379,14 +393,16 @@ function isOver(){
         if(ajaxCount >= 3){
             initiateAll();
             $(".tool").css({
-                "opacity":'1'
+                "display":'flex',
+                "opacity":"1",
             });
         }
     } else {
         if(ajaxCount >= 4){
             initiateAll();
             $(".tool").css({
-                "opacity":'1'
+                "display":'flex',
+                "opacity":"1",
             });
         }
     }
@@ -850,4 +866,25 @@ function initiate(){
          })
         })
   }
+  function showStep() {
+    $('#step').show();
+    $('#step .content').fadeIn();
+    $(".toThirdPage, .toFirstPage, #showStep").hide();
+    mySwiper1.slideTo(0);
+    mySwiper.detachEvents();
+    $(".tool").css({
+        "display":"none"
+    })
+}
+function hideStep() {
+    $('#step .content').hide();
+    $('#step').hide();
+    $(".toThirdPage, .toFirstPage, #showStep").show();
+    mySwiper.attachEvents();
+
+    $(".tool").css({
+        "display":"flex"
+    })
+}
+
 
