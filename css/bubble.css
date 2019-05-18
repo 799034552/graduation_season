@@ -876,7 +876,7 @@ body .cancelScrool {
     text-align: center;
     font-size: 4.5vw;
     color: #303133;
-    overflow: scroll;
+    overflow: hidden;
 }
 #showStep {
     position: absolute;
