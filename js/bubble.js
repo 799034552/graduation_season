@@ -7,6 +7,7 @@ var clone;//克隆出来的对象
 var beCloned;//被克隆的对象
 var isDelete;//是否可以删除移动对象的标识
 var isMoving;//是否正在移动
+var isMoving2 = false;
 var rule = /userid=(.+?)(&|#|$|\/)/;//检测是否是二维码进入的正则
 var userId = undefined;
 var showTopic;  //我的话题
@@ -27,7 +28,7 @@ var receiveData;
 var myData;//用户个人信息
 //初始化
 $(function(){
-    var isMoving2 = false;
+    isMoving2 = false;
     window.addEventListener('pageshow', function () {
         if (isPageHide) {
             window.location.reload();

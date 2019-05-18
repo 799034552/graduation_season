@@ -1,8 +1,9 @@
 #input_topic{
 	position: absolute;
 	top:20vw;
-	width: 83vw;
+	width: calc(83vw - 20px);
 	left: calc(8.5vw - 3px);
+	padding: 0 10px;
 	font-size: 5vw;
     cursor: pointer;
     border: 5px solid rgba(255, 255, 255, 0.5);
