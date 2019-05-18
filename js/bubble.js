@@ -22,7 +22,7 @@ var count1 = 0;
 var scale = [1,0.9,0.95,1,0.8,0.7];//气泡缩放
 var hotSearch ;
 var makecount = 100;
-
+var isPageHide;
 var hotComment;
 var receiveData;
 var myData;//用户个人信息
@@ -31,10 +31,12 @@ $(function(){
     isMoving2 = false;
     window.addEventListener('pageshow', function () {
         if (isPageHide) {
+            console.log("qu")
             window.location.reload();
         }
     });
     window.addEventListener('pagehide', function () {
+        console.log("qu");
         isPageHide = true;
     });
     $(".hotComment li").hide();
