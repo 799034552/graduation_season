@@ -907,7 +907,6 @@ body .cancelScrool {
     font-size: 4.5vw;
     color: white;
     font-weight: bold;
-    overflow: scroll;
 }
 .content img {
     height: 60vh;
