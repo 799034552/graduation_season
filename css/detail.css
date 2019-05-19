@@ -26,7 +26,10 @@ p{margin: 0;}
     font-size: 4vw;
     text-align: left;
     font-weight: 700;
+    word-wrap: break-word;
+	word-break: break-word;
 }
+
 
 #inputComment{
 	position: absolute;
@@ -173,7 +176,7 @@ p{margin: 0;}
 	width: 72vw;
 	font-size: 3.5vw;
 	word-wrap: break-word;
-	word-break: break-all;
+	word-break: break-word;
 }
 
 .reply{
@@ -212,7 +215,7 @@ p{margin: 0;}
 	right: 8vw;
 	font-size: 3.5vw;
 	word-wrap: break-word;
-	word-break: break-all;
+	word-break: break-word;
 }
 
 .sub_name{
@@ -357,7 +360,7 @@ p{margin: 0;}
 	right: 8vw;
 	font-size: 3.5vw;
 	word-wrap: break-word;
-	word-break: break-all;
+	word-break: break-word;
 	color: rgba(22, 155, 213, 1);
 }
 .comment_foot{
@@ -420,7 +423,8 @@ p{margin: 0;}
 	font-size: 3.5vw;
     width: 8vw;
     text-align: center;
-	top: 2.9vw;
+	top: 2.3vw;
+	padding-top: 1vw; 
 }
 #back{
 	position: absolute;
