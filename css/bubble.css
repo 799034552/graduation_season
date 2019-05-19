@@ -405,6 +405,7 @@ body .deleteBoxActive{
     width:100vw;
     height: 100vh;
     z-index: 999;
+    
 }
 .showSearch{
     position: absolute;
@@ -595,6 +596,11 @@ body .deleteBoxActive{
     display: flex;
     align-items: center;
     padding-left: 50px;
+    
+}
+.hotSearch li div{
+    word-wrap: break-word;
+	word-break: break-word;
 }
 .hotSearch li:not(.hotSearchTitle){
     font-size: 1rem;
@@ -683,7 +689,10 @@ body .deleteBoxActive{
     z-index: 1;
     height: 100%;
     min-height: 2000px;
-
+}
+.upbubble .message{
+    word-wrap: break-word;
+	word-break: break-word;
 }
 .light{
     position: absolute;

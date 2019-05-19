@@ -163,6 +163,11 @@
     height: 0vw;
     margin: 0 auto;
 }
+.userChoiced div p{
+    word-wrap: break-word;
+	word-break: break-word;
+}
+
 .userChoiced .bg{
     width: 100%;
     height: 100%;
@@ -251,6 +256,8 @@
     /*text-overflow: ellipsis;*/
     /*white-space: nowrap;*/
     text-align: left;
+    word-wrap: break-word;
+	word-break: break-word;
     
 }
 .topic div div{
