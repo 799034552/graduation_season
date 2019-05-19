@@ -327,6 +327,10 @@ function codeInit(){
         height : 300,
         correctLevel : QRCode.CorrectLevel.H,
     });
+    document.getElementById("qrcode").lastChild.onload = function () {
+        // console.log(document.getElementById("qrcode").lastChild.src)
+        drawAndShareImage();
+    }
     drawAndShareImage();
     function drawAndShareImage() {
             var myImage = new Image();
